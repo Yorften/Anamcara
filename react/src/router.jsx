@@ -17,7 +17,7 @@ import GlobalChat from "./views/dashboard/global";
 import Applicants from "./views/dashboard/applicants";
 import NotFound from "./views/notfound";
 import DefaultLayout from "./components/layouts/DefaultLayout";
-import DashboardLayout from "./components/layouts/DashboardLayout";
+import DashboardLayout from './components/layouts/DashboardLayout';
 
 const router = createBrowserRouter([
   {
