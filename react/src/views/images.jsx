@@ -1,7 +1,11 @@
+import { useDocumentTitle } from "../hooks/useDocumentTitle";
+
 export default function Images() {
-    return (
-      <>
-        <div className="text-5xl">Images</div>
-      </>
-    );
-  }
+  useDocumentTitle("Images");
+
+  return (
+    <>
+      <div className='text-5xl'>Images</div>
+    </>
+  );
+}

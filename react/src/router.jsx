@@ -1,23 +1,22 @@
 import { createBrowserRouter } from "react-router-dom";
-import Apply from "./views/apply";
-import Images from "./views/images";
-import Videos from "./views/videos";
-import StoneCutter from "./views/stone-cutter";
-import WelcomeChecklist from "./views/checklist/welcome";
-import ChecklistIndex from "./views/checklist/index";
-import Tasks from "./views/checklist/tasks";
-import Characters from "./views/checklist/characters";
-import ChecklistSettings from "./views/checklist/settings";
-import DashboardSettings from "./views/dashboard/settings";
-import DashboardImages from "./views/dashboard/images";
-import DashboardVideos from "./views/dashboard/videos";
-import Permissions from "./views/dashboard/permissions";
-import Members from "./views/dashboard/members";
-import GlobalChat from "./views/dashboard/global";
-import Applicants from "./views/dashboard/applicants";
-import NotFound from "./views/notfound";
-import DefaultLayout from "./components/layouts/DefaultLayout";
-import DashboardLayout from './components/layouts/DashboardLayout';
+import Apply from "./views/Apply";
+import Images from "./views/Images";
+import Videos from "./views/Videos";
+import StoneCutter from "./views/StoneCutter";
+import WelcomeChecklist from "./views/checklist/Welcome";
+import ChecklistIndex from "./views/checklist/Index";
+import Tasks from "./views/checklist/Tasks";
+import Characters from "./views/checklist/Characters";
+import ChecklistSettings from "./views/checklist/Settings";
+import DashboardSettings from "./views/dashboard/Settings";
+import DashboardImages from "./views/dashboard/Images";
+import DashboardVideos from "./views/dashboard/Videos";
+import Members from "./views/dashboard/Members";
+import GlobalChat from "./views/dashboard/GlobalChat";
+import Applicants from "./views/dashboard/Applicants";
+import NotFound from "./views/NotFound";
+import DefaultLayout from "./components/layouts/default/DefaultLayout";
+import DashboardLayout from "./components/layouts/dashboard/DashboardLayout";
 
 const router = createBrowserRouter([
   {
@@ -98,11 +97,6 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/videos",
         element: <DashboardVideos />,
-      },
-
-      {
-        path: "/dashboard/permissions",
-        element: <Permissions />,
       },
 
       {
