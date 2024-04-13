@@ -6,14 +6,16 @@ import Footer from "./Footer";
 const DefaultLayout = () => {
   const location = useLocation();
   return (
-    <div className='dashboard-layout'>
+    <div className='default-layout bg-[#224191] text-white'>
       {
         <>
           <Navigation />
         </>
       }
-      {location.pathname === "/" && <Welcome />}
-      <Outlet />
+      <div className='min-h-screen h-full mt-[40vw]'>
+        {location.pathname === "/" && <Welcome />}
+        <Outlet />
+      </div>
       {
         <>
           <Footer />

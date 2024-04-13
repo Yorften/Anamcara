@@ -1,8 +1,16 @@
+import { Link } from "react-router-dom";
+
 export default function Logo() {
   return (
-    <a href='/' className='flex items-center gap-6' aria-label='Cruip'>
-      <img src='assets/images/icon.png' className='w-8 h-8' />
-      <p className='text-xl font-medium'>FitNow</p>
-    </a>
+    <Link className='flex items-center' to={"/"}>
+      <img
+        src='/assets/images/icon.png'
+        className='mr-3 h-6 sm:h-9'
+        alt='Anamcara Logo'
+      />
+      <span className='self-center whitespace-nowrap text-xl font-semibold'>
+        Anamcara
+      </span>
+    </Link>
   );
 }
