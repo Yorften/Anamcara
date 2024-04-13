@@ -34,7 +34,9 @@ export default function Navigation() {
         color='blue-gray'
         className='p-1 font-normal'
       >
-        <Link className='flex items-center'>ABOUT US</Link>
+        <Link className='flex items-center'>
+          ABOUT US
+        </Link>
       </Typography>
       <Typography
         as='li'
@@ -42,7 +44,9 @@ export default function Navigation() {
         color='blue-gray'
         className='p-1 font-normal'
       >
-        <Link className='flex items-center'>APPLY</Link>
+        <Link className='flex items-center'>
+          APPLY
+        </Link>
       </Typography>
       <Typography
         as='li'
@@ -86,7 +90,7 @@ export default function Navigation() {
   );
 
   return (
-    <section>
+    <section className='bg-[url("/assets/images/hero.png")] md:bg-[center_bottom_5rem] bg-contain bg-no-repeat h-[116vw]'>
       <Navbar className='sticky top-0 z-10 h-max max-w-full rounded-none px-4 py-2 bg-transparent/15 border-0 shadow-none'>
         <div className='flex items-center justify-between text-blue-gray-900'>
           <Logo />
@@ -141,6 +145,8 @@ export default function Navigation() {
           <div></div>
         </Collapse>
       </Navbar>
+      <Hero />
+      <Recruiting />
     </section>
   );
 }

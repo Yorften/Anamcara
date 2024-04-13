@@ -7,7 +7,7 @@ export default function Hero() {
           <img
             src='assets/images/mokoko_bow.png'
             alt='mokoko bow'
-            className=' object-contain h-[7vw]'
+            className=' object-contain h-8 lg:h-[7vw]'
           />
         </span>
       </p>
