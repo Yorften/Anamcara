@@ -133,7 +133,8 @@ export default function JoinUs() {
                   <h1 className='text-lg font-medium'>Anamcara</h1>
                 </div>
                 <p className='text-sm ml-2'>
-                  Hellohello! Welcome to Anamcara! "Soul Friends" in Gaelic{" "}
+                  Hellohello! Welcome to Anamcara! &#34;Soul Friends&#34; in
+                  Gaelic
                 </p>
               </div>
               <div className='flex items-center justify-between'>

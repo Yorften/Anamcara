@@ -7,7 +7,7 @@ const user = "/user";
 UserRequest.getUser = (params) => {
   return fetch({
     url: user,
-    methods: "get",
+    method: "get",
     params: params,
   });
 };
