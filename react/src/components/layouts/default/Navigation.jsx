@@ -11,8 +11,6 @@ import {
 } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
 import { Dropdown } from "flowbite-react";
-import Hero from "./Hero";
-import Recruiting from "./Recruiting";
 
 export default function Navigation() {
   const [stateToken] = useState(false);

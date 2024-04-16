@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Client\HttpClientException;
@@ -11,12 +12,7 @@ class AuthController extends Controller
 
     public function callback(Request $request)
     {
-        if (!$request->has('code')) {
-            echo 'no code';
-            exit();
-        }
-
-        $discord_code = $request->query('code');
+        $discord_code = $request->input('code');
 
         $payload = [
             'code' => $discord_code,
@@ -29,9 +25,27 @@ class AuthController extends Controller
         try {
             $response = Http::asForm()->post('https://discord.com/api/oauth2/token', $payload);
             $result = $response->throw()->json();
-            dd($result);
         } catch (HttpClientException $e) {
-            echo $e->getMessage(); 
+            echo $e->getMessage();
         }
+
+        if ($result) {
+            try {
+                $access_token = $result['access_token'];
+                $response = Http::withHeaders([
+                    'Authorization' => 'Bearer ' . $access_token,
+                    'Content-Type' => 'application/x-www-form-urlencoded',
+                ])->get('https://discord.com/api/users/@me');
+
+                $user = $response->throw()->json();
+                $user['refresh_token'] = $result['refresh_token'];
+                $created_user = User::create($user);
+                return response(['user' => $created_user]);
+            } catch (HttpClientException $e) {
+                echo $e->getMessage();
+            }
+        }
+
+        return response(['message' => "couldn't get access token"]);
     }
 }

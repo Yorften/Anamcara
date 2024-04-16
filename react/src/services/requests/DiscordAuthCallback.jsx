@@ -1,21 +1,19 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import UserRequest from "./user";
+import AuthRequest from "./auth";
 
 export default function DiscordAuthCallback() {
   const navigate = useNavigate();
-  const fragmentParams = new URLSearchParams(window.location.hash.substring(1));
-  const accessToken = fragmentParams.get("access_token");
-
+  const url = new URL(window.location.href);
+  const code = url.searchParams.get("code");
   const formData = new FormData();
 
-  formData.append("token", accessToken);
+  formData.append("code", code);
 
   useEffect(() => {
-    const response = UserRequest.getUser(formData);
+    const response = AuthRequest.postAuth(formData);
     response.then((data) => {
         console.log(data);
-        navigate('/');
     });
   });
 }

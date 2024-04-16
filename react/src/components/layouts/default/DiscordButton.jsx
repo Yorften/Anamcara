@@ -5,7 +5,7 @@ export default function DiscordButton({ className }) {
       <button
         onClick={() =>
           (window.location =
-            "https://discord.com/oauth2/authorize?client_id=1187379843378196522&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Fapi%2Fauth%2Fdiscord%2Fcallback&scope=identify+guilds+guilds.members.read")
+            "https://discord.com/oauth2/authorize?client_id=1187379843378196522&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fauth%2Fdiscord%2Fcallback&scope=identify+guilds+guilds.members.read")
         }
         className={`flex items-center bg-[#5865F2] rounded-lg shadow-md px-6 py-2 text-sm font-medium text-gray-800 hover:bg-[#3c46bc] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 ${className}`}
       >
