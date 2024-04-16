@@ -4,18 +4,19 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Http\Client\HttpClientException;
 
 class AuthController extends Controller
 {
 
     public function callback(Request $request)
     {
-        if (!isset($_GET['code'])) {
+        if (!$request->has('code')) {
             echo 'no code';
             exit();
         }
 
-        $discord_code = $_GET['code'];
+        $discord_code = $request->query('code');
 
         $payload = [
             'code' => $discord_code,
@@ -25,29 +26,12 @@ class AuthController extends Controller
             'redirect_uri' => env('DISCORD_REDIRECT_URI'),
         ];
 
-
-        $payload_string = http_build_query($payload);
-        $discord_token_url = "https://discordapp.com/api/oauth2/token";
-
-        $ch = curl_init();
-
-        curl_setopt($ch, CURLOPT_URL, $discord_token_url);
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $payload_string);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-        // curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-        // curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-
-        $result = curl_exec($ch);
-
-        if (!$result) {
-            echo curl_error($ch);
+        try {
+            $response = Http::asForm()->post('https://discord.com/api/oauth2/token', $payload);
+            $result = $response->throw()->json();
+            dd($result);
+        } catch (HttpClientException $e) {
+            echo $e->getMessage();
         }
-
-        dd($result);
-
-        $result = json_decode($result, true);
-        $access_token = $result['access_token'];
     }
 }
