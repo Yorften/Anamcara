@@ -31,7 +31,7 @@ class AuthController extends Controller
             $result = $response->throw()->json();
             dd($result);
         } catch (HttpClientException $e) {
-            echo $e->getMessage();
+            echo $e->getMessage(); 
         }
     }
 }
