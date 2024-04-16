@@ -2,16 +2,11 @@ import axiosClient from "../../axios-client";
 
 const AuthRequest = {};
 
-const auth = "/auth/discord/callback";
+const url = "/auth/discord/callback";
 
 AuthRequest.postAuth = (params) => {
-  axiosClient
-    .post(auth, params)
-    .then(({ data }) => {
-      return data;
-    })
-    .catch((err) => {
-      return err;
-    });
+
+  return axiosClient.post(url, params).then((response) => response.data);
 };
+
 export default AuthRequest;

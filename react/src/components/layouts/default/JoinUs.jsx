@@ -115,12 +115,12 @@ export default function JoinUs() {
             <img
               src='assets/images/halloween_1.webp'
               alt='anamcara group picture'
-              className='h-[40%] object-cover rounded-t-md'
+              className='h-48 sm:h-52 md:h-[40%] object-cover rounded-t-md'
             />
             <img
               src='assets/images/Anamlogo_small.gif'
               alt='Anamcara logo'
-              className='object-contain h-14 p-1 top-[31%] left-10 bg-[#292B2F] rounded-md absolute'
+              className='object-contain h-14 p-1 top-[45%] md:top-[31%] left-10 bg-[#292B2F] rounded-md absolute'
             />
             <div className='flex flex-col justify-between h-40 p-4 pt-5 bg-[#292B2F]'>
               <div>

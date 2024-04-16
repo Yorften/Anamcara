@@ -1,14 +1,14 @@
-import fetch from "../../axios-client";
+import axiosClient from "../../axios-client";
 
 const UserRequest = {};
 
-const user = "/user";
+const url = "https://discordapp.com/api/users/@me";
 
-UserRequest.getUser = (params) => {
-  return fetch({
-    url: user,
-    method: "get",
-    params: params,
-  });
+UserRequest.getUser = (token) => {
+  const headers = {
+    Authorization: `Bearer ${token}`,
+    "Content-Type": "application/x-www-form-urlencoded",
+  };
+  return axiosClient.get(url, { headers }).then((response) => response.data);
 };
 export default UserRequest;
