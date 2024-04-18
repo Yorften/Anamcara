@@ -1,13 +1,16 @@
 import axiosClient from "../../axios-client";
+import Cookies from 'js-cookie';
 
 const UserRequest = {};
 
-const url = "https://discordapp.com/api/users/@me";
+const url = "/user";
 
-UserRequest.getUser = (token) => {
+UserRequest.getUser = () => {
+  const token = Cookies.get('token');
+  console.log(token);
   const headers = {
     Authorization: `Bearer ${token}`,
-    "Content-Type": "application/x-www-form-urlencoded",
+    "Content-Type": "json/application",
   };
   return axiosClient.get(url, { headers }).then((response) => response.data);
 };

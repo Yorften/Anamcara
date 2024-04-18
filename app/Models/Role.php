@@ -17,9 +17,17 @@ class Role extends Model
     protected $fillable = [
         'id',
         'name',
-        'global_name',
-        'avatar',
-        'refresh_token',
+    ];
+
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $hidden = [
+        'created_at',
+        'updated_at',
     ];
 
     public function users()

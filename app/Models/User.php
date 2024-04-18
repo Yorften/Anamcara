@@ -37,6 +37,15 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'id' => 'string',
+    ];
+
     public function assignRole($name)
     {
         try {

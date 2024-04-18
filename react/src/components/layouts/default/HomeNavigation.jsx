@@ -1,6 +1,5 @@
 import DiscordButton from "./DiscordButton";
 import NavProfile from "../NavProfile";
-import { useState } from "react";
 import Logo from "../Logo";
 import React from "react";
 import {
@@ -13,10 +12,12 @@ import { Link } from "react-router-dom";
 import { Dropdown } from "flowbite-react";
 import Hero from "./Hero";
 import Recruiting from "./Recruiting";
+import { useSelector } from "react-redux";
 
 export default function Navigation() {
-  const [stateToken] = useState(false);
-
+  const user = useSelector((state) => state.auth.user);
+  const token = useSelector((state) => state.auth.token);
+  const isLoading = useSelector((state) => state.auth.isLoading);
   const [openNav, setOpenNav] = React.useState(false);
 
   React.useEffect(() => {
@@ -34,9 +35,7 @@ export default function Navigation() {
         color='blue-gray'
         className='p-1 font-normal'
       >
-        <Link className='flex items-center'>
-          ABOUT US
-        </Link>
+        <Link className='flex items-center'>ABOUT US</Link>
       </Typography>
       <Typography
         as='li'
@@ -44,9 +43,7 @@ export default function Navigation() {
         color='blue-gray'
         className='p-1 font-normal'
       >
-        <Link className='flex items-center'>
-          APPLY
-        </Link>
+        <Link className='flex items-center'>APPLY</Link>
       </Typography>
       <Typography
         as='li'
@@ -134,11 +131,13 @@ export default function Navigation() {
               )}
             </IconButton>
           </div>
-          {stateToken ? (
-            <NavProfile user={"user"} />
-          ) : (
-            <DiscordButton className='lg:flex hidden' />
-          )}
+          {isLoading && <div></div>}
+          {!isLoading &&
+            (token ? (
+              <NavProfile className='lg:flex hidden' user={user} />
+            ) : (
+              <DiscordButton className='lg:flex hidden' />
+            ))}
         </div>
         <Collapse open={openNav}>
           {/* Mobile Nav */}
