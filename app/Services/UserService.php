@@ -65,7 +65,7 @@ class UserService
         }
     }
 
-    public function getUserRoles(User $user, $access_token = '')
+    public function fetchUserRoles(User $user, $access_token = '')
     {
         if (empty($access_token)) {
             $access_token = $this->getAccessToken($user);

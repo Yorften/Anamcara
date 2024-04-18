@@ -18,7 +18,7 @@ class RoleService
                 'Authorization' => 'Bot ' . env('DISCORD_APPLICATION_TOKEN'),
                 'Content-Type' => 'application/x-www-form-urlencoded',
             ])->get('https://discord.com/api/guilds/' . env('DISCORD_GUILD_ID') . '/roles');
-           
+
             $discordRoles = $response->throw()->json();
 
             $dbRoles = Role::all()->keyBy('id');
@@ -64,5 +64,20 @@ class RoleService
         } else {
             $user->roles()->attach($user_roles);
         }
+    }
+
+    public function getUserRoles($ids)
+    {
+        $user_roles_with_names = [];
+        foreach ($ids as $role_id) {
+            $role = Role::find($role_id);
+            if ($role) {
+                $user_roles_with_names[] = [
+                    'id' => $role_id,
+                    'name' => $role->name,
+                ];
+            }
+        }
+        return $user_roles_with_names;
     }
 }

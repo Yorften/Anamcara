@@ -71,11 +71,12 @@ class AuthController extends Controller
                     }
                 }
                 $guild_roles = $this->roleService->updateAppRoles();
-                $user_roles = $this->userService->getUserRoles($user, $access_token);
+                $user_roles = $this->userService->fetchUserRoles($user, $access_token);
                 $this->roleService->updateUserRoles($user, $user_roles);
+                $user_roles = $this->roleService->getUserRoles($user_roles);
                 $token = $user->createToken('API Token')->plainTextToken;
-
-                return response(compact('user', 'token', 'user_roles', 'guild_roles'));
+                
+                return response(compact('user', 'token', 'user_roles'));
             } catch (HttpClientException $e) {
                 Log::error('HTTP Client Exception: ' . $e->getMessage());
                 return response()->json(['error' => 'An error occurred while fetching user data:'], 500);
