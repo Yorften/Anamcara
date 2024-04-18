@@ -37,7 +37,6 @@ class RoleService
                 }
             }
 
-            // Retrieve updated roles from the database
             $updatedRoles = Role::pluck('id');
 
             return $updatedRoles;
@@ -50,7 +49,7 @@ class RoleService
         }
     }
 
-    public function updateUserRoles(User $user, $guild_roles, $user_roles)
+    public function updateUserRoles(User $user, $user_roles)
     {
         if ($user->roles()->exists()) {
             $currentRoles = $user->roles()->pluck('roles.id')->toArray();

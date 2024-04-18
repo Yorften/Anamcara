@@ -40,10 +40,10 @@ class AuthController extends Controller
             $result = $response->throw()->json();
         } catch (HttpClientException $e) {
             Log::error('HTTP Client Exception: ' . $e->getMessage());
-            return response()->json(['error' => 'An error occurred while fetching user data.' . $e->getMessage()], 500);
+            return response()->json(['error' => 'An error occurred while fetching token data:' . $e->getMessage()], 500);
         } catch (Exception $e) {
             Log::error('Exception: ' . $e->getMessage());
-            return response()->json(['error' => 'An unexpected error occurred.' . $e->getMessage()], 500);
+            return response()->json(['error' => 'An unexpected error occurred:' . $e->getMessage()], 500);
         }
 
         if ($result) {
@@ -72,16 +72,16 @@ class AuthController extends Controller
                 }
                 $guild_roles = $this->roleService->updateAppRoles();
                 $user_roles = $this->userService->getUserRoles($user, $access_token);
-                $this->roleService->updateUserRoles($user, $guild_roles, $user_roles);
+                $this->roleService->updateUserRoles($user, $user_roles);
                 $token = $user->createToken('API Token')->plainTextToken;
 
                 return response(compact('user', 'token', 'user_roles', 'guild_roles'));
             } catch (HttpClientException $e) {
                 Log::error('HTTP Client Exception: ' . $e->getMessage());
-                return response()->json(['error' => 'An error occurred while fetching user data.'], 500);
+                return response()->json(['error' => 'An error occurred while fetching user data:'], 500);
             } catch (Exception $e) {
                 Log::error('Exception: ' . $e->getMessage());
-                return response()->json(['error' => 'An unexpected error occurred.' . $e->getMessage()], 500);
+                return response()->json(['error' => 'An unexpected error occurred:' . $e->getMessage()], 500);
             }
         }
 

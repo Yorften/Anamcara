@@ -81,9 +81,14 @@ class UserService
                 ])->get('https://discord.com/api/users/@me/guilds/' . env('DISCORD_GUILD_ID') . '/member');
 
                 $result = $response->throw()->json();
-                $user->update(['nick' => $result['nick']]);
+                $user_roles = $result['roles'];
+                $joined_at = date('Y-m-d H:i:s', strtotime($result['joined_at']));
+                $user->update([
+                    'nick' => $user_roles,
+                    'joined_at' => $joined_at,
+                ]);
 
-                return $result['roles'];
+                return $user_roles;
             } catch (HttpClientException $e) {
                 Log::error('HTTP Client Exception: ' . $e->getMessage());
                 return response()->json(['error' => $e->getMessage()], 500);

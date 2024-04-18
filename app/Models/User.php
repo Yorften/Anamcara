@@ -23,6 +23,8 @@ class User extends Authenticatable
         'global_name',
         'avatar',
         'refresh_token',
+        'nick',
+        'joined_at',
     ];
 
     /**
