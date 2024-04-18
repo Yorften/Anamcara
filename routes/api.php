@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::post('/auth/discord/callback', [AuthController::class, 'callback']);
+
 Route::apiResource('/roles', RoleController::class);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

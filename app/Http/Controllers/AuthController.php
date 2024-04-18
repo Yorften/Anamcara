@@ -2,13 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use App\Models\User;
+use App\Services\RoleService;
 use Illuminate\Http\Request;
+use App\Services\UserService;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Client\HttpClientException;
 
 class AuthController extends Controller
 {
+
+    protected $userService, $roleService;
+
+    public function __construct(UserService $userService, RoleService $roleService)
+    {
+        $this->userService = $userService;
+        $this->roleService = $roleService;
+    }
+
 
     public function callback(Request $request)
     {
@@ -26,7 +39,11 @@ class AuthController extends Controller
             $response = Http::asForm()->post('https://discord.com/api/oauth2/token', $payload);
             $result = $response->throw()->json();
         } catch (HttpClientException $e) {
-            echo $e->getMessage();
+            Log::error('HTTP Client Exception: ' . $e->getMessage());
+            return response()->json(['error' => 'An error occurred while fetching user data.' . $e->getMessage()], 500);
+        } catch (Exception $e) {
+            Log::error('Exception: ' . $e->getMessage());
+            return response()->json(['error' => 'An unexpected error occurred.' . $e->getMessage()], 500);
         }
 
         if ($result) {
@@ -37,12 +54,34 @@ class AuthController extends Controller
                     'Content-Type' => 'application/x-www-form-urlencoded',
                 ])->get('https://discord.com/api/users/@me');
 
-                $user = $response->throw()->json();
-                $user['refresh_token'] = $result['refresh_token'];
-                $created_user = User::create($user);
-                return response(['user' => $created_user]);
+                $user_data = $response->throw()->json();
+                $user_data['refresh_token'] = $result['refresh_token'];
+
+                $existingUser = User::find($user_data['id']);
+
+                if (!$existingUser) {
+                    $user = User::create($user_data);
+                } else {
+                    $this->userService->updateUser($existingUser, $user_data);
+                    $user = $existingUser;
+                    try {
+                        $user->tokens()->delete();
+                    } catch (Exception $e) {
+                        Log::error('Error deleting tokens for user ' . $user->id . ': ' . $e->getMessage());
+                    }
+                }
+                $guild_roles = $this->roleService->updateAppRoles();
+                $user_roles = $this->userService->getUserRoles($user, $access_token);
+                $this->roleService->updateUserRoles($user, $guild_roles, $user_roles);
+                $token = $user->createToken('API Token')->plainTextToken;
+
+                return response(compact('user', 'token', 'user_roles', 'guild_roles'));
             } catch (HttpClientException $e) {
-                echo $e->getMessage();
+                Log::error('HTTP Client Exception: ' . $e->getMessage());
+                return response()->json(['error' => 'An error occurred while fetching user data.'], 500);
+            } catch (Exception $e) {
+                Log::error('Exception: ' . $e->getMessage());
+                return response()->json(['error' => 'An unexpected error occurred.' . $e->getMessage()], 500);
             }
         }
 

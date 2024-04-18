@@ -15,8 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('username')->unique();
             $table->string('global_name');
+            $table->string('nick')->nullable();
             $table->string('avatar');
             $table->string('refresh_token');
+            $table->timestamp('joined_at')->nullable();
             $table->timestamps();
         });
     }

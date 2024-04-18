@@ -33,4 +33,9 @@ class User extends Authenticatable
     protected $hidden = [
         'remember_token',
     ];
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class);
+    }
 }
