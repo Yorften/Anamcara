@@ -16,7 +16,7 @@ class UserService
         $user->update($payload);
     }
 
-    public function getAccessToken(User $user)
+    public function refreshAccessToken(User $user)
     {
         $payload = [
             'client_id' => env('DISCORD_CLIENT_ID'),
@@ -43,7 +43,7 @@ class UserService
     public function getUserGuilds(User $user, $access_token = '')
     {
         if (empty($access_token)) {
-            $access_token = $this->getAccessToken($user);
+            $access_token = $this->refreshAccessToken($user);
         }
 
         try {
@@ -65,10 +65,36 @@ class UserService
         }
     }
 
+    public function getUserData($access_token, $refresh_token)
+    {
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer ' . $access_token,
+            'Content-Type' => 'application/x-www-form-urlencoded',
+        ])->get('https://discord.com/api/users/@me');
+
+        $user_data = $response->throw()->json();
+        $user_data['refresh_token'] = $refresh_token;
+
+        $existingUser = User::find($user_data['id']);
+
+        if (!$existingUser) {
+            $user = User::create($user_data);
+        } else {
+            $this->updateUser($existingUser, $user_data);
+            $user = $existingUser;
+            try {
+                $user->tokens()->delete();
+            } catch (Exception $e) {
+                Log::error('Error deleting tokens for user ' . $user->id . ': ' . $e->getMessage());
+            }
+        }
+        return $user;
+    }
+
     public function fetchUserRoles(User $user, $access_token = '')
     {
         if (empty($access_token)) {
-            $access_token = $this->getAccessToken($user);
+            $access_token = $this->refreshAccessToken($user);
         }
 
         $result = $this->checkGuild($user, $access_token);
@@ -103,7 +129,7 @@ class UserService
     public function checkGuild(User $user, $access_token = '')
     {
         if (empty($access_token)) {
-            $access_token = $this->getAccessToken($user);
+            $access_token = $this->refreshAccessToken($user);
         }
 
         $guilds = $this->getUserGuilds($user, $access_token);
