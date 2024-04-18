@@ -6,7 +6,6 @@ import { setUser, setToken, setUserRoles, setIsLoading } from "../../features/au
 
 export default function DiscordAuthCallback() {
   const dispatch = useDispatch();
-
   const navigate = useNavigate();
   const url = new URL(window.location.href);
   const code = url.searchParams.get("code");

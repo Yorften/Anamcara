@@ -17,8 +17,12 @@ use App\Http\Controllers\UserController;
 |
 */
 
+
+// Route::apiResource('/roles', RoleController::class);
+
 Route::post('/auth/discord/callback', [AuthController::class, 'callback']);
 
-Route::apiResource('/roles', RoleController::class);
-
-Route::middleware('auth:sanctum')->get('/user', [UserController::class, 'show']);
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::get('/user', [UserController::class, 'show']);
+    Route::post('/logout', [AuthController::class, 'logout']);
+});

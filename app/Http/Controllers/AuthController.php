@@ -35,7 +35,7 @@ class AuthController extends Controller
             try {
                 $access_token = $response['access_token'];
                 $refresh_token = $response['refresh_token'];
-                
+
                 $user = $this->userService->getUserData($access_token, $refresh_token);
 
                 $guild_roles = $this->roleService->updateAppRoles();
@@ -47,7 +47,7 @@ class AuthController extends Controller
                 // remove refresh token so it wont be accessible in the client
                 // DO NOT REMOVE UNDER ANY CIRCUMSTANCES
                 $user['refresh_token'] = '';
-                
+
                 return response(compact('user', 'token', 'user_roles'));
             } catch (HttpClientException $e) {
                 Log::error('HTTP Client Exception: ' . $e->getMessage());
@@ -59,5 +59,12 @@ class AuthController extends Controller
         }
 
         return response(['message' => "couldn't get access token"]);
+    }
+
+    public function logout()
+    {
+        /** @disregard P1013  | tokens() marked as undefined but it works fine **/
+        auth()->user()->tokens()->delete();
+        return response('', 204);
     }
 }

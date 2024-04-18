@@ -7,11 +7,11 @@ const url = "/user";
 
 UserRequest.getUser = () => {
   const token = Cookies.get('token');
-  console.log(token);
   const headers = {
     Authorization: `Bearer ${token}`,
     "Content-Type": "json/application",
   };
   return axiosClient.get(url, { headers }).then((response) => response.data);
 };
+
 export default UserRequest;

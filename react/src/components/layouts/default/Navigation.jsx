@@ -1,6 +1,5 @@
 import DiscordButton from "./DiscordButton";
 import NavProfile from "../NavProfile";
-import { useState } from "react";
 import Logo from "../Logo";
 import React from "react";
 import {
@@ -11,10 +10,12 @@ import {
 } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
 import { Dropdown } from "flowbite-react";
+import { useSelector } from "react-redux";
 
 export default function Navigation() {
-  const [stateToken] = useState(false);
-
+  const user = useSelector((state) => state.auth.user);
+  const token = useSelector((state) => state.auth.token);
+  const isLoading = useSelector((state) => state.auth.isLoading);
   const [openNav, setOpenNav] = React.useState(false);
 
   React.useEffect(() => {
@@ -84,7 +85,7 @@ export default function Navigation() {
   );
 
   return (
-    <section>
+    <section className='bg-[url("/assets/images/hero.png")] md:bg-[center_bottom_5rem] bg-contain bg-no-repeat h-[116vw]'>
       <Navbar className='sticky top-0 z-10 h-max max-w-full rounded-none px-4 py-2 bg-transparent/15 border-0 shadow-none'>
         <div className='flex items-center justify-between text-blue-gray-900'>
           <Logo />
@@ -128,11 +129,13 @@ export default function Navigation() {
               )}
             </IconButton>
           </div>
-          {stateToken ? (
-            <NavProfile user={"user"} />
-          ) : (
-            <DiscordButton className='lg:flex hidden' />
-          )}
+          {isLoading && <div></div>}
+          {!isLoading &&
+            (token ? (
+              <NavProfile className='lg:flex hidden' user={user} />
+            ) : (
+              <DiscordButton className='lg:flex hidden' />
+            ))}
         </div>
         <Collapse open={openNav}>
           {/* Mobile Nav */}
