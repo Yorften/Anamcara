@@ -2,15 +2,16 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Role;
+use App\Traits\UserHasRoles;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, UserHasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -35,6 +36,16 @@ class User extends Authenticatable
     protected $hidden = [
         'remember_token',
     ];
+
+    public function assignRole($name)
+    {
+        try {
+            $role = Role::where('name', $name)->firstOrFail();
+            $this->roles()->attach($role->id);
+        } catch (\Exception $e) {
+            return 'error: ' . $e->getMessage();
+        }
+    }
 
     public function roles()
     {

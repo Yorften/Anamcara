@@ -16,3 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('app');
 });
+
+Route::middleware('role:officer')->get('/test-middleware', function () {
+    return 'You have access!';
+})->name('test.middleware');
