@@ -75,7 +75,7 @@ class AuthController extends Controller
                 $this->roleService->updateUserRoles($user, $user_roles);
                 $token = $user->createToken('API Token')->plainTextToken;
 
-                return response(compact('user', 'existingUser', 'token', 'user_roles', 'guild_roles'));
+                return response(compact('user', 'token', 'user_roles', 'guild_roles'));
             } catch (HttpClientException $e) {
                 Log::error('HTTP Client Exception: ' . $e->getMessage());
                 return response()->json(['error' => 'An error occurred while fetching user data:'], 500);
