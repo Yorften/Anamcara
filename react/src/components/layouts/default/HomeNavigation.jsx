@@ -27,6 +27,20 @@ export default function Navigation() {
     );
   }, []);
 
+   const scrollToJoinUs = () => {
+    const joinUsElement = document.getElementById("join_us");
+    if (joinUsElement) {
+      joinUsElement.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+   const scrollToAboutUs = () => {
+    const joinUsElement = document.getElementById("about_us");
+    if (joinUsElement) {
+      joinUsElement.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   const navList = (
     <ul className='mt-2 mb-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6'>
       <Typography
@@ -35,7 +49,9 @@ export default function Navigation() {
         color='blue-gray'
         className='p-1 font-normal'
       >
-        <Link className='flex items-center'>ABOUT US</Link>
+        <Link onClick={scrollToAboutUs} className='flex items-center'>
+          ABOUT US
+        </Link>
       </Typography>
       <Typography
         as='li'
@@ -43,7 +59,9 @@ export default function Navigation() {
         color='blue-gray'
         className='p-1 font-normal'
       >
-        <Link className='flex items-center'>APPLY</Link>
+        <Link onClick={scrollToJoinUs} className='flex items-center'>
+          JOIN US
+        </Link>
       </Typography>
       <Typography
         as='li'
@@ -53,10 +71,14 @@ export default function Navigation() {
       >
         <Dropdown label='HIGHLIGHTS' inline>
           <Dropdown.Item className='p-0'>
-            <Link className='w-full px-4 py-2'>GALLERY</Link>
+            <Link to={"gallery"} className='w-full px-4 py-2'>
+              GALLERY
+            </Link>
           </Dropdown.Item>
           <Dropdown.Item className='p-0'>
-            <Link className='w-full px-4 py-2'>VIDEOS</Link>
+            <Link to={"videos"} className='w-full px-4 py-2'>
+              VIDEOS
+            </Link>
           </Dropdown.Item>
         </Dropdown>
       </Typography>
@@ -66,6 +88,7 @@ export default function Navigation() {
         color='blue-gray'
         className='p-1 font-normal'
       >
+        {/* Teenspring store link <Link to={"(link goes here)"} className='flex items-center'> */}
         <Link className='flex items-center'>STORE</Link>
       </Typography>
       <Typography
@@ -76,10 +99,18 @@ export default function Navigation() {
       >
         <Dropdown label='TOOLS' inline>
           <Dropdown.Item className='p-0'>
-            <Link className='w-full px-4 py-2'>CHECKLIST</Link>
+            <Link to={"checklist"} className='w-full px-4 py-2'>
+              CHECKLIST
+            </Link>
           </Dropdown.Item>
           <Dropdown.Item className='p-0'>
-            <Link className='w-full px-4 py-2'>STONE CUTTER</Link>
+            <Link
+              to={"https://lostark.meta-game.gg/ability-stone-calculator"}
+              target='_blank'
+              className='w-full px-4 py-2'
+            >
+              STONE CUTTER
+            </Link>
           </Dropdown.Item>
         </Dropdown>
       </Typography>

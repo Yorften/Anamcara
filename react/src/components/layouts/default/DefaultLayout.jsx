@@ -53,7 +53,15 @@ const DefaultLayout = () => {
 
   return (
     <div className='default-layout bg-[#224191] text-white'>
-      {<>{location.pathname === "/" ? <HomeNavigation /> : <Navigation />}</>}
+      {
+        <>
+          {location.pathname === "/" ? (
+            <HomeNavigation />
+          ) : (
+            <Navigation />
+          )}
+        </>
+      }
       <div className='min-h-screen h-full'>
         {location.pathname === "/" && <Welcome />}
         <Outlet />

@@ -110,8 +110,8 @@ export default function JoinUs() {
             </div>
           </div>
         </div>
-        <div className='lg:w-1/3 w-full flex flex-col gap-8 lg:gap-0 justify-between'>
-          <div className='flex flex-col relative'>
+        <div className='lg:w-1/3 w-full flex flex-col gap-8 lg:gap-0'>
+          <div className='flex flex-col relative '>
             <img
               src='assets/images/halloween_1.webp'
               alt='anamcara group picture'

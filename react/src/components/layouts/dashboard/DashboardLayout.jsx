@@ -22,9 +22,11 @@ const DashboardLayout = () => {
   const user = useSelector((state) => state.auth.user);
   const token = useSelector((state) => state.auth.token);
 
-  if (!token) {
-    navigate('/');
-  }
+  useEffect(() => {
+    if (!token) {
+      navigate("/");
+    }
+  }, [token, navigate]);
 
   useCookieMonitor();
 

@@ -2,7 +2,6 @@
 import { Avatar, Dropdown } from "flowbite-react";
 import { PropTypes } from "prop-types";
 import { Link } from "react-router-dom";
-import AuthRequest from "../../services/requests/auth";
 import Cookies from "js-cookie";
 import { useDispatch } from "react-redux";
 import { clearStore } from "../../features/auth/authSlice";

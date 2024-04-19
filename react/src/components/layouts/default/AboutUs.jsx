@@ -27,7 +27,7 @@ export default function AboutUs() {
             src='assets/images/halloween_1.webp'
             alt='anamcara group picture'
           />
-          <div className='flex justify-between items-center gap-4 [&>*]:object-cover [&>*]:h-14 [&>*]:w-[30%] lg:[&>*]:h-20 lg:[&>*]:w-40'>
+          <div className='flex justify-between items-center gap-4 [&>*]:object-cover [&>*]:h-28 [&>*]:w-[30%] md:[&>*]:h-16 md:[&>*]:w-[30%] lg:[&>*]:h-20 lg:[&>*]:w-[30%]'>
             <img
               src='assets/images/Selfie_20220529_Misoria_010.webp'
               alt='anamcara group picture'
