@@ -6,11 +6,9 @@ const UserRequest = {};
 const url = "/user";
 
 UserRequest.getUser = () => {
-  const token = Cookies.get("token");
-  const headers = {
-    Authorization: `Bearer ${token}`,
-  };
-  return axiosClient.get(url, { headers }).then((response) => response.data);
+  return axiosClient.get(url).then((response) => response.data);
 };
+
+UserRequest.isUserInGuild = () => {};
 
 export default UserRequest;

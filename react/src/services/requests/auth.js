@@ -10,13 +10,7 @@ AuthRequest.postAuth = (params) => {
 };
 
 AuthRequest.logout = () => {
-  const token = Cookies.get("token");
-  const headers = {
-    Authorization: `Bearer ${token}`,
-  };
-  return axiosClient
-    .post("/logout", {}, { headers })
-    .then((response) => response);
+  return axiosClient.post("/logout").then((response) => response);
 };
 
 export default AuthRequest;
