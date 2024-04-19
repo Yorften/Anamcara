@@ -19,6 +19,14 @@ class Role extends Model
         'name',
     ];
 
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    // protected $casts = [
+    //     'id' => 'string',
+    // ];
 
     /**
      * The attributes that are mass assignable.

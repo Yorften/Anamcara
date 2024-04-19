@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
 import { useDispatch } from "react-redux";
 import { clearStore } from "../../features/auth/authSlice";
+import { useHasRole } from "../../hooks/useHasRole";
 
 export default function NavProfile({ className, user }) {
   const dispatch = useDispatch();
@@ -12,7 +13,7 @@ export default function NavProfile({ className, user }) {
 
   const onLogout = () => {
     dispatch(clearStore());
-    Cookies.remove('token');
+    Cookies.remove("token");
   };
 
   return (
@@ -29,11 +30,12 @@ export default function NavProfile({ className, user }) {
             {user.email}
           </span>
         </Dropdown.Header>
-        <Dropdown.Item>
-          <Link to={"/dashboard"}>Dashboard</Link>
-        </Dropdown.Item>
-        <Dropdown.Item>Settings</Dropdown.Item>
-        <Dropdown.Item>Earnings</Dropdown.Item>
+        {useHasRole('Officer Team') && (
+          <Dropdown.Item>
+            <Link to={"/dashboard"}>Dashboard</Link>
+          </Dropdown.Item>
+        )}
+
         <Dropdown.Divider />
         <Dropdown.Item onClick={onLogout}>Sign out</Dropdown.Item>
       </Dropdown>

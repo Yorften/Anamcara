@@ -72,7 +72,7 @@ export default function JoinUs() {
               />
             </label>
           </div>
-          <div className='bg-transparent/25 py-4 px-2 min-h-80'>
+          <div className='bg-transparent/25 py-4 px-2 min-h-80 shadow-xl'>
             <div id='expectations_text' className='content flex flex-col gap-4'>
               <p>✧ A Friendly, active and organised discord.</p>
               <p>✧ 3 Alt guilds with maxed out shops and weekly GVE.</p>
@@ -111,7 +111,7 @@ export default function JoinUs() {
           </div>
         </div>
         <div className='lg:w-1/3 w-full flex flex-col gap-8 lg:gap-0'>
-          <div className='flex flex-col relative '>
+          <div className='flex flex-col relative'>
             <img
               src='assets/images/halloween_1.webp'
               alt='anamcara group picture'
@@ -122,7 +122,7 @@ export default function JoinUs() {
               alt='Anamcara logo'
               className='object-contain h-14 p-1 top-[45%] md:top-[31%] left-10 bg-[#292B2F] rounded-md absolute'
             />
-            <div className='flex flex-col justify-between h-40 p-4 pt-5 bg-[#292B2F]'>
+            <div className='flex flex-col justify-between h-40 p-4 pt-5 bg-[#292B2F] shadow-lg'>
               <div>
                 <div className='flex items-center gap-1'>
                   <img
@@ -154,7 +154,7 @@ export default function JoinUs() {
           </div>
           <Link
             to={"/apply"}
-            className=' text-center font-semibold bg-[#878dd1] hover:bg-[#787CAD] py-3 rounded-md shadow-md'
+            className=' text-center font-semibold bg-[#878dd1] hover:bg-[#787CAD] py-3 rounded-md shadow-lg'
           >
             APPLY NOW
           </Link>

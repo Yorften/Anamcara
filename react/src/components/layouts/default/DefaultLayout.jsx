@@ -35,6 +35,7 @@ const DefaultLayout = () => {
         })
         .catch((error) => {
           console.error("Error fetching user data:", error);
+          dispatch(setUser(null));
           dispatch(setToken(null));
           dispatch(setIsLoading(false));
         });

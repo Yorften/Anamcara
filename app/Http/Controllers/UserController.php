@@ -2,10 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\RoleService;
+use App\Services\UserService;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+
+    protected $userService, $roleService;
+
+    public function __construct(UserService $userService, RoleService $roleService)
+    {
+        $this->userService = $userService;
+        $this->roleService = $roleService;
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -21,6 +32,11 @@ class UserController extends Controller
     {
         $user = $request->user();
         $user_roles = $user->roles()->get();
+        // $user_roles = $this->userService->fetchUserRoles($user);
+        // $this->roleService->updateAppRoles();
+        // $this->roleService->updateUserRoles($user, $user_roles);
+        // $user_roles = $this->roleService->getUserRoles($user_roles);
+
 
         return response(compact('user', 'user_roles'));
     }

@@ -5,7 +5,7 @@ export default function AboutUs() {
         WHO WE ARE
       </h1>
       <div className='flex md:flex-row flex-col gap-8 my-10'>
-        <div className='lg:w-3/5 w-full h-fit px-2 py-8 bg-transparent/25'>
+        <div className='lg:w-3/5 w-full h-fit px-2 py-8 bg-transparent/25 shadow-xl'>
           <div className='flex items-center md:gap-4 text-xl font-medium mb-8'>
             <p>Anamcara - Meaning &#34;Soul Friends&#34;</p>
             <img
@@ -26,8 +26,9 @@ export default function AboutUs() {
           <img
             src='assets/images/halloween_1.webp'
             alt='anamcara group picture'
+            className='shadow-lg'
           />
-          <div className='flex justify-between items-center gap-4 [&>*]:object-cover [&>*]:h-28 [&>*]:w-[30%] md:[&>*]:h-16 md:[&>*]:w-[30%] lg:[&>*]:h-20 lg:[&>*]:w-[30%]'>
+          <div className='flex justify-between items-center gap-4 [&>*]:object-cover [&>*]:h-28 [&>*]:w-[30%] md:[&>*]:h-16 md:[&>*]:w-[30%] lg:[&>*]:h-20 lg:[&>*]:w-[30%] [&>*]:shadow-lg'>
             <img
               src='assets/images/Selfie_20220529_Misoria_010.webp'
               alt='anamcara group picture'

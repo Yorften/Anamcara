@@ -28,8 +28,9 @@ class UserService
         try {
             $response = Http::asForm()->post('https://discord.com/api/oauth2/token', $payload);
             $result = $response->throw()->json();
-            $access_token = $result['refresh_token'];
-            $this->updateUser($user, ['refresh_token' => $access_token]);
+            $access_token = $result['access_token'];
+            $refresh_token = $result['refresh_token'];
+            $this->updateUser($user, ['refresh_token' => $refresh_token]);
             return $access_token;
         } catch (HttpClientException $e) {
             Log::error('HTTP Client Exception: ' . $e->getMessage());
@@ -105,7 +106,6 @@ class UserService
                     'Authorization' => 'Bearer ' . $access_token,
                     'Content-Type' => 'application/x-www-form-urlencoded',
                 ])->get('https://discord.com/api/users/@me/guilds/' . env('DISCORD_GUILD_ID') . '/member');
-
                 $result = $response->throw()->json();
                 $user_roles = $result['roles'];
                 $joined_at = date('Y-m-d H:i:s', strtotime($result['joined_at']));
@@ -122,6 +122,9 @@ class UserService
                 Log::error('Exception: ' . $e->getMessage());
                 return response()->json(['error' => $e->getMessage()], 500);
             }
+        } else {
+            return response()->json('Error: User is not in anamcara guild', 500);
+            // Maybe invite him to the server ? // To do
         }
     }
 
@@ -138,5 +141,6 @@ class UserService
                 return true;
             }
         }
+        return false;
     }
 }
