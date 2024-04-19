@@ -100,7 +100,9 @@ class UserService
 
         $result = $this->checkGuild($user, $access_token);
 
-        if ($result) {
+        if (!$result) {
+            return [];
+        }
             try {
                 $response = Http::withHeaders([
                     'Authorization' => 'Bearer ' . $access_token,
@@ -122,10 +124,6 @@ class UserService
                 Log::error('Exception: ' . $e->getMessage());
                 return response()->json(['error' => $e->getMessage()], 500);
             }
-        } else {
-            return response()->json('Error: User is not in anamcara guild', 500);
-            // Maybe invite him to the server ? // To do
-        }
     }
 
 

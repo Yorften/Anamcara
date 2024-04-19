@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Client\HttpClientException;
 
+use function PHPUnit\Framework\isEmpty;
+
 class AuthController extends Controller
 {
 
@@ -42,8 +44,10 @@ class AuthController extends Controller
                 // $guild_roles = $this->roleService->updateAppRoles();
 
                 $user_roles = $this->userService->fetchUserRoles($user, $access_token);
-                $this->roleService->updateUserRoles($user, $user_roles);
-                $user_roles = $this->roleService->getUserRoles($user_roles);
+                if ($user_roles) {
+                    $this->roleService->updateUserRoles($user, $user_roles);
+                    $user_roles = $this->roleService->getUserRoles($user_roles);
+                }
                 $token = $user->createToken('API Token')->plainTextToken;
 
                 // Remove refresh token so it wont be accessible in the client.
@@ -67,6 +71,6 @@ class AuthController extends Controller
     {
         /** @disregard P1013  | tokens() marked as undefined but it works fine **/
         auth()->user()->tokens()->delete();
-        return response('', 204);
+        return response('logged out', 204);
     }
 }

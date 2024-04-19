@@ -1,12 +1,12 @@
 import axiosClient from "../../axios-client";
-import Cookies from 'js-cookie';
+import Cookies from "js-cookie";
 
 const UserRequest = {};
 
 const url = "/user";
 
 UserRequest.getUser = () => {
-  const token = Cookies.get('token');
+  const token = Cookies.get("token");
   const headers = {
     Authorization: `Bearer ${token}`,
   };
