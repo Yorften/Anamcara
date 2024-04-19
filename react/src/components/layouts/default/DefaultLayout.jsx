@@ -28,16 +28,16 @@ const DefaultLayout = () => {
       const response = UserRequest.getUser();
       response
         .then((data) => {
-          console.log(data);
           dispatch(setUser(data.user));
           dispatch(setUserRoles(data.user_roles));
-          dispatch(setIsLoading(false));
         })
         .catch((error) => {
           console.error("Error fetching user data:", error);
           dispatch(setUser(null));
           dispatch(setToken(null));
-          dispatch(setIsLoading(false));
+        })
+        .finally(() => {
+            dispatch(setIsLoading(false));
         });
     };
 
@@ -54,15 +54,7 @@ const DefaultLayout = () => {
 
   return (
     <div className='default-layout bg-[#224191] text-white'>
-      {
-        <>
-          {location.pathname === "/" ? (
-            <HomeNavigation />
-          ) : (
-            <Navigation />
-          )}
-        </>
-      }
+      {<>{location.pathname === "/" ? <HomeNavigation /> : <Navigation />}</>}
       <div className='min-h-screen h-full'>
         {location.pathname === "/" && <Welcome />}
         <Outlet />

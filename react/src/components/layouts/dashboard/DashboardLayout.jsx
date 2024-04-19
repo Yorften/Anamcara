@@ -57,10 +57,8 @@ const DashboardLayout = () => {
 
     const storedToken = Cookies.get("token");
     if (!user) {
-      console.log("test");
       fetchUserData();
     } else if (!storedToken) {
-      console.log("test2");
       dispatch(setUser(null));
       dispatch(setToken(null));
       dispatch(setUserRoles([]));

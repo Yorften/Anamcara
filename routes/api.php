@@ -23,6 +23,7 @@ use App\Http\Controllers\UserController;
 Route::post('/auth/discord/callback', [AuthController::class, 'callback']);
 
 Route::middleware(['auth:sanctum'])->group(function () {
-    Route::get('/user', [UserController::class, 'show']);
+    Route::get('/users/@me', [UserController::class, 'show']);
+    Route::get('/users/@me/guild', [UserController::class, 'guild']);
     Route::post('/logout', [AuthController::class, 'logout']);
 });

@@ -19,7 +19,7 @@ function Welcome() {
       <Gvg />
       <Events />
       <AboutUs />
-      <JoinUs />
+      <JoinUs userInGuild={true}/>
       <Emotes />
     </div>
   );

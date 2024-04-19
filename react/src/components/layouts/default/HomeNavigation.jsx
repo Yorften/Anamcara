@@ -15,9 +15,9 @@ import Recruiting from "./Recruiting";
 import { useSelector } from "react-redux";
 
 export default function Navigation() {
-  const user = useSelector((state) => state.auth.user);
   const token = useSelector((state) => state.auth.token);
   const isLoading = useSelector((state) => state.auth.isLoading);
+  const user = useSelector((state) => state.auth.user);
   const [openNav, setOpenNav] = React.useState(false);
 
   React.useEffect(() => {
@@ -27,14 +27,14 @@ export default function Navigation() {
     );
   }, []);
 
-   const scrollToJoinUs = () => {
+  const scrollToJoinUs = () => {
     const joinUsElement = document.getElementById("join_us");
     if (joinUsElement) {
       joinUsElement.scrollIntoView({ behavior: "smooth" });
     }
   };
 
-   const scrollToAboutUs = () => {
+  const scrollToAboutUs = () => {
     const joinUsElement = document.getElementById("about_us");
     if (joinUsElement) {
       joinUsElement.scrollIntoView({ behavior: "smooth" });
@@ -162,13 +162,13 @@ export default function Navigation() {
               )}
             </IconButton>
           </div>
-          {isLoading && <div></div>}
-          {!isLoading &&
-            (token ? (
-              <NavProfile className='lg:flex hidden' user={user} />
-            ) : (
-              <DiscordButton className='lg:flex hidden' />
-            ))}
+          {isLoading ? (
+            <div className='w-[189.33px]'></div>
+          ) : token && user ? (
+            <NavProfile className='lg:flex hidden' user={user} />
+          ) : (
+            <DiscordButton className='lg:flex hidden' />
+          )}
         </div>
         <Collapse open={openNav}>
           {/* Mobile Nav */}

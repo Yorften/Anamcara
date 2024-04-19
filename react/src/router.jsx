@@ -18,6 +18,7 @@ import NotFound from "./views/NotFound";
 import DefaultLayout from "./components/layouts/default/DefaultLayout";
 import DashboardLayout from "./components/layouts/dashboard/DashboardLayout";
 import DiscordAuthCallback from "./services/requests/DiscordAuthCallback";
+import Application from './views/dashboard/Application';
 
 const router = createBrowserRouter([
   {
@@ -76,8 +77,13 @@ const router = createBrowserRouter([
     element: <DashboardLayout />,
     children: [
       {
-        path: "/dashboard/applicants",
+        path: "/dashboard/applications",
         element: <Applicants />,
+      },
+
+      {
+        path: "/dashboard/applications/:id",
+        element: <Application />,
       },
 
       {

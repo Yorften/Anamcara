@@ -1,14 +1,13 @@
 import axiosClient from "../../axios-client";
-import Cookies from "js-cookie";
 
 const UserRequest = {};
 
-const url = "/user";
-
 UserRequest.getUser = () => {
-  return axiosClient.get(url).then((response) => response.data);
+  return axiosClient.get("/users/@me").then((response) => response.data);
 };
 
-UserRequest.isUserInGuild = () => {};
+UserRequest.isUserInGuild = () => {
+  return axiosClient.get("/users/@me/guild").then((response) => response.data);
+};
 
 export default UserRequest;

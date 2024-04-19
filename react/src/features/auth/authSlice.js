@@ -6,6 +6,7 @@ const initialState = {
   token: Cookies.get("token"),
   isLoading: true,
   userRoles: [],
+  userInGuild: false,
 };
 
 const authSlice = createSlice({
@@ -30,9 +31,18 @@ const authSlice = createSlice({
       state.token = null;
       state.userRoles = [];
     },
+    setUserInGuild: (state, action) => {
+      state.userInGuild = action.payload;
+    },
   },
 });
 
-export const { setUser, setToken, setUserRoles, setIsLoading, clearStore } =
-  authSlice.actions;
+export const {
+  setUser,
+  setToken,
+  setUserRoles,
+  setIsLoading,
+  clearStore,
+  setUserInGuild,
+} = authSlice.actions;
 export default authSlice.reducer;

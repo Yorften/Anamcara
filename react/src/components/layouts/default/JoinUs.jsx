@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 
-export default function JoinUs() {
+// eslint-disable-next-line react/prop-types
+export default function JoinUs({ userInGuild }) {
   const handleTabChange = (event) => {
     const radioButtons = document.querySelectorAll('input[type="radio"]');
     const contentAreas = document.querySelectorAll(".content");
@@ -24,16 +25,27 @@ export default function JoinUs() {
     }
   };
   return (
-    <section id='join_us' className='lg:mt-40 mt-20 mx-4 lg:mx-10 pb-20'>
+    <section
+      id='join_us'
+      className={`${
+        userInGuild
+          ? "lg:mt-40 mt-20 mx-4 lg:mx-10 pb-20"
+          : "mt-20 mx-4 lg:mx-10 pb-20"
+      }`}
+    >
       <div className='flex items-end gap-4 mb-8'>
         <h1 className='xl:text-6xl lg:text-5xl md:text-4xl sm:text-3xl text-3xl font-semibold'>
-          JOIN US
+          {!userInGuild
+            ? "You must be in the Anamcara discord server to apply!"
+            : "JOIN US"}
         </h1>
-        <img
-          src='assets/images/emotes/emoji_a_1_53.png'
-          className='object-contain h-20 inline-block'
-          alt=''
-        />
+        {userInGuild && (
+          <img
+            src='assets/images/emotes/emoji_a_1_53.png'
+            className='object-contain h-20 inline-block'
+            alt=''
+          />
+        )}
       </div>
       <div className='flex md:flex-row flex-col gap-8 lg:gap-0 justify-between mt-10'>
         <div className='lg:w-3/5 w-full h-full'>
@@ -152,12 +164,14 @@ export default function JoinUs() {
               </div>
             </div>
           </div>
-          <Link
-            to={"/apply"}
-            className=' text-center font-semibold bg-[#878dd1] hover:bg-[#787CAD] py-3 rounded-md shadow-lg'
-          >
-            APPLY NOW
-          </Link>
+          {userInGuild && (
+            <Link
+              to={"/apply"}
+              className=' text-center font-semibold bg-[#878dd1] hover:bg-[#787CAD] py-3 rounded-md shadow-lg'
+            >
+              APPLY NOW
+            </Link>
+          )}
         </div>
       </div>
     </section>

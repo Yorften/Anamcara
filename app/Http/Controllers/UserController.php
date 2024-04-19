@@ -41,6 +41,12 @@ class UserController extends Controller
         return response(compact('user', 'user_roles'));
     }
 
+    public function guild(Request $request){
+        $user = $request->user();
+        $userInGuild = $this->userService->checkGuild($user);
+        return response(compact('userInGuild'));
+    }
+
     /**
      * Remove the specified resource from storage.
      */

@@ -16,7 +16,6 @@ export default function DiscordAuthCallback() {
   useEffect(() => {
     const response = AuthRequest.postAuth(formData);
     response.then((data) => {
-      console.log(data);
       dispatch(setUser(data.user));
       dispatch(setToken(data.token));
       dispatch(setUserRoles(data.user_roles));

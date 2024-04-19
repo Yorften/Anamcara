@@ -1,5 +1,4 @@
 import axiosClient from "../../axios-client";
-import Cookies from "js-cookie";
 
 const AuthRequest = {};
 

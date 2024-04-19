@@ -8,15 +8,17 @@ import { clearStore } from "../../features/auth/authSlice";
 import { useHasRole } from "../../hooks/useHasRole";
 import AuthRequest from "../../services/requests/auth";
 
+
+
 export default function NavProfile({ className, user }) {
   const dispatch = useDispatch();
+
   let imageUrl = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
 
   const onLogout = () => {
     const response = AuthRequest.logout();
     response
-      .then((response) => {
-        console.log(response);
+      .then(() => {
         dispatch(clearStore());
         Cookies.remove("token");
       })
