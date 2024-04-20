@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { Avatar, Dropdown } from "flowbite-react";
 import { PropTypes } from "prop-types";
 import { Link } from "react-router-dom";
@@ -10,6 +9,7 @@ import AuthRequest from "../../services/requests/auth";
 
 
 
+// eslint-disable-next-line react/prop-types
 export default function NavProfile({ className, user }) {
   const dispatch = useDispatch();
 
