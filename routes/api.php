@@ -27,5 +27,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/users/@me', [UserController::class, 'show']);
     Route::get('/users/@me/guild', [UserController::class, 'guild']);
     Route::post('/logout', [AuthController::class, 'logout']);
-    Route::apiResource('/applications', GuildApplicationController::class);
+
+    Route::middleware(['role:Officer Team'])->group(function () {
+        Route::apiResource('/applications', GuildApplicationController::class);
+    });
 });

@@ -1,19 +1,26 @@
 import { MdSpaceDashboard } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { setApplicant } from "../../features/applications/applicantSlice";
 import { useEffect } from "react";
 import ApplicationRequest from "../../services/requests/application";
 
 export default function Application() {
+  const { id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const application = useSelector((state) => state.applicant.applicant);
 
   useEffect(() => {
-    const response = ApplicationRequest.show(id)
-  }, [])
-
+    const response = ApplicationRequest.show(id);
+    response
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
 
   return (
     <div id='content' className='flex flex-col gap-8 h-full'>

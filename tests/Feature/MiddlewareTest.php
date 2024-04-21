@@ -22,7 +22,7 @@ class MiddlewareTest extends TestCase
     public function testUserWithRoleCanAccess()
     {
         $user = User::where('username', 'yoften')->first();
-        $user->assignRole('officer');
+        $result = $user->assignRole('Officer Team');
 
         $this->actingAs($user);
 

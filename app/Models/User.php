@@ -50,9 +50,15 @@ class User extends Authenticatable
     {
         try {
             $role = Role::where('name', $name)->firstOrFail();
+
+            if ($this->roles()->where('roles.id', $role->id)->exists()) {
+                return 'User already has this role.';
+            }
+
             $this->roles()->attach($role->id);
+            return 'Role assigned successfully.';
         } catch (\Exception $e) {
-            return 'error: ' . $e->getMessage();
+            return 'Error: ' . $e->getMessage();
         }
     }
 
@@ -61,7 +67,8 @@ class User extends Authenticatable
         return $this->belongsToMany(Role::class);
     }
 
-    public function guildApplications(){
+    public function guildApplications()
+    {
         return $this->hasMany(GuildApplication::class);
     }
 }
