@@ -76,6 +76,7 @@ export default function Images() {
         const response = ImageRequest.store(formData);
         response
           .then((data) => {
+            setLoading(true);
             Swal.fire({
               title: "Success!",
               html: data.message,
