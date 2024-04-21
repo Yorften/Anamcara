@@ -15,9 +15,9 @@ class GuildApplicationController extends Controller
      */
     public function index()
     {
-        $guild_applications = GuildApplication::where('accepted', null)->get();
-        $guild_applications->load('user');
-        return response(new GuildApplicationResource($guild_applications));
+        $guildApplications = GuildApplication::where('accepted', null)->get();
+        $guildApplications->load('user');
+        return response(new GuildApplicationResource($guildApplications));
     }
 
 
@@ -27,8 +27,8 @@ class GuildApplicationController extends Controller
      */
     public function store(StoreGuildApplicationRequest $request)
     {
-        $guild_applications = GuildApplication::where('user_id', auth()->id())->get();
-        foreach ($guild_applications as $application) {
+        $guildApplications = GuildApplication::where('user_id', auth()->id())->get();
+        foreach ($guildApplications as $application) {
             if ($application->accepted === null) {
                 return response(['message' => 'You already have a pending application.'], 200);
             }
@@ -50,16 +50,41 @@ class GuildApplicationController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show()
+    public function show($id)
     {
-        //
+        try {
+            $guildApplication = GuildApplication::findOrFail($id);
+            $guildApplication->load('user');
+            return response(new GuildApplicationResource($guildApplication));
+        } catch (\Exception $e) {
+            return response(['error' => 'Application not found.'], 404);
+        }
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request,)
+    public function update(Request $request, $id)
     {
-        //
+        $validated = $request->validate([
+            'accepted' => 'required|boolean',
+        ]);
+        try {
+            $guildApplication = GuildApplication::where('id', $id)->where('accepted', null)->firstOrFail();
+
+            $guildApplication->update([
+                'accepted' => $validated['accepted'],
+            ]);
+
+            if ($validated['accepted']) {
+                $message = 'Application accespted successfully';
+            } else {
+                $message = 'Application rejected successfully';
+            }
+
+            return response(['message' => $message], 200);
+        } catch (\Exception $e) {
+            return response(['error' => 'Application already processed.'], 409);
+        }
     }
 }

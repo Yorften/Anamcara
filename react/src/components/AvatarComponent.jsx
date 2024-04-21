@@ -1,18 +1,22 @@
 import { Avatar } from "flowbite-react";
 import { IoIosArrowDown } from "react-icons/io";
 
-// eslint-disable-next-line react/prop-types
-export default function AvatarComponent({ imageUrl, nick }) {
+export default function AvatarComponent({
+  imageUrl,
+  nick,
+  username,
+  application,
+}) {
   return (
-    <div className='flex items-center gap-1'>
+    <div className='flex items-center gap-2'>
       <Avatar
         alt='User settings'
         img={imageUrl}
         rounded
         className='flex items-center'
       />
-      <p>{nick}</p>
-      <IoIosArrowDown />
+      {nick ? <p>{nick}</p> : <p>{username}</p>}
+      {!application && <IoIosArrowDown />}
     </div>
   );
 }

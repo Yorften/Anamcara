@@ -53,9 +53,6 @@ export default function Applicants() {
         console.log(data);
         dispatch(setApplication(data));
         setLoading(false);
-        document
-          .getElementById("content")
-          .children[1].classList.add("opacity-100");
       })
       .catch((error) => {
         console.error(error);
@@ -97,8 +94,7 @@ export default function Applicants() {
           pointerOnHover={true}
           highlightOnHover={true}
           onRowClicked={onRowClicked}
-          className='shadow-xl opacity-0 transition-all duration-500'
-          id='table'
+          className='shadow-xl'
         />
       )}
     </div>

@@ -14,9 +14,15 @@ ApplicationRequest.index = (params) => {
     .then((response) => response.data);
 };
 
-ApplicationRequest.show = (id,params) => {
+ApplicationRequest.show = (id, params) => {
   return axiosClient
     .get(`/applications/${id}`, params)
+    .then((response) => response.data);
+};
+
+ApplicationRequest.update = (id, params) => {
+  return axiosClient
+    .patch(`/applications/${id}`, { accepted: params})
     .then((response) => response.data);
 };
 
