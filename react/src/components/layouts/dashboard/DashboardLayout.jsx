@@ -15,6 +15,7 @@ import UserRequest from "../../../services/requests/user";
 import Cookies from "js-cookie";
 import { useHasRole } from "./../../../hooks/useHasRole";
 
+
 const DashboardLayout = () => {
   const location = useLocation();
   const dispatch = useDispatch();
@@ -37,7 +38,10 @@ const DashboardLayout = () => {
 
   useCookieMonitor();
 
-  // getUser with new roles.
+  // To-do get user with updated roles.
+
+
+  // This only gets user info from database, not from discord's api
   useEffect(() => {
     const fetchUserData = async () => {
       const response = UserRequest.getUser();
@@ -69,7 +73,7 @@ const DashboardLayout = () => {
   return (
     <div className='dashboard-layout'>
       {isLoading && (
-        <div className='h-screen bg-[#313338] flex items-center justify-center text-white'>
+        <div className='h-screen bg-blue-800 flex items-center justify-center text-white'>
           <img
             src='/assets/images/Anamlogo_large_transparent.gif'
             className='h-60 w-60'
@@ -87,14 +91,14 @@ const DashboardLayout = () => {
                 alt='Flowbite React Logo'
               />
               <span className='self-center whitespace-nowrap text-xl font-semibold'>
-                FitNow
+                Anamcara
               </span>
             </Link>
             <NavProfile user={user} />
           </div>
           <AdminSideBar />
-          <main className='h-full ml-14 mt-14 mb-10 md:ml-64'>
-            <div className='w-11/12 mx-auto py-8'>
+          <main className='ml-14 mt-14 md:ml-64'>
+            <div className='w-11/12 mx-auto pt-8'>
               {location.pathname === "/dashboard" && <DashboardIndex />}
               <Outlet />
             </div>

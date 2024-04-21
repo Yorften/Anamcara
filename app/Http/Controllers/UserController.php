@@ -32,11 +32,11 @@ class UserController extends Controller
     {
         $user = $request->user();
         $user_roles = $user->roles()->get();
+
         // $user_roles = $this->userService->fetchUserRoles($user);
         // $this->roleService->updateAppRoles();
         // $this->roleService->updateUserRoles($user, $user_roles);
         // $user_roles = $this->roleService->getUserRoles($user_roles);
-
 
         return response(compact('user', 'user_roles'));
     }

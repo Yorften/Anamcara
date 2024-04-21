@@ -77,12 +77,12 @@ const router = createBrowserRouter([
     element: <DashboardLayout />,
     children: [
       {
-        path: "/dashboard/applications",
+        path: "/dashboard/applicants",
         element: <Applicants />,
       },
 
       {
-        path: "/dashboard/applications/:id",
+        path: "/dashboard/applicants/:id",
         element: <Application />,
       },
 

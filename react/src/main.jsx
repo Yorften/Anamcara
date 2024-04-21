@@ -5,6 +5,7 @@ import { RouterProvider } from "react-router-dom";
 import router from "./router";
 import store from "./app/store";
 import { Provider } from "react-redux";
+import "@sweetalert2/theme-dark";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   

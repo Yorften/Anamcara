@@ -7,6 +7,7 @@ import { setUserInGuild } from "../features/auth/authSlice";
 import JoinUs from "../components/layouts/default/JoinUs";
 import InputLayout from "../components/apply/InputLayout";
 import ApplicationRequest from "../services/requests/application";
+import Swal from "sweetalert2/src/sweetalert2.js";
 
 function ScrollToTop() {
   useEffect(() => {
@@ -94,6 +95,7 @@ export default function Apply() {
       guild_cooldown: guildCooldownRef.current.value,
       acquaintances: acquaintancesRef.current.value,
     };
+    console.log(payload);
     if (
       required(payload, "in_server") &&
       required(payload, "description") &&
@@ -114,29 +116,18 @@ export default function Apply() {
             formData.append(key, payload[key]);
           }
 
-          const response = ApplicationRequest.post(formData);
+          const response = ApplicationRequest.store(formData);
           response
             .then((data) => {
-              console.log(data);
+              Swal.fire({
+                title: "Success!",
+                html: data.message,
+                icon: "success",
+                confirmButtonText: "Ok",
+              });
             })
             .catch((error) => {
-              if (error.response) {
-                // The request was made and the server responded with a status code
-                // that falls out of the range of 2xx
-                console.error(
-                  "Server responded with error:",
-                  error.response.data
-                );
-              } else if (error.request) {
-                // The request was made but no response was received
-                console.error(
-                  "No response received from the server:",
-                  error.request
-                );
-              } else {
-                // Something happened in setting up the request that triggered an Error
-                console.error("Error setting up the request:", error.message);
-              }
+              console.error(error);
             });
         }
       } else {
@@ -144,7 +135,10 @@ export default function Apply() {
           behavior: "smooth",
           block: "center",
         });
-        image.parentElement.parentElement.classList.add("border-2", "border-red-600");
+        image.parentElement.parentElement.classList.add(
+          "border-2",
+          "border-red-600"
+        );
         setTimeout(() => {
           image.classList.remove("border-2", "border-red-600");
         }, 3000);
@@ -215,7 +209,7 @@ export default function Apply() {
                       ref={serverRef}
                       type='radio'
                       name='server'
-                      value={true}
+                      value={1}
                       id='elpon'
                     />
                     <label htmlFor='elpon'>{`Yes - I'm from Elpon`}</label>
@@ -231,7 +225,7 @@ export default function Apply() {
                       ref={serverRef}
                       type='radio'
                       name='server'
-                      value={false}
+                      value={0}
                       id='other'
                     />
                     <label htmlFor='other'>
@@ -328,7 +322,7 @@ export default function Apply() {
                       ref={gvgRef}
                       type='radio'
                       name='gvg'
-                      value={true}
+                      value={1}
                       id='yes_gvg'
                     />
                     <label htmlFor='yes_gvg'>{`Yes`}</label>
@@ -341,7 +335,7 @@ export default function Apply() {
                       ref={gvgRef}
                       type='radio'
                       name='gvg'
-                      value={false}
+                      value={0}
                       id='no_gvg'
                     />
                     <label htmlFor='no_gvg'>{`No`}</label>

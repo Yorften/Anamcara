@@ -122,7 +122,7 @@ export default function Navigation() {
       <Navbar className='sticky top-0 z-10 h-max max-w-full rounded-none px-4 py-2 bg-transparent/15 border-0 shadow-none'>
         <div className='flex items-center justify-between text-blue-gray-900'>
           <Logo />
-          <div className='flex items-center gap-4'>
+          <div className='flex items-center order-3 gap-4'>
             <div className='mr-4 hidden lg:block'>{navList}</div>
             <IconButton
               variant='text'

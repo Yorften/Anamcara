@@ -1,4 +1,4 @@
-import { Avatar, Dropdown } from "flowbite-react";
+import { Dropdown } from "flowbite-react";
 import { PropTypes } from "prop-types";
 import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { clearStore } from "../../features/auth/authSlice";
 import { useHasRole } from "../../hooks/useHasRole";
 import AuthRequest from "../../services/requests/auth";
+import AvatarComponent from "../AvatarComponent";
 
 
 
@@ -28,17 +29,12 @@ export default function NavProfile({ className, user }) {
   };
 
   return (
-    <div className={`flex md:order-2 px-6 w-[189.33px] ${className}`}>
+    <div className={`flex items-center gap-4 md:order-last px-6 ${className}`}>
       <Dropdown
         arrowIcon={false}
         inline
         label={
-          <Avatar
-            alt='User settings'
-            img={imageUrl}
-            rounded
-            className='pl-14'
-          />
+          <AvatarComponent imageUrl={imageUrl} nick={user.nick} />
         }
       >
         <Dropdown.Header>

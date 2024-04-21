@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('guild_applications', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->boolean('in_server');
             $table->string('server')->nullable();
-            $table->string('description');
+            $table->text('description');
             $table->string('roster_image');
-            $table->string('experience');
+            $table->text('experience');
             $table->string('play_time');
             $table->boolean('gvg');
             $table->string('gve');
@@ -27,7 +27,7 @@ return new class extends Migration
             $table->string('additional_info')->nullable();
             $table->string('guild_cooldown')->nullable();
             $table->string('acquaintances')->nullable();
-            $table->boolean('accepted');
+            $table->boolean('accepted')->nullable();
             $table->timestamps();
         });
     }
