@@ -5,11 +5,10 @@ import ApplicationRequest from "../../services/requests/application";
 import DataTable from "react-data-table-component";
 import { useDispatch, useSelector } from "react-redux";
 import { setApplication } from "../../features/applications/applicationSlice";
-import { FaArrowCircleRight } from "react-icons/fa";
 import "ldrs/grid";
 import moment from "moment";
 
-export default function Applicants() {
+export default function History() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const applications = useSelector((state) => state.application.applications);
@@ -48,7 +47,7 @@ export default function Applicants() {
   };
 
   useEffect(() => {
-    const response = ApplicationRequest.index();
+    const response = ApplicationRequest.history();
     response
       .then((data) => {
         dispatch(setApplication(data));
@@ -78,18 +77,20 @@ export default function Applicants() {
             >
               Applicants
             </Link>
+            <span className='mx-4 h-auto text-gray-400 font-medium'>/</span>
+          </li>
+          <li className='inline-flex items-center'>
+            <Link
+              to={"/dashboard/applicants/history"}
+              className="className='hover:text-blue-500'"
+            >
+              History
+            </Link>
           </li>
         </ul>
-        <Link
-          to={"/dashboard/applicants/history"}
-          className='flex text-lg items-end hover:underline gap-1'
-        >
-          <p>History</p>
-          <FaArrowCircleRight className='h-6 w-6' />
-        </Link>
       </div>
       {loading ? (
-        <div className='flex items-center justify-center w-full h-[70vh]'>
+        <div className='flex items-center justify-center w-full h-full'>
           <l-grid size='100' speed='1.5' color='black'></l-grid>
         </div>
       ) : (

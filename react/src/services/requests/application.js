@@ -26,4 +26,10 @@ ApplicationRequest.update = (id, params) => {
     .then((response) => response.data);
 };
 
+ApplicationRequest.history = (params) => {
+  return axiosClient
+    .get("/applications/history", params)
+    .then((response) => response.data);
+};
+
 export default ApplicationRequest;

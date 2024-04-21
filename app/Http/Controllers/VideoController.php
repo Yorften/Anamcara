@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreVideoRequest;
+use App\Http\Resources\VideoResource;
+use App\Models\Video;
 use Illuminate\Http\Request;
 
 class VideoController extends Controller
@@ -11,37 +14,32 @@ class VideoController extends Controller
      */
     public function index()
     {
-        //
+        $videos = Video::all();
+        return response(new VideoResource($videos));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreVideoRequest $request)
     {
+        $validated = $request->validated();
+        Video::create($validated);
+        return response(['message' => 'Video added successfully!'], 200);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show()
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, )
-    {
-        //
-    }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy()
+    public function destroy($id)
     {
-        //
+        try {
+            $video = Video::findOrFail($id);
+            $video->delete();
+            return response(['message' => 'Video deleted successfully!'], 200);
+        } catch (\Exception $e) {
+            return response(['error' => 'Video not found.'], 404);
+        }
     }
 }

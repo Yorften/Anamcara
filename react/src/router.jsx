@@ -19,6 +19,7 @@ import DefaultLayout from "./components/layouts/default/DefaultLayout";
 import DashboardLayout from "./components/layouts/dashboard/DashboardLayout";
 import DiscordAuthCallback from "./services/requests/DiscordAuthCallback";
 import Application from './views/dashboard/Application';
+import History from './views/dashboard/History';
 
 const router = createBrowserRouter([
   {
@@ -79,6 +80,11 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/applicants",
         element: <Applicants />,
+      },
+
+      {
+        path: "/dashboard/applicants/history",
+        element: <History />,
       },
 
       {

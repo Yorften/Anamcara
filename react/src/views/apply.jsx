@@ -95,7 +95,6 @@ export default function Apply() {
       guild_cooldown: guildCooldownRef.current.value,
       acquaintances: acquaintancesRef.current.value,
     };
-    console.log(payload);
     if (
       required(payload, "in_server") &&
       required(payload, "description") &&

@@ -12,4 +12,6 @@ class Gallery extends Model
     protected $fillable = [
         'path',
     ];
+
+    protected $table = 'gallery';
 }

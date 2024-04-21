@@ -1,11 +1,13 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\GuildApplicationController;
 use App\Http\Controllers\RoleController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VideoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +31,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
 
     Route::middleware(['role:Officer Team'])->group(function () {
+        Route::get('/applications/history', [GuildApplicationController::class, 'history']);
         Route::apiResource('/applications', GuildApplicationController::class);
+        Route::apiResource('/images', GalleryController::class);
+        Route::apiResource('/videos', VideoController::class);
     });
 });

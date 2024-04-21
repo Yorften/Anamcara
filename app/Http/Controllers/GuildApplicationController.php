@@ -87,4 +87,11 @@ class GuildApplicationController extends Controller
             return response(['error' => 'Application already processed.'], 409);
         }
     }
+
+    public function history()
+    {
+        $guildApplications = GuildApplication::whereNotNull('accepted')->get();
+        $guildApplications->load('user');
+        return response(new GuildApplicationResource($guildApplications));
+    }
 }

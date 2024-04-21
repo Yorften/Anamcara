@@ -69,6 +69,8 @@ export default function Application() {
         setLoading(false);
       })
       .catch((error) => {
+        dispatch(setApplicant(null));
+        setLoading(false);
         console.error(error);
       });
   }, []);
@@ -92,7 +94,7 @@ export default function Application() {
         <div className='flex items-center justify-center w-full h-[70vh]'>
           <l-grid size='100' speed='1.5' color='black'></l-grid>
         </div>
-      ) : (
+      ) : application ? (
         <div className='h-full p-4 lg:p-8 rounded-lg bg-gray-100'>
           <div className='flex flex-col gap-8'>
             <AvatarComponent
@@ -268,21 +270,29 @@ export default function Application() {
                 ></textarea>
               </InputLayout>
             </div>
-            <div className='w-full flex items-center gap-2 text-white font-medium'>
-              <button
-                onClick={handleAccept}
-                className='w-1/2 text-center bg-green-600 hover:bg-green-700 py-3 rounded-md shadow-lg'
-              >
-                ACCEPT
-              </button>
-              <button
-                onClick={handleReject}
-                className='w-1/2 text-center bg-red-600 hover:bg-red-700 py-3 rounded-md shadow-lg'
-              >
-                REJECT
-              </button>
-            </div>
+            {application.accepted == null ? (
+              <div className='w-full flex items-center gap-2 text-white font-medium'>
+                <button
+                  onClick={handleAccept}
+                  className='w-1/2 text-center bg-green-600 hover:bg-green-700 py-3 rounded-md shadow-lg'
+                >
+                  ACCEPT
+                </button>
+                <button
+                  onClick={handleReject}
+                  className='w-1/2 text-center bg-red-600 hover:bg-red-700 py-3 rounded-md shadow-lg'
+                >
+                  REJECT
+                </button>
+              </div>
+            ) : (
+              <div></div>
+            )}
           </div>
+        </div>
+      ) : (
+        <div className="h-[70vh] w-full flex items-center justify-center">
+          <p className="text-xl font-medium">Application not found</p>
         </div>
       )}
     </div>
