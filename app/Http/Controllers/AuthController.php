@@ -41,7 +41,7 @@ class AuthController extends Controller
                 $user = $this->userService->getUserData($access_token, $refresh_token);
 
                 // To do - Emplement Sync app roles.
-                // $guild_roles = $this->roleService->updateAppRoles();
+                $guild_roles = $this->roleService->updateAppRoles();
 
                 $user_roles = $this->userService->fetchUserRoles($user, $access_token);
                 if ($user_roles) {

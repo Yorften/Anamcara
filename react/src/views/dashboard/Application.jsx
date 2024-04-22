@@ -24,7 +24,7 @@ export default function Application() {
     const response = ApplicationRequest.update(id, payload);
     response
       .then((data) => {
-        console.log(data);
+        setLoading(true);
         Swal.fire({
           title: "Success!",
           html: data.message,
@@ -50,13 +50,11 @@ export default function Application() {
       reason: reasonRef.current.value,
     };
 
-    console.log(payload);
-
     const response = ApplicationRequest.update(id, payload);
 
     response
       .then((data) => {
-        console.log(data);
+        setLoading(true);
         Swal.fire({
           title: "Success!",
           html: data.message,
@@ -87,7 +85,7 @@ export default function Application() {
         setLoading(false);
         console.error(error);
       });
-  }, []);
+  }, [loading]);
 
   return (
     <div id='content' className='flex flex-col gap-8 h-full'>

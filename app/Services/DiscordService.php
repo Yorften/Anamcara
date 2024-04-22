@@ -21,7 +21,10 @@ class DiscordService
         ];
 
         try {
-            $response = Http::asForm()->post('https://discord.com/api/oauth2/token', $payload);
+            $response = Http::asForm()->withHeaders([
+                'Content-Type' => 'application/json',
+            ])->post('https://discord.com/api/oauth2/token', $payload);
+            
             return $response->throw()->json();
         } catch (HttpClientException $e) {
             Log::error('HTTP Client Exception: ' . $e->getMessage());

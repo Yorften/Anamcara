@@ -88,16 +88,18 @@ class GuildApplicationController extends Controller
 
             // Create or get the channel with the applicant
             $channel = $this->applicationService->createChannel($user);
+            $msg = $this->applicationService->generateWelcomeMessage();
 
             if ($validated['accepted']) {
+                // Assign trail member role
                 $this->applicationService->assignRole($user);
 
+                // Remove Applicant role
+                $this->applicationService->removeRole($user);
 
 
-                $msg = $this->applicationService->generateWelcomeMessage();
-                // // // Send a DM to the applicant
+                // Send a DM to the applicant
                 $this->applicationService->sendMessage($channel, $msg);
-
 
                 $message = 'Application accepted successfully';
             } else {

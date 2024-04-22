@@ -24,6 +24,20 @@ class GuildApplicationService
         }
     }
 
+    public function removeRole($user)
+    {
+        try {
+            Http::withHeaders([
+                'Authorization' => 'Bot ' . env('DISCORD_APPLICATION_TOKEN'),
+                'Content-Type' => 'application/x-www-form-urlencoded',
+            ])->delete('https://discord.com/api/guilds/' . env('DISCORD_GUILD_ID') . '/members/' . $user->id . '/roles/1132835277543583854');
+        } catch (\Exception $e) {
+            Log::error('Error sending message: ' . $e->getMessage());
+
+            throw $e;
+        }
+    }
+
     public function createChannel($user)
     {
         try {
