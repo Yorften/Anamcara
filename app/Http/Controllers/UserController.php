@@ -19,14 +19,6 @@ class UserController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        // List of users
-    }
-
-    /**
      * Display the specified resource.
      */
     public function show(Request $request)
@@ -38,14 +30,14 @@ class UserController extends Controller
     }
 
     public function updateUserRoles(Request $request)
-    {
+    {        
         $user = $request->user();
         $user_roles = $user->roles()->get();
         try {
             $user_roles = $this->userService->fetchUserRoles($user);
 
             $this->roleService->updateUserRoles($user, $user_roles);
-
+            
             $user_roles = $this->roleService->getUserRoles($user_roles);
         } catch (\Exception $e) {
             if ($e instanceof ModelNotFoundException) {
@@ -64,11 +56,4 @@ class UserController extends Controller
         return response(compact('userInGuild'));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        // To be implemented
-    }
 }

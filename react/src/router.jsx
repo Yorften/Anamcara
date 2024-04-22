@@ -17,8 +17,9 @@ import NotFound from "./views/NotFound";
 import DefaultLayout from "./components/layouts/default/DefaultLayout";
 import DashboardLayout from "./components/layouts/dashboard/DashboardLayout";
 import DiscordAuthCallback from "./services/requests/DiscordAuthCallback";
-import Application from './views/dashboard/Application';
-import History from './views/dashboard/History';
+import Application from "./views/dashboard/Application";
+import History from "./views/dashboard/History";
+import ChecklistLayout from "./components/layouts/checklist/ChecklistLayout";
 
 const router = createBrowserRouter([
   {
@@ -42,27 +43,23 @@ const router = createBrowserRouter([
 
       {
         path: "/checklist",
-        element: <WelcomeChecklist />,
-      },
+        element: <ChecklistLayout />,
+        children: [
+          {
+            path: "/checklist/tasks",
+            element: <Tasks />,
+          },
 
-      {
-        path: "/checklist/index",
-        element: <ChecklistIndex />,
-      },
+          {
+            path: "/checklist/characters",
+            element: <Characters />,
+          },
 
-      {
-        path: "/checklist/tasks",
-        element: <Tasks />,
-      },
-
-      {
-        path: "/checklist/characters",
-        element: <Characters />,
-      },
-
-      {
-        path: "/checklist/settings",
-        element: <ChecklistSettings />,
+          {
+            path: "/checklist/settings",
+            element: <ChecklistSettings />,
+          },
+        ],
       },
     ],
   },

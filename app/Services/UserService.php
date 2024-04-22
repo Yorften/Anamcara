@@ -108,6 +108,7 @@ class UserService
             }
             $result = $response->throw()->json();
             $user_roles = $result['roles'];
+            
             $joined_at = date('Y-m-d H:i:s', strtotime($result['joined_at']));
             $user->update([
                 'nick' => $result['nick'],
