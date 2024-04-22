@@ -67,6 +67,10 @@ const DefaultLayout = () => {
           location.pathname.startsWith("/checklist/") ? null : (
             <Footer />
           )}
+          {(location.pathname.startsWith("/checklist") && user) ||
+          (location.pathname.startsWith("/checklist/") && user) ? null : (
+            <Footer />
+          )}
         </>
       }
     </div>

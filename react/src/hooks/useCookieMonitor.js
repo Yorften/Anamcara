@@ -15,10 +15,10 @@ const useCookieMonitor = () => {
       } else {
         setHasCookieChanged(false);
       }
-    }, 1000); // Check for cookie changes every second
+    }, 1000);
 
     return () => clearInterval(interval);
-  }, [dispatch]);
+  }, []);
 
   return hasCookieChanged;
 };
