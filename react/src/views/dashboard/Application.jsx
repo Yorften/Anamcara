@@ -1,22 +1,27 @@
 import { MdSpaceDashboard } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { setApplicant } from "../../features/applications/applicantSlice";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import ApplicationRequest from "../../services/requests/application";
 import AvatarComponent from "../../components/AvatarComponent";
 import InputLayout from "../../components/apply/InputLayout";
 import Swal from "sweetalert2/src/sweetalert2.js";
+import { Button, Modal } from "flowbite-react";
 
 export default function Application() {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
+  const [openModal, setOpenModal] = useState(false);
   const application = useSelector((state) => state.applicant.applicant);
+  const reasonRef = useRef();
 
   const handleAccept = () => {
-    const response = ApplicationRequest.update(id, true);
+    const payload = {
+      accepted: true,
+    };
+    const response = ApplicationRequest.update(id, payload);
     response
       .then((data) => {
         console.log(data);
@@ -38,8 +43,17 @@ export default function Application() {
       });
   };
 
-  const handleReject = () => {
-    const response = ApplicationRequest.update(id, false);
+  const handleReject = (e) => {
+    e.preventDefault();
+    const payload = {
+      accepted: false,
+      reason: reasonRef.current.value,
+    };
+
+    console.log(payload);
+
+    const response = ApplicationRequest.update(id, payload);
+
     response
       .then((data) => {
         console.log(data);
@@ -77,6 +91,33 @@ export default function Application() {
 
   return (
     <div id='content' className='flex flex-col gap-8 h-full'>
+      <Modal dismissible show={openModal} onClose={() => setOpenModal(false)}>
+        <Modal.Header>Rejection reason</Modal.Header>
+        <form className='space-y-6' onSubmit={handleReject}>
+          <Modal.Body>
+            <textarea
+              name='reason'
+              id='reason'
+              cols='30'
+              rows='10'
+              className='p-2 w-full text-gray-200 focus:ring-gray-600 focus:ring-2 rounded-sm bg-[#18191C] border-none'
+              ref={reasonRef}
+            ></textarea>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button
+              type='submit'
+              className='bg-blue-600 enabled:hover:bg-blue-700'
+            >
+              Send
+            </Button>
+
+            <Button color='gray' onClick={() => setOpenModal(false)}>
+              Cancel
+            </Button>
+          </Modal.Footer>
+        </form>
+      </Modal>
       <div className='flex items-center flex-wrap'>
         <ul className='flex items-center'>
           <li className='inline-flex items-center'>
@@ -279,7 +320,7 @@ export default function Application() {
                   ACCEPT
                 </button>
                 <button
-                  onClick={handleReject}
+                  onClick={() => setOpenModal(true)}
                   className='w-1/2 text-center bg-red-600 hover:bg-red-700 py-3 rounded-md shadow-lg'
                 >
                   REJECT
@@ -291,8 +332,8 @@ export default function Application() {
           </div>
         </div>
       ) : (
-        <div className="h-[70vh] w-full flex items-center justify-center">
-          <p className="text-xl font-medium">Application not found</p>
+        <div className='h-[70vh] w-full flex items-center justify-center'>
+          <p className='text-xl font-medium'>Application not found</p>
         </div>
       )}
     </div>

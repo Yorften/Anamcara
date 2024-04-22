@@ -163,7 +163,7 @@ export default function Navigation() {
             </IconButton>
           </div>
           {isLoading ? (
-            <div className='w-[189.33px]'></div>
+            <div className='w-[189.33px] lg:order-last'></div>
           ) : token && user ? (
             <NavProfile className='lg:flex hidden' user={user} />
           ) : (

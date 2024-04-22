@@ -6,9 +6,20 @@ use Illuminate\Http\Request;
 use App\Models\GuildApplication;
 use App\Http\Resources\GuildApplicationResource;
 use App\Http\Requests\GuildApplications\StoreGuildApplicationRequest;
+use App\Services\GuildApplicationService;
+use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Log;
 
 class GuildApplicationController extends Controller
 {
+
+    protected $applicationService;
+
+    public function __construct(GuildApplicationService $applicationService)
+    {
+        $this->applicationService = $applicationService;
+    }
 
     /**
      * Display a listing of the resource.
@@ -68,24 +79,46 @@ class GuildApplicationController extends Controller
     {
         $validated = $request->validate([
             'accepted' => 'required|boolean',
+            'reason' => 'sometimes|string'
         ]);
+
         try {
             $guildApplication = GuildApplication::where('id', $id)->where('accepted', null)->firstOrFail();
+            $user = $guildApplication->user()->first();
+
+            // Create or get the channel with the applicant
+            $channel = $this->applicationService->createChannel($user);
+
+            if ($validated['accepted']) {
+                $this->applicationService->assignRole($user);
+
+
+
+                $msg = $this->applicationService->generateWelcomeMessage();
+                // // // Send a DM to the applicant
+                $this->applicationService->sendMessage($channel, $msg);
+
+
+                $message = 'Application accepted successfully';
+            } else {
+                $msg = $validated['reason'];
+                $this->applicationService->sendMessage($channel, $msg);
+
+                $message = 'Application rejected successfully';
+            }
 
             $guildApplication->update([
                 'accepted' => $validated['accepted'],
             ]);
-
-            if ($validated['accepted']) {
-                $message = 'Application accespted successfully';
-            } else {
-                $message = 'Application rejected successfully';
-            }
-
-            return response(['message' => $message], 200);
         } catch (\Exception $e) {
-            return response(['error' => 'Application already processed.'], 409);
+            if ($e instanceof ModelNotFoundException) {
+                return response(['error' => 'Application not found: ' . $e->getMessage()], 500);
+            } else {
+                return response(['error' => 'Error sending message: ' . $e->getMessage()], 500);
+            }
         }
+
+        return response(compact('message', 'msg'), 200);
     }
 
     public function history()

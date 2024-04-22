@@ -22,7 +22,7 @@ ApplicationRequest.show = (id, params) => {
 
 ApplicationRequest.update = (id, params) => {
   return axiosClient
-    .patch(`/applications/${id}`, { accepted: params})
+    .patch(`/applications/${id}`, params)
     .then((response) => response.data);
 };
 

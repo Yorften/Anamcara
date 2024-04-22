@@ -156,7 +156,7 @@ export default function Videos() {
           </Modal.Footer>
         </form>
       </Modal>
-      <div id='content' className='flex flex-col gap-8 h-full'>
+      <div id='content' className='flex flex-col gap-8 h-full lg:h-[85vh]'>
         <div className='flex items-center justify-between flex-wrap'>
           <ul className='flex items-center'>
             <li className='inline-flex items-center'>

@@ -8,6 +8,7 @@ import JoinUs from "../components/layouts/default/JoinUs";
 import InputLayout from "../components/apply/InputLayout";
 import ApplicationRequest from "../services/requests/application";
 import Swal from "sweetalert2/src/sweetalert2.js";
+import { useHasRole } from "../hooks/useHasRole";
 
 function ScrollToTop() {
   useEffect(() => {
@@ -21,6 +22,8 @@ export default function Apply() {
   const dispatch = useDispatch();
   const userInGuild = useSelector((state) => state.auth.userInGuild);
   const user = useSelector((state) => state.auth.token);
+  const isGuildMember = useHasRole("Guild member");
+  const isTrailMember = useHasRole("Trial member");
   const [isLoading, setIsLoading] = useState(true);
 
   const serverRef = useRef();
@@ -164,318 +167,322 @@ export default function Apply() {
     <>
       <ScrollToTop />
       <img
-        src='assets/images/welcome-apply.png'
+        src='/assets/images/welcome-apply.png'
         className='object-contain h-full'
         alt=''
       />
-
-      {isLoading ? (
-        <div className='w-full h-80 flex items-center justify-center'>
-          <img
-            src='/assets/images/Anamlogo_large_transparent.gif'
-            className='h-40 w-40'
-            alt=''
-          />
-        </div>
-      ) : user === null ? (
-        <div>
-          <div className='text-5xl'>Pleage log in</div>
-        </div>
-      ) : !userInGuild ? (
-        <div>
-          <JoinUs userInGuild={userInGuild} />
-        </div>
-      ) : (
-        <div className='my-20 mx-6 md:mx-20'>
-          <p className='text-5xl mb-20'>Application form</p>
-          <div className='min-h-screen h-full bg-transparent/25 rounded-md px-4 py-4 md:px-20 md:py-10'>
-            <form
-              encType='multipart/form-data'
-              className='flex flex-col items-center gap-10'
-              onSubmit={onSubmit}
-            >
-              <InputLayout id='in_server'>
-                <p>We are based in Elpon server, are you from Elpon?</p>
-                <div className='flex flex-col gap-4'>
-                  <div className='flex items-center gap-4'>
-                    <input
-                      onInput={(e) => {
-                        serverRef.current = e.target;
-                        document
-                          .getElementById("server_name")
-                          .classList.add("hidden");
-                      }}
-                      ref={serverRef}
-                      type='radio'
-                      name='server'
-                      value={1}
-                      id='elpon'
-                    />
-                    <label htmlFor='elpon'>{`Yes - I'm from Elpon`}</label>
-                  </div>
-                  <div className='flex items-center gap-4'>
-                    <input
-                      onInput={(e) => {
-                        serverRef.current = e.target;
-                        document
-                          .getElementById("server_name")
-                          .classList.remove("hidden");
-                      }}
-                      ref={serverRef}
-                      type='radio'
-                      name='server'
-                      value={0}
-                      id='other'
-                    />
-                    <label htmlFor='other'>
-                      Other :{" "}
-                      <input
-                        type='text'
-                        id='server_name'
-                        placeholder='Serve name'
-                        className='placeholder:text-[#A6AEB7] placeholder:text-sm placeholder:font-medium focus:ring-gray-600 focus:ring-2 rounded-sm bg-[#18191C] w-80 py-3 border-none hidden'
-                        ref={serverNameRef}
-                      />
-                    </label>
-                  </div>
-                  <div className='flex items-center gap-4'>
-                    <input
-                      className='hidden'
-                      ref={serverRef}
-                      type='radio'
-                      name='server'
-                      value={""}
-                      id='elpon2'
-                    />
-                  </div>
-                </div>
-              </InputLayout>
-              <InputLayout id='description'>
-                <p>
-                  {`Tell us about yourself! (Your name/nickname preference, where
-                  you're from, hobbies, your age, etc...)`}
-                </p>
-                <textarea
-                  name='description'
-                  id='desc'
-                  cols='30'
-                  rows='10'
-                  className='p-2 focus:ring-gray-600 focus:ring-2 rounded-sm bg-[#18191C] border-none'
-                  ref={descriptionRef}
-                ></textarea>
-              </InputLayout>
-              <InputLayout id='roster_image'>
-                <p>{`What does your Roster look like? (Main 1-6) Please provide a
-                  screenshot of your roster overview.`}</p>
-                <img
-                  src='assets/images/roster.png'
-                  className=' object-contain'
-                  alt='roster image example'
-                />
-                <div className='flex flex-col'>
-                  <input
-                    className=' bg-[#4F545C] w-fit rounded shadow-md text-base'
-                    type='file'
-                    id='image'
-                  />
-                  <p className='text-red-600 text-sm'></p>
-                </div>
-              </InputLayout>
-              <InputLayout id='experience'>
-                <p>{`What is your Lost Ark experience and what are your goals? (How long have you played, whats your Raid experience, etc...)`}</p>
-                <textarea
-                  name='experience'
-                  id='exp'
-                  cols='30'
-                  rows='10'
-                  className='p-2 focus:ring-gray-600 focus:ring-2 rounded-sm bg-[#18191C] border-none'
-                  ref={experienceRef}
-                ></textarea>
-              </InputLayout>
-              <InputLayout id='play_time'>
-                <p>{`How much time do you spend on the game? (Daily, every other day, etc.)`}</p>
-                <input
-                  type='text'
-                  id='playtime'
-                  placeholder='Playtime'
-                  className='placeholder:text-[#A6AEB7] placeholder:text-sm placeholder:font-medium focus:ring-gray-600 focus:ring-2 rounded-sm bg-[#18191C] w-full lg:w-[60%] py-3 border-none'
-                  ref={playTimeRef}
-                />
-              </InputLayout>
-              <InputLayout id='gvg'>
-                <p>{`Are you interested in joining GVG?`}</p>
-                <p>
-                  GVG is a PVP based Guild vs. Guild event. PVP Build, iLvl and
-                  stats are required. Please feel free to get in touch with a{" "}
-                  <span className=' text-[#A61655] bg-[#A61655]/20 '>
-                    @GVG Officer
-                  </span>{" "}
-                  for more information.
-                </p>
-                <div className='flex flex-col gap-4'>
-                  <div className='flex items-center gap-4'>
-                    <input
-                      onInput={(e) => {
-                        gvgRef.current = e.target;
-                      }}
-                      ref={gvgRef}
-                      type='radio'
-                      name='gvg'
-                      value={1}
-                      id='yes_gvg'
-                    />
-                    <label htmlFor='yes_gvg'>{`Yes`}</label>
-                  </div>
-                  <div className='flex items-center gap-4'>
-                    <input
-                      onInput={(e) => {
-                        gvgRef.current = e.target;
-                      }}
-                      ref={gvgRef}
-                      type='radio'
-                      name='gvg'
-                      value={0}
-                      id='no_gvg'
-                    />
-                    <label htmlFor='no_gvg'>{`No`}</label>
-                  </div>
-                  <div className='flex items-center gap-4'>
-                    <input
-                      className='hidden'
-                      ref={gvgRef}
-                      type='radio'
-                      name='gvg'
-                      value={""}
-                      id='null_gvg'
-                    />
-                  </div>
-                </div>
-              </InputLayout>
-              <InputLayout id='gve'>
-                <p>{`Our schedule for GVE is on Sundays at 19:40 ST (Server Time) with optional Alt Guild GVE's afterwards`}</p>
-                <p>{`GVE is a PVE Guild Raid for bloodstones that everyone can participate in, takes around 5 minutes`}</p>
-                <p>{`We expect you to show up for Main Guild GVE as often as possible, do you agree to this? Please write in "Other" if there is a reason you cannot participate. This does not effect your application.`}</p>
-                <div className='flex flex-col gap-4'>
-                  <div className='flex items-center gap-4'>
-                    <input
-                      onInput={(e) => {
-                        gveRef.current = e.target;
-                        document
-                          .getElementById("reason")
-                          .classList.add("hidden");
-                      }}
-                      ref={gveRef}
-                      type='radio'
-                      name='gve'
-                      value={"Yes"}
-                      id='yes_gve'
-                    />
-                    <label htmlFor='yes_gve'>{`Yes`}</label>
-                  </div>
-                  <div className='flex items-center gap-4'>
-                    <input
-                      onInput={() => {
-                        document
-                          .getElementById("reason")
-                          .classList.remove("hidden");
-                      }}
-                      type='radio'
-                      name='gve'
-                      id='no_gve'
-                    />
-                    <label htmlFor='no_gve'>
-                      Other :{" "}
-                      <input
-                        onChange={(e) => {
-                          gveRef.current = e.target;
-                        }}
-                        type='text'
-                        id='reason'
-                        placeholder='Reason'
-                        className='placeholder:text-[#A6AEB7] placeholder:text-sm placeholder:font-medium focus:ring-gray-600 focus:ring-2 rounded-sm bg-[#18191C] w-52 lg:w-80 py-3 border-none hidden'
-                        ref={gveRef}
-                      />
-                    </label>
-                  </div>
-                  <div className='flex items-center gap-4'>
-                    <input
-                      className='hidden'
-                      ref={gveRef}
-                      type='radio'
-                      name='gve'
-                      value={""}
-                      id='null_gve'
-                    />
-                  </div>
-                </div>
-              </InputLayout>
-              <InputLayout id='server_expectations'>
-                <p>{`What are you looking for in Anamcara?`}</p>
-                <input
-                  type='text'
-                  id='expectations'
-                  placeholder=''
-                  className='placeholder:text-[#A6AEB7] placeholder:text-sm placeholder:font-medium focus:ring-gray-600 focus:ring-2 rounded-sm bg-[#18191C] w-full lg:w-[60%] py-3 border-none'
-                  ref={serverExpectationsRef}
-                />
-              </InputLayout>
-              <InputLayout id='inquiry_source'>
-                <p>{`How did you hear about us?`}</p>
-                <input
-                  type='text'
-                  id='inquiry'
-                  placeholder=''
-                  ref={inquirySourceRef}
-                  className='placeholder:text-[#A6AEB7] placeholder:text-sm placeholder:font-medium focus:ring-gray-600 focus:ring-2 rounded-sm bg-[#18191C] w-full lg:w-[60%] py-3 border-none'
-                />
-              </InputLayout>
-              <InputLayout id='additional_info'>
-                <p className='text-xs'>*Not Required</p>
-                <p>{`Anything else you'd like us to know?`}</p>
-                <input
-                  type='text'
-                  id='info'
-                  placeholder=''
-                  className='placeholder:text-[#A6AEB7] placeholder:text-sm placeholder:font-medium focus:ring-gray-600 focus:ring-2 rounded-sm bg-[#18191C] w-full lg:w-[60%] py-3 border-none'
-                  ref={additionalInfoRef}
-                />
-              </InputLayout>
-              <InputLayout id='guild_cooldown'>
-                <p className='text-xs'>*Not Required</p>
-                <p>{`Are you in a Guild at the moment/What was your previous Guild? (Please also include your Guild Cooldown/when you can be invited)`}</p>
-                <input
-                  type='text'
-                  id='cooldown'
-                  placeholder=''
-                  className='placeholder:text-[#A6AEB7] placeholder:text-sm placeholder:font-medium focus:ring-gray-600 focus:ring-2 rounded-sm bg-[#18191C] w-full lg:w-[60%] py-3 border-none'
-                  ref={guildCooldownRef}
-                />
-              </InputLayout>
-              <InputLayout id='acquaintances'>
-                <p className='text-xs'>*Not Required</p>
-                <p>{`Do you know anyone in the guild already? If you have a reference please give their IGN.`}</p>
-                <input
-                  type='text'
-                  id='acquant'
-                  placeholder='IGN'
-                  className='placeholder:text-[#A6AEB7] placeholder:text-sm placeholder:font-medium focus:ring-gray-600 focus:ring-2 rounded-sm bg-[#18191C] w-full lg:w-[60%] py-3 border-none'
-                  ref={acquaintancesRef}
-                />
-              </InputLayout>
-              <div className='flex flex-col lg:flex-row gap-4 lg:gap-2 items-center justify-between w-full'>
-                <p className='text-sm font-light w-full lg:w-3/6 text-gray-300'>
-                  By submitting an application, you agree to our leadership
-                  reviewing it. We will reach out to you within a week via
-                  discord.
-                </p>
-                <button className='w-full lg:w-2/6 text-center font-light bg-[#878dd1] hover:bg-[#787CAD] py-3 rounded-md shadow-lg'>
-                  SEND
-                </button>
-              </div>
-            </form>
+      <div className='my-20 mx-6 md:mx-20'>
+        {isLoading ? (
+          <div className='w-full h-80 flex items-center justify-center'>
+            <img
+              src='/assets/images/Anamlogo_large_transparent.gif'
+              className='h-40 w-40'
+              alt=''
+            />
           </div>
-        </div>
-      )}
+        ) : user === null ? (
+          <div>
+            <div className='text-5xl'>You must be logged in to apply!</div>
+          </div>
+        ) : !userInGuild ? (
+          <div>
+            <JoinUs userInGuild={userInGuild} />
+          </div>
+        ) : isGuildMember || isTrailMember ? (
+          <div></div>
+        ) : (
+          <>
+            <p className='text-5xl mb-20'>Application form</p>
+            <div className='min-h-screen h-full bg-transparent/25 rounded-md px-4 py-4 md:px-20 md:py-10'>
+              <form
+                encType='multipart/form-data'
+                className='flex flex-col items-center gap-10'
+                onSubmit={onSubmit}
+              >
+                <InputLayout id='in_server'>
+                  <p>We are based in Elpon server, are you from Elpon?</p>
+                  <div className='flex flex-col gap-4'>
+                    <div className='flex items-center gap-4'>
+                      <input
+                        onInput={(e) => {
+                          serverRef.current = e.target;
+                          document
+                            .getElementById("server_name")
+                            .classList.add("hidden");
+                        }}
+                        ref={serverRef}
+                        type='radio'
+                        name='server'
+                        value={1}
+                        id='elpon'
+                      />
+                      <label htmlFor='elpon'>{`Yes - I'm from Elpon`}</label>
+                    </div>
+                    <div className='flex items-center gap-4'>
+                      <input
+                        onInput={(e) => {
+                          serverRef.current = e.target;
+                          document
+                            .getElementById("server_name")
+                            .classList.remove("hidden");
+                        }}
+                        ref={serverRef}
+                        type='radio'
+                        name='server'
+                        value={0}
+                        id='other'
+                      />
+                      <label htmlFor='other'>
+                        Other :{" "}
+                        <input
+                          type='text'
+                          id='server_name'
+                          placeholder='Serve name'
+                          className='placeholder:text-[#A6AEB7] placeholder:text-sm placeholder:font-medium focus:ring-gray-600 focus:ring-2 rounded-sm bg-[#18191C] w-80 py-3 border-none hidden'
+                          ref={serverNameRef}
+                        />
+                      </label>
+                    </div>
+                    <div className='flex items-center gap-4'>
+                      <input
+                        className='hidden'
+                        ref={serverRef}
+                        type='radio'
+                        name='server'
+                        value={""}
+                        id='elpon2'
+                      />
+                    </div>
+                  </div>
+                </InputLayout>
+                <InputLayout id='description'>
+                  <p>
+                    {`Tell us about yourself! (Your name/nickname preference, where
+                  you're from, hobbies, your age, etc...)`}
+                  </p>
+                  <textarea
+                    name='description'
+                    id='desc'
+                    cols='30'
+                    rows='10'
+                    className='p-2 focus:ring-gray-600 focus:ring-2 rounded-sm bg-[#18191C] border-none'
+                    ref={descriptionRef}
+                  ></textarea>
+                </InputLayout>
+                <InputLayout id='roster_image'>
+                  <p>{`What does your Roster look like? (Main 1-6) Please provide a
+                  screenshot of your roster overview.`}</p>
+                  <img
+                    src='assets/images/roster.png'
+                    className=' object-contain'
+                    alt='roster image example'
+                  />
+                  <div className='flex flex-col'>
+                    <input
+                      className=' bg-[#4F545C] w-fit rounded shadow-md text-base'
+                      type='file'
+                      id='image'
+                    />
+                    <p className='text-red-600 text-sm'></p>
+                  </div>
+                </InputLayout>
+                <InputLayout id='experience'>
+                  <p>{`What is your Lost Ark experience and what are your goals? (How long have you played, whats your Raid experience, etc...)`}</p>
+                  <textarea
+                    name='experience'
+                    id='exp'
+                    cols='30'
+                    rows='10'
+                    className='p-2 focus:ring-gray-600 focus:ring-2 rounded-sm bg-[#18191C] border-none'
+                    ref={experienceRef}
+                  ></textarea>
+                </InputLayout>
+                <InputLayout id='play_time'>
+                  <p>{`How much time do you spend on the game? (Daily, every other day, etc.)`}</p>
+                  <input
+                    type='text'
+                    id='playtime'
+                    placeholder='Playtime'
+                    className='placeholder:text-[#A6AEB7] placeholder:text-sm placeholder:font-medium focus:ring-gray-600 focus:ring-2 rounded-sm bg-[#18191C] w-full lg:w-[60%] py-3 border-none'
+                    ref={playTimeRef}
+                  />
+                </InputLayout>
+                <InputLayout id='gvg'>
+                  <p>{`Are you interested in joining GVG?`}</p>
+                  <p>
+                    GVG is a PVP based Guild vs. Guild event. PVP Build, iLvl
+                    and stats are required. Please feel free to get in touch
+                    with a{" "}
+                    <span className=' text-[#A61655] bg-[#A61655]/20 '>
+                      @GVG Officer
+                    </span>{" "}
+                    for more information.
+                  </p>
+                  <div className='flex flex-col gap-4'>
+                    <div className='flex items-center gap-4'>
+                      <input
+                        onInput={(e) => {
+                          gvgRef.current = e.target;
+                        }}
+                        ref={gvgRef}
+                        type='radio'
+                        name='gvg'
+                        value={1}
+                        id='yes_gvg'
+                      />
+                      <label htmlFor='yes_gvg'>{`Yes`}</label>
+                    </div>
+                    <div className='flex items-center gap-4'>
+                      <input
+                        onInput={(e) => {
+                          gvgRef.current = e.target;
+                        }}
+                        ref={gvgRef}
+                        type='radio'
+                        name='gvg'
+                        value={0}
+                        id='no_gvg'
+                      />
+                      <label htmlFor='no_gvg'>{`No`}</label>
+                    </div>
+                    <div className='flex items-center gap-4'>
+                      <input
+                        className='hidden'
+                        ref={gvgRef}
+                        type='radio'
+                        name='gvg'
+                        value={""}
+                        id='null_gvg'
+                      />
+                    </div>
+                  </div>
+                </InputLayout>
+                <InputLayout id='gve'>
+                  <p>{`Our schedule for GVE is on Sundays at 19:40 ST (Server Time) with optional Alt Guild GVE's afterwards`}</p>
+                  <p>{`GVE is a PVE Guild Raid for bloodstones that everyone can participate in, takes around 5 minutes`}</p>
+                  <p>{`We expect you to show up for Main Guild GVE as often as possible, do you agree to this? Please write in "Other" if there is a reason you cannot participate. This does not effect your application.`}</p>
+                  <div className='flex flex-col gap-4'>
+                    <div className='flex items-center gap-4'>
+                      <input
+                        onInput={(e) => {
+                          gveRef.current = e.target;
+                          document
+                            .getElementById("reason")
+                            .classList.add("hidden");
+                        }}
+                        ref={gveRef}
+                        type='radio'
+                        name='gve'
+                        value={"Yes"}
+                        id='yes_gve'
+                      />
+                      <label htmlFor='yes_gve'>{`Yes`}</label>
+                    </div>
+                    <div className='flex items-center gap-4'>
+                      <input
+                        onInput={() => {
+                          document
+                            .getElementById("reason")
+                            .classList.remove("hidden");
+                        }}
+                        type='radio'
+                        name='gve'
+                        id='no_gve'
+                      />
+                      <label htmlFor='no_gve'>
+                        Other :{" "}
+                        <input
+                          onChange={(e) => {
+                            gveRef.current = e.target;
+                          }}
+                          type='text'
+                          id='reason'
+                          placeholder='Reason'
+                          className='placeholder:text-[#A6AEB7] placeholder:text-sm placeholder:font-medium focus:ring-gray-600 focus:ring-2 rounded-sm bg-[#18191C] w-52 lg:w-80 py-3 border-none hidden'
+                          ref={gveRef}
+                        />
+                      </label>
+                    </div>
+                    <div className='flex items-center gap-4'>
+                      <input
+                        className='hidden'
+                        ref={gveRef}
+                        type='radio'
+                        name='gve'
+                        value={""}
+                        id='null_gve'
+                      />
+                    </div>
+                  </div>
+                </InputLayout>
+                <InputLayout id='server_expectations'>
+                  <p>{`What are you looking for in Anamcara?`}</p>
+                  <input
+                    type='text'
+                    id='expectations'
+                    placeholder=''
+                    className='placeholder:text-[#A6AEB7] placeholder:text-sm placeholder:font-medium focus:ring-gray-600 focus:ring-2 rounded-sm bg-[#18191C] w-full lg:w-[60%] py-3 border-none'
+                    ref={serverExpectationsRef}
+                  />
+                </InputLayout>
+                <InputLayout id='inquiry_source'>
+                  <p>{`How did you hear about us?`}</p>
+                  <input
+                    type='text'
+                    id='inquiry'
+                    placeholder=''
+                    ref={inquirySourceRef}
+                    className='placeholder:text-[#A6AEB7] placeholder:text-sm placeholder:font-medium focus:ring-gray-600 focus:ring-2 rounded-sm bg-[#18191C] w-full lg:w-[60%] py-3 border-none'
+                  />
+                </InputLayout>
+                <InputLayout id='additional_info'>
+                  <p className='text-xs'>*Not Required</p>
+                  <p>{`Anything else you'd like us to know?`}</p>
+                  <input
+                    type='text'
+                    id='info'
+                    placeholder=''
+                    className='placeholder:text-[#A6AEB7] placeholder:text-sm placeholder:font-medium focus:ring-gray-600 focus:ring-2 rounded-sm bg-[#18191C] w-full lg:w-[60%] py-3 border-none'
+                    ref={additionalInfoRef}
+                  />
+                </InputLayout>
+                <InputLayout id='guild_cooldown'>
+                  <p className='text-xs'>*Not Required</p>
+                  <p>{`Are you in a Guild at the moment/What was your previous Guild? (Please also include your Guild Cooldown/when you can be invited)`}</p>
+                  <input
+                    type='text'
+                    id='cooldown'
+                    placeholder=''
+                    className='placeholder:text-[#A6AEB7] placeholder:text-sm placeholder:font-medium focus:ring-gray-600 focus:ring-2 rounded-sm bg-[#18191C] w-full lg:w-[60%] py-3 border-none'
+                    ref={guildCooldownRef}
+                  />
+                </InputLayout>
+                <InputLayout id='acquaintances'>
+                  <p className='text-xs'>*Not Required</p>
+                  <p>{`Do you know anyone in the guild already? If you have a reference please give their IGN.`}</p>
+                  <input
+                    type='text'
+                    id='acquant'
+                    placeholder='IGN'
+                    className='placeholder:text-[#A6AEB7] placeholder:text-sm placeholder:font-medium focus:ring-gray-600 focus:ring-2 rounded-sm bg-[#18191C] w-full lg:w-[60%] py-3 border-none'
+                    ref={acquaintancesRef}
+                  />
+                </InputLayout>
+                <div className='flex flex-col lg:flex-row gap-4 lg:gap-2 items-center justify-between w-full'>
+                  <p className='text-sm font-light w-full lg:w-3/6 text-gray-300'>
+                    By submitting an application, you agree to our leadership
+                    reviewing it. We will reach out to you within a week via
+                    discord.
+                  </p>
+                  <button className='w-full lg:w-2/6 text-center font-light bg-[#878dd1] hover:bg-[#787CAD] py-3 rounded-md shadow-lg'>
+                    SEND
+                  </button>
+                </div>
+              </form>
+            </div>
+          </>
+        )}
+      </div>
     </>
   );
 }
