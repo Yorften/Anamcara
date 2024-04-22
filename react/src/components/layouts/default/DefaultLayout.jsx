@@ -37,7 +37,7 @@ const DefaultLayout = () => {
           dispatch(setToken(null));
         })
         .finally(() => {
-            dispatch(setIsLoading(false));
+          dispatch(setIsLoading(false));
         });
     };
 
@@ -48,6 +48,8 @@ const DefaultLayout = () => {
       dispatch(setUser(null));
       dispatch(setToken(null));
       dispatch(setUserRoles([]));
+      dispatch(setIsLoading(false));
+    } else {
       dispatch(setIsLoading(false));
     }
   }, [dispatch, user, token]);

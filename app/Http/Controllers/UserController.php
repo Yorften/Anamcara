@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Services\RoleService;
 use App\Services\UserService;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -33,15 +34,31 @@ class UserController extends Controller
         $user = $request->user();
         $user_roles = $user->roles()->get();
 
-        // $user_roles = $this->userService->fetchUserRoles($user);
-        // $this->roleService->updateAppRoles();
-        // $this->roleService->updateUserRoles($user, $user_roles);
-        // $user_roles = $this->roleService->getUserRoles($user_roles);
-
         return response(compact('user', 'user_roles'));
     }
 
-    public function guild(Request $request){
+    public function updateUserRoles(Request $request)
+    {
+        $user = $request->user();
+        $user_roles = $user->roles()->get();
+        try {
+            $user_roles = $this->userService->fetchUserRoles($user);
+
+            $this->roleService->updateUserRoles($user, $user_roles);
+
+            $user_roles = $this->roleService->getUserRoles($user_roles);
+        } catch (\Exception $e) {
+            if ($e instanceof ModelNotFoundException) {
+                return response(['error' => 'User roles not found: ' . $e->getMessage()], 500);
+            } else {
+                return response(['error' => 'Error sending message: ' . $e->getMessage()], 500);
+            }
+        }
+        return response(compact('user', 'user_roles'));
+    }
+
+    public function guild(Request $request)
+    {
         $user = $request->user();
         $userInGuild = $this->userService->checkGuild($user);
         return response(compact('userInGuild'));

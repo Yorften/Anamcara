@@ -2,48 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Role;
-use Illuminate\Http\Request;
+use App\Services\RoleService;
 
 class RoleController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+
+    protected $userService, $roleService;
+
+    public function __construct(RoleService $roleService)
     {
-        //
+        $this->roleService = $roleService;
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function sync()
     {
-        
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Role $role)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Role $role)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Role $role)
-    {
-        //
+        try {
+            $this->roleService->updateAppRoles();
+            return response(['message' => 'Application roles updated successfully!']);
+        } catch (\Exception $e) {
+            return response(['error' => 'Error sending message: ' . $e->getMessage()], 500);
+        }
     }
 }

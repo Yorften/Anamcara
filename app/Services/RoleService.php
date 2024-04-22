@@ -36,33 +36,35 @@ class RoleService
                     Role::create(array_merge(['id' => $discordRole['id']], $roleData));
                 }
             }
-
-            $updatedRoles = Role::pluck('id');
-
-            return $updatedRoles;
         } catch (HttpClientException $e) {
             Log::error('HTTP Client Exception: ' . $e->getMessage());
-            return response()->json(['error' => $e->getMessage()], 500);
+            throw $e;
         } catch (Exception $e) {
             Log::error('Exception: ' . $e->getMessage());
-            return response()->json(['error' => $e->getMessage()], 500);
+            throw $e;
         }
     }
 
     public function updateUserRoles(User $user, $user_roles)
     {
+        $guild_roles = Role::pluck('id')->toArray();
+
+        $valid_roles = array_intersect($user_roles, $guild_roles);
+
+
         if ($user->roles()->exists()) {
+
             $currentRoles = $user->roles()->pluck('roles.id')->toArray();
 
-            $rolesToAttach = array_diff($user_roles, $currentRoles);
+            $rolesToAttach = array_diff($valid_roles, $currentRoles);
 
-            $rolesToDetach = array_diff($currentRoles, $user_roles);
+            $rolesToDetach = array_diff($currentRoles, $valid_roles);
 
             $user->roles()->attach($rolesToAttach);
 
             $user->roles()->detach($rolesToDetach);
         } else {
-            $user->roles()->attach($user_roles);
+            $user->roles()->attach($valid_roles);
         }
     }
 

@@ -5,16 +5,13 @@ import NavProfile from "../NavProfile";
 import { useDispatch, useSelector } from "react-redux";
 import useCookieMonitor from "../../../hooks/useCookieMonitor";
 import {
-  setIsLoading,
   setToken,
   setUser,
   setUserRoles,
 } from "../../../features/auth/authSlice";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import UserRequest from "../../../services/requests/user";
-import Cookies from "js-cookie";
 import { useHasRole } from "./../../../hooks/useHasRole";
-
 
 const DashboardLayout = () => {
   const location = useLocation();
@@ -23,8 +20,9 @@ const DashboardLayout = () => {
 
   const user = useSelector((state) => state.auth.user);
   const token = useSelector((state) => state.auth.token);
-  const isLoading = useSelector((state) => state.auth.isLoading);
-  const hasRole = useHasRole("Officer Team");
+  const [isLoading, setIsLoading] = useState(true);
+
+  useCookieMonitor();
 
   useEffect(() => {
     if (!token) {
@@ -32,43 +30,26 @@ const DashboardLayout = () => {
     }
   }, [token, navigate]);
 
-  if (!hasRole) {
+  // This user info and update user roles
+  useEffect(() => {
+    const response = UserRequest.getUpdatedUserRoles();
+    response
+      .then((data) => {
+        dispatch(setUser(data.user));
+        dispatch(setUserRoles(data.user_roles));
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching user data:", error);
+        dispatch(setUser(null));
+        dispatch(setToken(null));
+        setIsLoading(false);
+      });
+  }, []);
+
+  if (!useHasRole("Officer Team")) {
     navigate("/");
   }
-
-  useCookieMonitor();
-
-  // To-do get user with updated roles.
-
-
-  // This only gets user info from database, not from discord's api
-  useEffect(() => {
-    const fetchUserData = async () => {
-      const response = UserRequest.getUser();
-      response
-        .then((data) => {
-          dispatch(setUser(data.user));
-          dispatch(setUserRoles(data.user_roles));
-          dispatch(setIsLoading(false));
-        })
-        .catch((error) => {
-          console.error("Error fetching user data:", error);
-          dispatch(setUser(null));
-          dispatch(setToken(null));
-          dispatch(setIsLoading(false));
-        });
-    };
-
-    const storedToken = Cookies.get("token");
-    if (!user) {
-      fetchUserData();
-    } else if (!storedToken) {
-      dispatch(setUser(null));
-      dispatch(setToken(null));
-      dispatch(setUserRoles([]));
-      dispatch(setIsLoading(false));
-    }
-  });
 
   return (
     <div className='dashboard-layout'>

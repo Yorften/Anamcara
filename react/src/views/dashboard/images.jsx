@@ -38,7 +38,7 @@ export default function Images() {
       cell: (row) => (
         <Button
           onClick={() => handleDelete(row.id)}
-          className='bg-red-600 enabled:hover:bg-red-700'
+          className='bg-red-600 enabled:hover:bg-red-700 py-0'
         >
           Delete
         </Button>

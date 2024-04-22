@@ -40,14 +40,12 @@ class AuthController extends Controller
 
                 $user = $this->userService->getUserData($access_token, $refresh_token);
 
-                // To do - Emplement Sync app roles.
-                $guild_roles = $this->roleService->updateAppRoles();
-
                 $user_roles = $this->userService->fetchUserRoles($user, $access_token);
-                if ($user_roles) {
-                    $this->roleService->updateUserRoles($user, $user_roles);
-                    $user_roles = $this->roleService->getUserRoles($user_roles);
-                }
+
+                $this->roleService->updateUserRoles($user, $user_roles);
+
+                $user_roles = $this->roleService->getUserRoles($user_roles);
+
                 $token = $user->createToken('API Token')->plainTextToken;
 
                 // Remove refresh token so it wont be accessible in the client.

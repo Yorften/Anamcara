@@ -155,7 +155,7 @@ export default function JoinUs({ userInGuild }) {
                   <p className='text-green-400'>&#9679; 120 Online</p>
                 </div>
                 <Link
-                  className='w-[15%] self-end text-center font-semibold bg-[#3BA561] hover:bg-[#339155] py-2 rounded-md shadow-md'
+                  className='w-[17%] self-end text-center bg-[#3BA561] hover:bg-[#339155] py-1 rounded-md shadow-md'
                   to={"https://discord.gg/anamcara"}
                   target='_blank'
                 >

@@ -98,32 +98,30 @@ class UserService
             $access_token = $this->refreshAccessToken($user);
         }
 
-        $result = $this->checkGuild($user, $access_token);
-
-        if (!$result) {
-            return [];
-        }
-            try {
-                $response = Http::withHeaders([
-                    'Authorization' => 'Bearer ' . $access_token,
-                    'Content-Type' => 'application/x-www-form-urlencoded',
-                ])->get('https://discord.com/api/users/@me/guilds/' . env('DISCORD_GUILD_ID') . '/member');
-                $result = $response->throw()->json();
-                $user_roles = $result['roles'];
-                $joined_at = date('Y-m-d H:i:s', strtotime($result['joined_at']));
-                $user->update([
-                    'nick' => $result['nick'],
-                    'joined_at' => $joined_at,
-                ]);
-
-                return $user_roles;
-            } catch (HttpClientException $e) {
-                Log::error('HTTP Client Exception: ' . $e->getMessage());
-                return response()->json(['error' => $e->getMessage()], 500);
-            } catch (Exception $e) {
-                Log::error('Exception: ' . $e->getMessage());
-                return response()->json(['error' => $e->getMessage()], 500);
+        try {
+            $response = Http::withHeaders([
+                'Authorization' => 'Bearer ' . $access_token,
+                'Content-Type' => 'application/x-www-form-urlencoded',
+            ])->get('https://discord.com/api/users/@me/guilds/' . env('DISCORD_GUILD_ID') . '/member');
+            if($response->status() !== 200){
+                return [];
             }
+            $result = $response->throw()->json();
+            $user_roles = $result['roles'];
+            $joined_at = date('Y-m-d H:i:s', strtotime($result['joined_at']));
+            $user->update([
+                'nick' => $result['nick'],
+                'joined_at' => $joined_at,
+            ]);
+
+            return $user_roles;
+        } catch (HttpClientException $e) {
+            Log::error('HTTP Client Exception: ' . $e->getMessage());
+            throw $e;
+        } catch (Exception $e) {
+            Log::error('Exception: ' . $e->getMessage());
+            throw $e;
+        }
     }
 
 

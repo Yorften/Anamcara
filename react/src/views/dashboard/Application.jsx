@@ -138,8 +138,7 @@ export default function Application() {
           <div className='flex flex-col gap-8'>
             <AvatarComponent
               imageUrl={`https://cdn.discordapp.com/avatars/${application.user.id}/${application.user.avatar}.png`}
-              nick={application.user.nick}
-              username={application.user.username}
+              user={application.user}
               application={true}
             />
             <div className='flex flex-col items-center gap-10 text-white [&>*]:bg-[#313338] [&>*]:text-lg mx-20'>

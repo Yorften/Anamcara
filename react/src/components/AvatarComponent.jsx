@@ -1,10 +1,10 @@
+/* eslint-disable react/prop-types */
 import { Avatar } from "flowbite-react";
 import { IoIosArrowDown } from "react-icons/io";
 
 export default function AvatarComponent({
   imageUrl,
-  nick,
-  username,
+  user,
   application,
 }) {
   return (
@@ -15,7 +15,11 @@ export default function AvatarComponent({
         rounded
         className='flex items-center'
       />
-      {nick ? <p>{nick}</p> : <p>{username}</p>}
+      {user.nick ? (
+        <p className='hidden md:block'>{user.nick}</p>
+      ) : (
+        <p className='hidden md:block'>{user.username}</p>
+      )}
       {!application && <IoIosArrowDown />}
     </div>
   );

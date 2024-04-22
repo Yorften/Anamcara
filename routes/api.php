@@ -28,12 +28,15 @@ Route::post('/auth/discord/callback', [AuthController::class, 'callback']);
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/users/@me', [UserController::class, 'show']);
     Route::get('/users/@me/guild', [UserController::class, 'guild']);
+    Route::get('/users/roles', [UserController::class, 'updateUserRoles']);
     Route::post('/logout', [AuthController::class, 'logout']);
+    Route::apiResource('/images', GalleryController::class);
+    Route::apiResource('/videos', VideoController::class);  
 
     Route::middleware(['role:Officer Team'])->group(function () {
         Route::get('/applications/history', [GuildApplicationController::class, 'history']);
+        Route::post('/roles/sync', [RoleController::class, 'sync']);
         Route::apiResource('/applications', GuildApplicationController::class);
-        Route::apiResource('/images', GalleryController::class);
-        Route::apiResource('/videos', VideoController::class);
+
     });
 });
