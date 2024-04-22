@@ -142,7 +142,7 @@ export default function Application() {
               username={application.user.username}
               application={true}
             />
-            <div className='flex flex-col items-center gap-10 text-white [&>*]:bg-[#787CAD] '>
+            <div className='flex flex-col items-center gap-10 text-white [&>*]:bg-[#313338] [&>*]:text-lg mx-20'>
               <InputLayout id='in_server'>
                 <p>We are based in Elpon server, are you from Elpon?</p>
                 {application.in_server ? (
@@ -172,7 +172,7 @@ export default function Application() {
                   name='description'
                   id='desc'
                   cols='30'
-                  rows='10'
+                  rows='5'
                   disabled
                   className='p-2 focus:ring-gray-600 focus:ring-2 rounded-sm bg-[#18191C] border-none'
                   value={application.description}
@@ -195,7 +195,7 @@ export default function Application() {
                   name='experience'
                   id='exp'
                   cols='30'
-                  rows='10'
+                  rows='5'
                   disabled
                   value={application.experience}
                   className='p-2 focus:ring-gray-600 focus:ring-2 rounded-sm bg-[#18191C] border-none'
@@ -310,16 +310,16 @@ export default function Application() {
               </InputLayout>
             </div>
             {application.accepted == null ? (
-              <div className='w-full flex items-center gap-2 text-white font-medium'>
+              <div className='flex items-center gap-2 text-white font-medium mx-20'>
                 <button
                   onClick={handleAccept}
-                  className='w-1/2 text-center bg-green-600 hover:bg-green-700 py-3 rounded-md shadow-lg'
+                  className='w-1/2 text-center bg-[#787CAD] hover:bg-[#5e64a3] py-3 rounded-md shadow-lg'
                 >
                   ACCEPT
                 </button>
                 <button
                   onClick={() => setOpenModal(true)}
-                  className='w-1/2 text-center bg-red-600 hover:bg-red-700 py-3 rounded-md shadow-lg'
+                  className='w-1/2 text-center bg-[#313338] hover:bg-[#292b31] py-3 rounded-md shadow-lg'
                 >
                   REJECT
                 </button>

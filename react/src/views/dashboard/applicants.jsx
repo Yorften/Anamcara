@@ -22,12 +22,12 @@ export default function Applicants() {
     },
     {
       name: "In Server",
-      selector: (row) => row.in_server,
+      selector: (row) => (row.in_server === 1 ? "Yes" : "No"),
       sortable: true,
     },
     {
       name: "GVG",
-      selector: (row) => row.gvg,
+      selector: (row) => (row.gvg === 1 ? "Yes" : "No"),
       sortable: true,
     },
     {

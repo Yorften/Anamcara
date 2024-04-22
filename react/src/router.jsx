@@ -2,7 +2,6 @@ import { createBrowserRouter } from "react-router-dom";
 import Apply from "./views/Apply";
 import Images from "./views/Images";
 import Videos from "./views/Videos";
-import StoneCutter from "./views/StoneCutter";
 import WelcomeChecklist from "./views/checklist/Welcome";
 import ChecklistIndex from "./views/checklist/Index";
 import Tasks from "./views/checklist/Tasks";
@@ -39,11 +38,6 @@ const router = createBrowserRouter([
       {
         path: "/videos",
         element: <Videos />,
-      },
-
-      {
-        path: "/stone-cutter",
-        element: <StoneCutter />,
       },
 
       {

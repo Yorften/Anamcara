@@ -40,6 +40,12 @@ export default function History() {
       selector: (row) => row.created_at,
       sortable: true,
     },
+    {
+      name: "Status",
+      format: (row) => moment(row.accepted).format("DD-MM-YYYY"),
+      selector: (row) => row.created_at,
+      sortable: true,
+    },
   ];
 
   const onRowClicked = (row) => {
