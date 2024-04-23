@@ -11,11 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('characters', function (Blueprint $table) {
+        Schema::create('tasks', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->text('note');
-            $table->foreignId('class_icon_id')->constrained();
+            $table->boolean('tracked')->default(true);
+            $table->enum('frequency', ['daily','weekly']);
+            $table->integer('repetition');
+            $table->integer('ilvl');
+            $table->foreignId('icon_id')->constrained();
             $table->timestamps();
         });
     }
@@ -25,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('characters');
+        Schema::dropIfExists('tasks');
     }
 };

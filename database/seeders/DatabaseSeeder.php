@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
         $this->call(IconSeeder::class);
         $this->call(ClassIconSeeder::class);
+        $this->call(TaskSeeder::class);
 
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',
