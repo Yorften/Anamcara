@@ -1,10 +1,7 @@
 import { Link } from "react-router-dom";
 import { FaTasks } from "react-icons/fa";
 import { IoPersonSharp } from "react-icons/io5";
-import { IoMdSettings } from "react-icons/io";
 import { FaRegCheckSquare } from "react-icons/fa";
-
-
 
 
 // eslint-disable-next-line react/prop-types
@@ -51,17 +48,6 @@ export default function ChecklistSideBar({ className }) {
                 <IoPersonSharp />
               </span>
               <span className='ml-2 tracking-wide truncate'>Characters</span>
-            </Link>
-          </li>
-          <li>
-            <Link
-              to={"/checklist/settings"}
-              className='relative flex flex-row items-center h-11 focus:outline-none hover:bg-blue-800 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 pr-6'
-            >
-              <span className='inline-flex justify-center items-center [&>svg]:h-5 [&>svg]:w-5 ml-2 md:ml-4'>
-                <IoMdSettings />
-              </span>
-              <span className='ml-2 tracking-wide truncate'>Settings</span>
             </Link>
           </li>
         </ul>

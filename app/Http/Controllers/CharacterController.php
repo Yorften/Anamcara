@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\CharacterCreated;
 use App\Http\Requests\Characters\StoreCharacterRequest;
 use App\Http\Requests\Characters\UpdateCharacterRequest;
 use App\Http\Resources\CharacterResource;
@@ -24,7 +25,14 @@ class CharacterController extends Controller
      */
     public function store(StoreCharacterRequest $request)
     {
-        //
+        $validated = $request->validated();
+        $character = Character::create($validated);
+        if ($character) {
+            event(new CharacterCreated($character));
+            return response(['message' => 'Character created successfully!']);
+        } else {
+            return response(['error' => 'Unkown error while creating the character'], 500);
+        }
     }
 
     /**

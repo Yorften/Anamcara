@@ -18,6 +18,12 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+        'App\Events\CharacterCreated' => [
+            'App\Listeners\AttachTasks',
+        ],
+        'App\Events\TaskCreated' => [
+            'App\Listeners\AttachCharacters',
+        ],
     ];
 
     /**
