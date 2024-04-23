@@ -7,13 +7,11 @@ import Swal from "sweetalert2/src/sweetalert2.js";
 import { RiDeleteBin2Line } from "react-icons/ri";
 import IconRequest from "../../services/requests/icon";
 import "ldrs/grid";
-import { setName } from "../../features/characters/updateCharacterSlice";
 
 export default function Characters() {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
   const characters = useSelector((state) => state.character.characters);
-  const char = useSelector((state) => state.char.character);
   const icons = useSelector((state) => state.icon.icons);
   const nameRef = useRef();
   const noteRef = useRef();
@@ -21,11 +19,9 @@ export default function Characters() {
   const iconRef = useRef();
 
   const updateCharacter = (id, data) => {
-    console.log(data);
     const response = CharacterRequest.update(id, data);
     response
       .then((data) => {
-        console.log(data);
       })
       .catch((error) => {
         console.error(error);
