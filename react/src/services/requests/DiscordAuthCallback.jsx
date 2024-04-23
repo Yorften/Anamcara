@@ -29,7 +29,7 @@ export default function DiscordAuthCallback() {
         dispatch(setIsLoading(false));
         navigate("/");
       })
-      .catch((error) => {
+      .catch(() => {
         navigate("/");
       });
   }, [dispatch]);

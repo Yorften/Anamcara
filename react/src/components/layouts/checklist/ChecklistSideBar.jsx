@@ -1,15 +1,14 @@
 import { Link } from "react-router-dom";
-import { CiBoxList } from "react-icons/ci";
-import { MdSpaceDashboard } from "react-icons/md";
-import { PiImageSquareDuotone } from "react-icons/pi";
-import { FaImages } from "react-icons/fa";
-import { BiSolidVideos } from "react-icons/bi";
+import { FaTasks } from "react-icons/fa";
+import { IoPersonSharp } from "react-icons/io5";
 import { IoMdSettings } from "react-icons/io";
+import { FaRegCheckSquare } from "react-icons/fa";
+
 
 
 
 // eslint-disable-next-line react/prop-types
-export default function AdminSideBar({ className }) {
+export default function ChecklistSideBar({ className }) {
   return (
     <div
       className={`fixed flex flex-col top-14 left-0 w-14 hover:w-64 md:w-64 bg-[#1C2434] h-full text-white transition-all duration-300 border-none z-10 sidebar ${className}`}
@@ -23,61 +22,46 @@ export default function AdminSideBar({ className }) {
           </li>
           <li>
             <Link
-              to={"/dashboard"}
+              to={"/checklist"}
               className='relative flex flex-row items-center h-11 focus:outline-none hover:bg-blue-800 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 pr-6'
             >
               <span className='inline-flex justify-center items-center [&>svg]:h-5 [&>svg]:w-5 ml-2 md:ml-4'>
-                <MdSpaceDashboard />
+                <FaRegCheckSquare />
               </span>
-              <span className='ml-2 tracking-wide truncate'>Dashboard</span>
+              <span className='ml-2 tracking-wide truncate'>Checklist</span>
             </Link>
           </li>
           <li>
             <Link
-              to={"/dashboard/applicants"}
+              to={"/checklist/tasks"}
               className='relative flex flex-row items-center h-11 focus:outline-none hover:bg-blue-800 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 pr-6'
             >
               <span className='inline-flex justify-center items-center [&>svg]:h-5 [&>svg]:w-5 ml-2 md:ml-4'>
-                <CiBoxList />
+                <FaTasks />
               </span>
-              <span className='ml-2 tracking-wide truncate'>Applicants</span>
-            </Link>
-          </li>
-          <li className='flex flex-col gap-2 p-1 bg-transparent/15 rounded'>
-            <div className='relative flex flex-row items-center h-11 focus:outline-none  text-white-600 border-l-4 border-transparent pr-6'>
-              <span className='inline-flex justify-center items-center [&>svg]:h-5 [&>svg]:w-5 ml-2 md:ml-4'>
-                <PiImageSquareDuotone />
-              </span>
-              <span className='ml-2 tracking-wide truncate'>Gallery</span>
-            </div>
-            <Link
-              to={"/dashboard/images"}
-              className='relative flex flex-row items-center h-11 focus:outline-none hover:bg-blue-800 text-gray-200 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 pr-6 ml-2 md:ml-4 text-sm'
-            >
-              <span className='inline-flex justify-center items-center [&>svg]:h-4 [&>svg]:w-4 ml-2 md:ml-4'>
-                <FaImages />
-              </span>
-              <span className='ml-2 tracking-wide truncate'>Images</span>
-            </Link>
-            <Link
-              to={"/dashboard/videos"}
-              className='relative flex flex-row items-center h-11 focus:outline-none hover:bg-blue-800 text-gray-200 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 pr-6 ml-2 md:ml-4 text-sm'
-            >
-              <span className='inline-flex justify-center items-center [&>svg]:h-4 [&>svg]:w-4 ml-2 md:ml-4'>
-                <BiSolidVideos />
-              </span>
-              <span className='ml-2 tracking-wide truncate'>Videos</span>
+              <span className='ml-2 tracking-wide truncate'>Tasks</span>
             </Link>
           </li>
           <li>
             <Link
-              to={"/dashboard/settings"}
+              to={"/checklist/characters"}
+              className='relative flex flex-row items-center h-11 focus:outline-none hover:bg-blue-800 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 pr-6'
+            >
+              <span className='inline-flex justify-center items-center [&>svg]:h-5 [&>svg]:w-5 ml-2 md:ml-4'>
+                <IoPersonSharp />
+              </span>
+              <span className='ml-2 tracking-wide truncate'>Characters</span>
+            </Link>
+          </li>
+          <li>
+            <Link
+              to={"/checklist/settings"}
               className='relative flex flex-row items-center h-11 focus:outline-none hover:bg-blue-800 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 pr-6'
             >
               <span className='inline-flex justify-center items-center [&>svg]:h-5 [&>svg]:w-5 ml-2 md:ml-4'>
                 <IoMdSettings />
               </span>
-              <span className='ml-2 tracking-wide truncate'>App Settings</span>
+              <span className='ml-2 tracking-wide truncate'>Settings</span>
             </Link>
           </li>
         </ul>

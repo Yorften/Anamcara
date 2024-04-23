@@ -2,8 +2,6 @@ import { createBrowserRouter } from "react-router-dom";
 import Apply from "./views/Apply";
 import Images from "./views/Images";
 import Videos from "./views/Videos";
-import WelcomeChecklist from "./views/checklist/Welcome";
-import ChecklistIndex from "./views/checklist/Index";
 import Tasks from "./views/checklist/Tasks";
 import Characters from "./views/checklist/Characters";
 import ChecklistSettings from "./views/checklist/Settings";
