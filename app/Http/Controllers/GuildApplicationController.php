@@ -94,7 +94,7 @@ class GuildApplicationController extends Controller
                 // Assign trail member role
                 $this->applicationService->assignRole($user);
 
-                // Remove Applicant role
+                // // Remove Applicant role
                 $this->applicationService->removeRole($user);
 
 
@@ -120,7 +120,7 @@ class GuildApplicationController extends Controller
             }
         }
 
-        return response(compact('message', 'msg'), 200);
+        return response(compact('message', 'msg', 'channel'), 200);
     }
 
     public function history()

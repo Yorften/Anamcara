@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import Index from "./../../../views/checklist/Index";
 import Welcome from "../../../views/checklist/Welcome";
-import AdminSideBar from "../dashboard/AdminSideBar";
+import AdminSideBar from './AdminSideBar';
 
 export default function ChecklistLayout() {
   const navigate = useNavigate();
@@ -15,7 +15,7 @@ export default function ChecklistLayout() {
   }
 
   return (
-    <>
+    <div>
       <div>
         {location.pathname === "/checklist" && !user && !isLoading && (
           <Welcome />
@@ -35,6 +35,6 @@ export default function ChecklistLayout() {
           </div>
         )}
       <Outlet />
-    </>
+    </div>
   );
 }

@@ -9,6 +9,10 @@ export default function DiscordAuthCallback() {
   const navigate = useNavigate();
   const url = new URL(window.location.href);
   const code = url.searchParams.get("code");
+  const error = url.searchParams.get("error");
+  if(error){
+    alert(error);
+  }
   const formData = new FormData();
 
   formData.append("code", code);
@@ -27,7 +31,7 @@ export default function DiscordAuthCallback() {
 
   return (
     <>
-      <div className='h-screen bg-[#313338] flex items-center justify-center text-white'>
+      <div className='h-screen bg-blue-800 flex items-center justify-center text-white'>
         <img
           src='/assets/images/Anamlogo_large_transparent.gif'
           className='h-60 w-60'

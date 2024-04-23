@@ -5,7 +5,7 @@ export default function Welcome() {
   return (
     <>
       <div className='relative px-4 md:px-14 bg-cover w-full h-[40vh] lg:h-[60vh] bg-fixed bg-right lg:bg-bottom bg-no-repeat bg-[url("/assets/images/legion-commanders.png")]'>
-        <div className='absolute stroke-1 top-28 lg:top-36 text-5xl lg:text-[66px]'>
+        <div className='absolute stroke-1 top-28 lg:top-36 text-5xl lg:text-[66px] text-stroke-1'>
           Welcome to checklist tool!
         </div>
       </div>

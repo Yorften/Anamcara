@@ -24,6 +24,7 @@ export default function Application() {
     const response = ApplicationRequest.update(id, payload);
     response
       .then((data) => {
+        console.log(data);
         setLoading(true);
         Swal.fire({
           title: "Success!",
@@ -141,7 +142,7 @@ export default function Application() {
               user={application.user}
               application={true}
             />
-            <div className='flex flex-col items-center gap-10 text-white [&>*]:bg-[#313338] [&>*]:text-lg mx-20'>
+            <div className='flex flex-col items-center gap-10 text-white [&>*]:bg-[#313338] [&>*]:text-lg mx-4 lg:mx-20'>
               <InputLayout id='in_server'>
                 <p>We are based in Elpon server, are you from Elpon?</p>
                 {application.in_server ? (
@@ -309,7 +310,7 @@ export default function Application() {
               </InputLayout>
             </div>
             {application.accepted == null ? (
-              <div className='flex items-center gap-2 text-white font-medium mx-20'>
+              <div className='flex items-center gap-2 text-white font-medium mx-4 lg:mx-20'>
                 <button
                   onClick={handleAccept}
                   className='w-1/2 text-center bg-[#787CAD] hover:bg-[#5e64a3] py-3 rounded-md shadow-lg'
