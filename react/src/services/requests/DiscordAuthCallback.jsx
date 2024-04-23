@@ -2,31 +2,36 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import AuthRequest from "./auth";
-import { setUser, setToken, setUserRoles, setIsLoading } from "../../features/auth/authSlice";
+import {
+  setUser,
+  setToken,
+  setUserRoles,
+  setIsLoading,
+} from "../../features/auth/authSlice";
 
 export default function DiscordAuthCallback() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const url = new URL(window.location.href);
   const code = url.searchParams.get("code");
-  const error = url.searchParams.get("error");
-  if(error){
-    alert(error);
-  }
+
   const formData = new FormData();
 
   formData.append("code", code);
 
   useEffect(() => {
     const response = AuthRequest.postAuth(formData);
-    response.then((data) => {
-      console.log(data);
-      dispatch(setUser(data.user));
-      dispatch(setToken(data.token));
-      dispatch(setUserRoles(data.user_roles));
-      dispatch(setIsLoading(false));
-      navigate("/");
-    });
+    response
+      .then((data) => {
+        dispatch(setUser(data.user));
+        dispatch(setToken(data.token));
+        dispatch(setUserRoles(data.user_roles));
+        dispatch(setIsLoading(false));
+        navigate("/");
+      })
+      .catch((error) => {
+        navigate("/");
+      });
   }, [dispatch]);
 
   return (
