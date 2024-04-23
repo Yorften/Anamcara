@@ -71,4 +71,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(GuildApplication::class);
     }
+
+    public function characters()
+    {
+        return $this->hasMany(Character::class);
+    }
 }

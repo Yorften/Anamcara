@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->boolean('tracked')->default(true);
             $table->enum('frequency', ['daily','weekly']);
             $table->integer('repetition');
             $table->integer('ilvl');

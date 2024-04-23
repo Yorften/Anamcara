@@ -11,13 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('custom_tasks', function (Blueprint $table) {
+        Schema::create('character_custom_task', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->enum('frequency', ['daily', 'weekly']);
-            $table->integer('repetition');
-            $table->integer('ilvl');
-            $table->foreignId('icon_id')->constrained();
+            $table->foreignId('custom_task_id')->constrained();
+            $table->foreignId('character_id')->constrained();
+            $table->integer('progress');
             $table->timestamps();
         });
     }
@@ -27,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('custom_tasks');
+        Schema::dropIfExists('character_custom_task');
     }
 };

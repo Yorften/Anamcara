@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class ClassIcon extends Model
 {
     use HasFactory;
+
+    public function characters()
+    {
+        return $this->hasMany(Character::class);
+    }
 }
