@@ -26,6 +26,7 @@ class CharacterController extends Controller
     public function store(StoreCharacterRequest $request)
     {
         $validated = $request->validated();
+        $validated['user_id'] = auth()->id();
         $character = Character::create($validated);
         if ($character) {
             event(new CharacterCreated($character));

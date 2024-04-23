@@ -23,7 +23,7 @@ export default function ChecklistLayout() {
       </div>
 
       <div className='h-full flex flex-col flex-auto flex-shrink-0 antialiased'>
-        <main className='ml-14 md:ml-64 min-h-screen h-full bg-[#314088]'>
+        <main className='ml-14 md:ml-56 min-h-screen h-full bg-[#313338]'>
           {user && (
             <ChecklistSideBar
               className={"top-[44px] sm:top-[52px] lg:top-[56px] shadow-xl"}

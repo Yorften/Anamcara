@@ -12,6 +12,7 @@ class Character extends Model
     protected $fillable = [
         'name',
         'note',
+        'ilvl',
         'class_icon_id',
         'user_id',
     ];

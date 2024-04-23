@@ -2,11 +2,11 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CharacterController;
+use App\Http\Controllers\ClassIconController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\GuildApplicationController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TaskController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VideoController;
@@ -32,9 +32,15 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/users/@me/guild', [UserController::class, 'guild']);
     Route::get('/users/roles', [UserController::class, 'updateUserRoles']);
     Route::post('/logout', [AuthController::class, 'logout']);
+
+    Route::get('/icons', [ClassIconController::class, 'index']);
+
     Route::apiResource('/images', GalleryController::class);
+
     Route::apiResource('/videos', VideoController::class);
+
     Route::apiResource('/characters', CharacterController::class);
+
     Route::apiResource('/tasks', TaskController::class);
 
 

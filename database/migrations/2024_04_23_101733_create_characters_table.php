@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('characters', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->text('note');
+            $table->text('note')->nullable();
             $table->foreignId('class_icon_id')->constrained();
             $table->timestamps();
         });

@@ -23,7 +23,7 @@ class StoreCharacterRequest extends FormRequest
     {
         return [
             'name' => 'required|string',
-            'note' => 'sometimes|string',
+            'note' => 'nullable|string',
             'ilvl' => 'required|integer',
             'class_icon_id' => 'required|integer',
         ];

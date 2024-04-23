@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  icons: null,
+  icons: [],
 };
 
 const iconSlice = createSlice({

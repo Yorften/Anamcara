@@ -8,7 +8,7 @@ import { FaRegCheckSquare } from "react-icons/fa";
 export default function ChecklistSideBar({ className }) {
   return (
     <div
-      className={`fixed flex flex-col top-14 left-0 w-14 hover:w-64 md:w-64 bg-[#1C2434] h-full text-white transition-all duration-300 border-none z-10 sidebar ${className}`}
+      className={`fixed flex flex-col top-14 left-0 w-14 hover:w-56 md:w-56 bg-[#1C2434] h-full text-white transition-all duration-300 border-none z-10 sidebar ${className}`}
     >
       <div className='overflow-y-auto overflow-x-hidden flex flex-col justify-between flex-grow'>
         <ul className='flex flex-col py-4 space-y-4'>
