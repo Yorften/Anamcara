@@ -21,8 +21,7 @@ export default function Characters() {
   const updateCharacter = (id, data) => {
     const response = CharacterRequest.update(id, data);
     response
-      .then((data) => {
-      })
+      .then(() => {})
       .catch((error) => {
         console.error(error);
         Swal.fire({
@@ -96,6 +95,13 @@ export default function Characters() {
 
   const tableRows = characters.map((character) => (
     <tr key={character.id}>
+      <td className='w-24'>
+        <img
+          src={`/public/assets/Icons/classes/${character.icon_path}`}
+          className='w-6 h-6'
+          alt=''
+        />
+      </td>
       <td>
         <input type='hidden' name='id' value={character.id} />
         <div className='flex flex-col gap-2'>
@@ -167,12 +173,6 @@ export default function Characters() {
         setLoading(false);
       } catch (error) {
         console.error(error);
-        Swal.fire({
-          title: "Error!",
-          html: error.message || "Unknown error",
-          icon: "error",
-          confirmButtonText: "Ok",
-        });
       }
     };
 
@@ -188,36 +188,38 @@ export default function Characters() {
             Manage & configure your roster
           </span>
         </p>
-        <table className=' w-full bg-[#141414] border-2 border-[#646464]'>
-          <thead className='border-2 border-[#646464]'>
-            <tr className='*:p-4'>
-              <th className='w-4/12 text-left indent-2 font-medium border-[#646464]'>
-                Characters
-              </th>
-              <th className='w-4/12'></th>
-              <th className='w-3/12'></th>
-              <th className='w-1/12'></th>
-            </tr>
-          </thead>
-          <tbody className='[&>*]:[&>*]:p-2 [&>*]:border-b-2 [&>*]:border-[#646464] '>
-            {loading && (
-              <tr>
-                <td colSpan={4} className='text-center'>
-                  <l-grid size='60' speed='1.5' color='white'></l-grid>
-                </td>
+        <div className='overflow-x-auto'>
+          <table className=' w-full bg-[#141414] border-2 border-[#646464] max-w-max min-w-[724px]'>
+            <thead className='border-2 border-[#646464]'>
+              <tr className='*:p-4'>
+                <th colSpan={2} className='w-3/12 text-left font-medium'>
+                  Characters
+                </th>
+                <th className='w-4/12'></th>
+                <th className='w-3/12'></th>
+                <th className='w-1/12'></th>
               </tr>
-            )}
-            {!loading && characters.length === 0 ? (
-              <tr>
-                <td colSpan={4} className='text-center'>
-                  No characters found
-                </td>
-              </tr>
-            ) : (
-              tableRows
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className='[&>*]:[&>*]:p-2 [&>*]:border-b-2 [&>*]:border-[#646464] '>
+              {loading && (
+                <tr>
+                  <td colSpan={4} className='text-center'>
+                    <l-grid size='60' speed='1.5' color='white'></l-grid>
+                  </td>
+                </tr>
+              )}
+              {!loading && characters.length === 0 ? (
+                <tr>
+                  <td colSpan={4} className='text-center'>
+                    No characters found
+                  </td>
+                </tr>
+              ) : (
+                tableRows
+              )}
+            </tbody>
+          </table>
+        </div>
         <table className=' w-full bg-[#141414] border-2 border-[#646464]'>
           <thead className='border-2 border-[#646464]'>
             <tr className='*:p-4'>

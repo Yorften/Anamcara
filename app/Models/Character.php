@@ -24,7 +24,7 @@ class Character extends Model
 
     public function icon()
     {
-        return $this->belongsTo(ClassIcon::class);
+        return $this->belongsTo(ClassIcon::class, 'class_icon_id');
     }
 
     public function assignedTasks()

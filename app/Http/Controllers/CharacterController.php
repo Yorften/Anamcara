@@ -16,8 +16,13 @@ class CharacterController extends Controller
      */
     public function index()
     {
-        $characters = Character::where('user_id', auth()->id())->get();
-        return response(new CharacterResource($characters));
+        $characters = Character::with('icon')->where('user_id', auth()->id())->get();
+        return response(new CharacterResource(
+            $characters->map(function ($character) {
+                $character->icon_path = $character->icon->path;
+                return $character;
+            })
+        ));
     }
 
     /**

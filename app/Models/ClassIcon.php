@@ -9,6 +9,8 @@ class ClassIcon extends Model
 {
     use HasFactory;
 
+    protected $table = 'class_icons';
+
     public function characters()
     {
         return $this->hasMany(Character::class);
