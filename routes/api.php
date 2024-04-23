@@ -38,7 +38,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::apiResource('/images', GalleryController::class);
 
     Route::apiResource('/videos', VideoController::class);
-
     Route::apiResource('/characters', CharacterController::class);
 
     Route::apiResource('/tasks', TaskController::class);

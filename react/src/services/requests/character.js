@@ -16,13 +16,13 @@ CharacterRequest.index = (params) => {
 
 CharacterRequest.update = (id, params) => {
   return axiosClient
-    .patch(`/characters/${id}`, params)
+    .put(`/characters/${id}`, params)
     .then((response) => response.data);
 };
 
-CharacterRequest.delete = (id, params) => {
+CharacterRequest.delete = (id) => {
   return axiosClient
-    .delete(`/characters/${id}`, params)
+    .delete(`/characters/${id}`)
     .then((response) => response.data);
 };
 

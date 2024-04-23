@@ -7,19 +7,60 @@ import Swal from "sweetalert2/src/sweetalert2.js";
 import { RiDeleteBin2Line } from "react-icons/ri";
 import IconRequest from "../../services/requests/icon";
 import "ldrs/grid";
+import { setName } from "../../features/characters/updateCharacterSlice";
 
 export default function Characters() {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
   const characters = useSelector((state) => state.character.characters);
+  const char = useSelector((state) => state.char.character);
   const icons = useSelector((state) => state.icon.icons);
-  const idRef = useRef(null);
   const nameRef = useRef();
   const noteRef = useRef();
   const ilvlRef = useRef();
   const iconRef = useRef();
 
-  const deleteCharacter = () => {};
+  const updateCharacter = (id, data) => {
+    console.log(data);
+    const response = CharacterRequest.update(id, data);
+    response
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.error(error);
+        Swal.fire({
+          title: "Error!",
+          html: error.message || "Unknown error",
+          icon: "error",
+          confirmButtonText: "Ok",
+        });
+      });
+  };
+
+  const deleteCharacter = (id) => {
+    const response = CharacterRequest.delete(id);
+    response
+      .then((data) => {
+        setLoading(true);
+        Swal.fire({
+          title: "Success!",
+          html: data.message,
+          icon: "success",
+          confirmButtonText: "Ok",
+        });
+      })
+      .catch((error) => {
+        console.error(error);
+        Swal.fire({
+          title: "Error!",
+          html: error.message || "Unknown error",
+          icon: "error",
+          confirmButtonText: "Ok",
+        });
+      });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const payload = {
@@ -29,7 +70,6 @@ export default function Characters() {
       class_icon_id: iconRef.current.value,
     };
 
-    console.log(payload);
     const response = CharacterRequest.store(payload);
     response
       .then((data) => {
@@ -66,7 +106,10 @@ export default function Characters() {
           <input
             type='text'
             name='name'
-            value={character.name}
+            defaultValue={character.name}
+            onBlur={(ev) =>
+              updateCharacter(character.id, { name: ev.target.value })
+            }
             className='bg-[#141414] p-2 rounded-sm'
           />
           <div>
@@ -74,8 +117,11 @@ export default function Characters() {
             <input
               type='text'
               name='ilvl'
+              onBlur={(ev) =>
+                updateCharacter(character.id, { ilvl: ev.target.value })
+              }
               className='bg-[#141414] ml-1 p-1 rounded-sm w-2/3 inline-block'
-              value={character.ilvl}
+              defaultValue={character.ilvl}
             />
           </div>
         </div>
@@ -87,23 +133,28 @@ export default function Characters() {
           rows='3'
           className='bg-[#141414] w-full text-sm'
           placeholder='Custom note, you can use it to set your bifrost info ect...'
-          value={character.note}
+          defaultValue={character.note}
+          onBlur={(ev) =>
+            updateCharacter(character.id, { note: ev.target.value })
+          }
         ></textarea>
       </td>
       <td>
         <select
           name='icon'
-          defaultValue='Select...'
           className='w-full bg-[#141414] text-sm'
-          value={character.class_icon_id}
+          defaultValue={character.class_icon_id}
+          onBlur={(ev) =>
+            updateCharacter(character.id, { class_icon_id: ev.target.value })
+          }
         >
-          {icons}
+          {options}
         </select>
       </td>
       <td className=' text-center'>
         <RiDeleteBin2Line
-          className='h-6 w-6 inline-block'
-          onClick={deleteCharacter}
+          className='h-6 w-6 inline-block cursor-pointer text-red-600'
+          onClick={() => deleteCharacter(character.id)}
         />
       </td>
     </tr>
@@ -144,7 +195,7 @@ export default function Characters() {
         <table className=' w-full bg-[#141414] border-2 border-[#646464]'>
           <thead className='border-2 border-[#646464]'>
             <tr className='*:p-4'>
-              <th className='w-4/12 text-left indent-4 font-light text-xl border-[#646464]'>
+              <th className='w-4/12 text-left indent-2 font-medium border-[#646464]'>
                 Characters
               </th>
               <th className='w-4/12'></th>
@@ -160,7 +211,7 @@ export default function Characters() {
                 </td>
               </tr>
             )}
-            {!loading && characters ? (
+            {!loading && characters.length === 0 ? (
               <tr>
                 <td colSpan={4} className='text-center'>
                   No characters found
@@ -176,7 +227,7 @@ export default function Characters() {
             <tr className='*:p-4'>
               <th
                 colSpan={4}
-                className='w-4/12 text-left indent-4 font-light text-xl border-[#646464]'
+                className='w-4/12 text-left indent-2 font-medium border-[#646464]'
               >
                 Add a character
               </th>

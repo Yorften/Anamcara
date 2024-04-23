@@ -39,7 +39,7 @@ class CharacterController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCharacterRequest $request, string $id)
+    public function update(UpdateCharacterRequest $request, $id)
     {
         try {
             $validated = $request->validated();
@@ -53,13 +53,14 @@ class CharacterController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
         try {
             $character = Character::findOrFail($id);
-            $character->dalete();
+            $character->delete();
+            return response('', 204);
         } catch (\Exception $e) {
-            return response(['error' => 'Character not found.'], 404);
+            return response(['error' => 'Character not found.'], 500);
         }
     }
 }
