@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Characters\StoreCharacterRequest;
+use App\Http\Requests\Characters\UpdateCharacterRequest;
+use App\Http\Resources\CharacterResource;
+use App\Models\Character;
 use Illuminate\Http\Request;
 
 class CharacterController extends Controller
@@ -11,21 +15,14 @@ class CharacterController extends Controller
      */
     public function index()
     {
-        //
+        $characters = Character::where('user_id', auth()->id())->get();
+        return response(new CharacterResource($characters));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function store(StoreCharacterRequest $request)
     {
         //
     }
@@ -33,9 +30,15 @@ class CharacterController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateCharacterRequest $request, string $id)
     {
-        //
+        try {
+            $validated = $request->validated();
+            $character = Character::findOrFail($id);
+            $character->update($validated);
+        } catch (\Exception $e) {
+            return response(['error' => 'Character not found.'], 404);
+        }
     }
 
     /**
@@ -43,6 +46,11 @@ class CharacterController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            $character = Character::findOrFail($id);
+            $character->dalete();
+        } catch (\Exception $e) {
+            return response(['error' => 'Character not found.'], 404);
+        }
     }
 }

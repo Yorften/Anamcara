@@ -22,7 +22,6 @@ class UpdateTaskRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id' => 'required|integer',
             'name' => 'sometimes|string',
             'frequency' => 'sometimes|string',
             'repetition' => 'sometimes|integer',

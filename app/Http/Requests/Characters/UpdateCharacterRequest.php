@@ -22,7 +22,6 @@ class UpdateCharacterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id' => 'required|integer',
             'name' => 'sometimes|string',
             'note' => 'sometimes|string',
             'ilvl' => 'sometimes|integer',

@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('character_custom_task', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('custom_task_id')->constrained();
-            $table->foreignId('character_id')->constrained();
-            $table->integer('progress');
+            $table->foreignId('custom_task_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('character_id')->constrained()->cascadeOnDelete();
+            $table->integer('progress')->default(0);
             $table->timestamps();
         });
     }
