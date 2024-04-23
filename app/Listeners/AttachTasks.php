@@ -21,11 +21,11 @@ class AttachTasks
     /**
      * Handle the event.
      */
-    public function handle(CharacterCreated $character): void
+    public function handle(CharacterCreated $characterCreated): void
     {
         $tasks = Task::pluck('id')->toArray();
         $customTasks = CustomTask::pluck('id')->toArray();
-        $character->assignedTasks()->attach($tasks);
-        $character->assignedCustomTasks()->attach($customTasks);
+        $characterCreated->character->assignedTasks()->attach($tasks);
+        $characterCreated->character->assignedCustomTasks()->attach($customTasks);
     }
 }
