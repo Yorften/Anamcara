@@ -4,12 +4,9 @@ import Images from "./views/Images";
 import Videos from "./views/Videos";
 import Tasks from "./views/checklist/Tasks";
 import Characters from "./views/checklist/Characters";
-import ChecklistSettings from "./views/checklist/Settings";
 import DashboardSettings from "./views/dashboard/Settings";
 import DashboardImages from "./views/dashboard/Images";
 import DashboardVideos from "./views/dashboard/Videos";
-import Members from "./views/dashboard/Members";
-import GlobalChat from "./views/dashboard/GlobalChat";
 import Applicants from "./views/dashboard/Applicants";
 import NotFound from "./views/NotFound";
 import DefaultLayout from "./components/layouts/default/DefaultLayout";
@@ -52,11 +49,6 @@ const router = createBrowserRouter([
             path: "/checklist/characters",
             element: <Characters />,
           },
-
-          {
-            path: "/checklist/settings",
-            element: <ChecklistSettings />,
-          },
         ],
       },
     ],
@@ -79,16 +71,6 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/applicants/:id",
         element: <Application />,
-      },
-
-      {
-        path: "/dashboard/global-chat",
-        element: <GlobalChat />,
-      },
-
-      {
-        path: "/dashboard/members",
-        element: <Members />,
       },
 
       {
