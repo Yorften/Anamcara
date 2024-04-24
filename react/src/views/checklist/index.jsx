@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import CharacterRequest from "../../services/requests/character";
 import {
   setCharacters,
@@ -13,6 +13,10 @@ import "ldrs/grid";
 export default function Index() {
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.character.loading);
+  const [isLoading, setIsLoading] = useState(true);
+  const characters = useSelector((state) => state.character.characters);
+  const tasks = useSelector((state) => state.task.tasks);
+  const custom = useSelector((state) => state.task.custom);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -21,14 +25,11 @@ export default function Index() {
         const defaultTasksData = await TaskRequest.default();
         const customTasksData = await TaskRequest.custom();
 
-        console.log(characterData);
-        console.log(defaultTasksData);
-        console.log(customTasksData);
-
         dispatch(setCharacters(characterData));
         dispatch(setTasks(defaultTasksData));
         dispatch(setCustom(customTasksData));
         dispatch(setLoading(false));
+        setIsLoading(false);
       } catch (error) {
         console.error(error);
       }
@@ -47,7 +48,7 @@ export default function Index() {
           </span>
         </p>
         <div className='overflow-x-auto'>
-          {loading ? (
+          {isLoading ? (
             <div className='h-full w-full flex items-center justify-center'>
               <l-grid size='120' speed='1.5' color='white'></l-grid>
             </div>

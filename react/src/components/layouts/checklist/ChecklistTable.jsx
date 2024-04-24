@@ -92,13 +92,13 @@ export default function ChecklistTable() {
           character.pivot.progress === task.repetition ? (
             <td
               key={character.id}
-              className='text-center border-2 border-[#646464]'
+              className='text-center border-2 border-[#646464] bg-green-500/20'
             >
               <div className='flex items-center justify-center gap-2'>
                 <div
                   id={`checkbox${character.id}${task.id}`}
                   onClick={() => handleClick(character.id, task.id)}
-                  className=' bg-transparent/50 mx-8 py-2 rounded hover:bg-transparent/25 select-none'
+                  className=' bg-transparent/50 px-4 py-2 rounded hover:bg-transparent/25 select-none'
                   disabled
                 >
                   {character.pivot.progress}/{task.repetition}
