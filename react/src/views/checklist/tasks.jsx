@@ -97,7 +97,7 @@ export default function Tasks() {
 
   const tableRows = tasks.map((task) => (
     <tr key={task.id}>
-      <td className='w-24'>
+      <td className='w-16 md:w-14 lg:w-10'>
         <img
           src={`/assets/Icons/tasks/${task.icon_path}`}
           className='w-6 h-6'

@@ -171,7 +171,7 @@ export default function Apply() {
         className='object-contain h-full'
         alt=''
       />
-      <div className='my-20 mx-6 md:mx-20'>
+      <div className='my-4 lg:my-20 mx-2 md:mx-20'>
         {isLoading ? (
           <div className='w-full h-80 flex items-center justify-center'>
             <img
@@ -192,11 +192,13 @@ export default function Apply() {
           <div></div>
         ) : (
           <>
-            <p className='text-5xl mb-20'>Application form</p>
-            <div className='min-h-screen h-full bg-transparent/25 rounded-md px-4 py-4 md:px-20 md:py-10'>
+            <p className='text-2xl lg:text-5xl mb-4 lg:mb-20'>
+              Application form
+            </p>
+            <div className='min-h-screen h-full w-full bg-transparent/25 rounded-md px-4 py-4 mx-auto md:py-20'>
               <form
                 encType='multipart/form-data'
-                className='flex flex-col items-center gap-10'
+                className='flex flex-col items-center gap-10 [&>*]:md:text-lg [&>*]:text-sm mx-4 lg:px-20'
                 onSubmit={onSubmit}
               >
                 <InputLayout id='in_server'>
@@ -238,7 +240,7 @@ export default function Apply() {
                           type='text'
                           id='server_name'
                           placeholder='Serve name'
-                          className='placeholder:text-[#A6AEB7] placeholder:text-sm placeholder:font-medium focus:ring-gray-600 focus:ring-2 rounded-sm bg-[#18191C] w-80 py-3 border-none hidden'
+                          className='placeholder:text-[#A6AEB7] placeholder:text-sm placeholder:font-light focus:ring-gray-600 focus:ring-2 rounded-sm bg-[#18191C] w-80 py-3 border-none hidden'
                           ref={serverNameRef}
                         />
                       </label>
@@ -264,7 +266,7 @@ export default function Apply() {
                     name='description'
                     id='desc'
                     cols='30'
-                    rows='10'
+                    rows='5'
                     className='p-2 focus:ring-gray-600 focus:ring-2 rounded-sm bg-[#18191C] border-none'
                     ref={descriptionRef}
                   ></textarea>
@@ -279,7 +281,7 @@ export default function Apply() {
                   />
                   <div className='flex flex-col'>
                     <input
-                      className=' bg-[#4F545C] w-fit rounded shadow-md text-base'
+                      className=' bg-[#4F545C] w-full rounded shadow-md text-base'
                       type='file'
                       id='image'
                     />
@@ -292,7 +294,7 @@ export default function Apply() {
                     name='experience'
                     id='exp'
                     cols='30'
-                    rows='10'
+                    rows='5'
                     className='p-2 focus:ring-gray-600 focus:ring-2 rounded-sm bg-[#18191C] border-none'
                     ref={experienceRef}
                   ></textarea>
@@ -303,7 +305,7 @@ export default function Apply() {
                     type='text'
                     id='playtime'
                     placeholder='Playtime'
-                    className='placeholder:text-[#A6AEB7] placeholder:text-sm placeholder:font-medium focus:ring-gray-600 focus:ring-2 rounded-sm bg-[#18191C] w-full lg:w-[60%] py-3 border-none'
+                    className='placeholder:text-[#A6AEB7] placeholder:text-sm placeholder:font-light focus:ring-gray-600 focus:ring-2 rounded-sm bg-[#18191C] w-full lg:w-[60%] py-3 border-none'
                     ref={playTimeRef}
                   />
                 </InputLayout>
@@ -398,7 +400,7 @@ export default function Apply() {
                           type='text'
                           id='reason'
                           placeholder='Reason'
-                          className='placeholder:text-[#A6AEB7] placeholder:text-sm placeholder:font-medium focus:ring-gray-600 focus:ring-2 rounded-sm bg-[#18191C] w-52 lg:w-80 py-3 border-none hidden'
+                          className='placeholder:text-[#A6AEB7] placeholder:text-sm placeholder:font-light focus:ring-gray-600 focus:ring-2 rounded-sm bg-[#18191C] w-52 lg:w-80 py-3 border-none hidden'
                           ref={gveRef}
                         />
                       </label>
@@ -420,8 +422,8 @@ export default function Apply() {
                   <input
                     type='text'
                     id='expectations'
-                    placeholder=''
-                    className='placeholder:text-[#A6AEB7] placeholder:text-sm placeholder:font-medium focus:ring-gray-600 focus:ring-2 rounded-sm bg-[#18191C] w-full lg:w-[60%] py-3 border-none'
+                    placeholder='Expectations'
+                    className='placeholder:text-[#A6AEB7] placeholder:text-sm placeholder:font-light focus:ring-gray-600 focus:ring-2 rounded-sm bg-[#18191C] w-full lg:w-[60%] py-3 border-none'
                     ref={serverExpectationsRef}
                   />
                 </InputLayout>
@@ -430,9 +432,9 @@ export default function Apply() {
                   <input
                     type='text'
                     id='inquiry'
-                    placeholder=''
+                    placeholder='Source'
                     ref={inquirySourceRef}
-                    className='placeholder:text-[#A6AEB7] placeholder:text-sm placeholder:font-medium focus:ring-gray-600 focus:ring-2 rounded-sm bg-[#18191C] w-full lg:w-[60%] py-3 border-none'
+                    className='placeholder:text-[#A6AEB7] placeholder:text-sm placeholder:font-light focus:ring-gray-600 focus:ring-2 rounded-sm bg-[#18191C] w-full lg:w-[60%] py-3 border-none'
                   />
                 </InputLayout>
                 <InputLayout id='additional_info'>
@@ -441,8 +443,8 @@ export default function Apply() {
                   <input
                     type='text'
                     id='info'
-                    placeholder=''
-                    className='placeholder:text-[#A6AEB7] placeholder:text-sm placeholder:font-medium focus:ring-gray-600 focus:ring-2 rounded-sm bg-[#18191C] w-full lg:w-[60%] py-3 border-none'
+                    placeholder='Info'
+                    className='placeholder:text-[#A6AEB7] placeholder:text-sm placeholder:font-light focus:ring-gray-600 focus:ring-2 rounded-sm bg-[#18191C] w-full lg:w-[60%] py-3 border-none'
                     ref={additionalInfoRef}
                   />
                 </InputLayout>
@@ -452,8 +454,8 @@ export default function Apply() {
                   <input
                     type='text'
                     id='cooldown'
-                    placeholder=''
-                    className='placeholder:text-[#A6AEB7] placeholder:text-sm placeholder:font-medium focus:ring-gray-600 focus:ring-2 rounded-sm bg-[#18191C] w-full lg:w-[60%] py-3 border-none'
+                    placeholder='Guild / Previous guild'
+                    className='placeholder:text-[#A6AEB7] placeholder:text-sm placeholder:font-light focus:ring-gray-600 focus:ring-2 rounded-sm bg-[#18191C] w-full lg:w-[60%] py-3 border-none'
                     ref={guildCooldownRef}
                   />
                 </InputLayout>
@@ -464,7 +466,7 @@ export default function Apply() {
                     type='text'
                     id='acquant'
                     placeholder='IGN'
-                    className='placeholder:text-[#A6AEB7] placeholder:text-sm placeholder:font-medium focus:ring-gray-600 focus:ring-2 rounded-sm bg-[#18191C] w-full lg:w-[60%] py-3 border-none'
+                    className='placeholder:text-[#A6AEB7] placeholder:text-sm placeholder:font-light focus:ring-gray-600 focus:ring-2 rounded-sm bg-[#18191C] w-full lg:w-[60%] py-3 border-none'
                     ref={acquaintancesRef}
                   />
                 </InputLayout>

@@ -70,7 +70,6 @@ export default function ChecklistTable() {
 
   const tableHeads = characters.map((character) => {
     const width = `${90 / characters.length}%`;
-
     return (
       <td
         key={character.id}
@@ -147,6 +146,14 @@ export default function ChecklistTable() {
       </tr>
     ))
     .concat(
+      <tr>
+        <td
+          className='text-center bg-[#090909] '
+          colSpan={characters.length + 1}
+        >
+          Custom Tasks
+        </td>
+      </tr>,
       custom.map((task) => (
         <tr key={"prog" + task.id}>
           <td className='border-2 border-[#646464]'>
@@ -214,6 +221,14 @@ export default function ChecklistTable() {
           </tr>
         </thead>
         <tbody className='[&>*]:[&>*]:px-2 [&>*]:[&>*]:py-3 [&>*]:border-b-2 [&>*]:border-[#646464] '>
+          <tr>
+            <td
+              className='text-center bg-[#090909] '
+              colSpan={characters.length + 1}
+            >
+              Default Tasks
+            </td>
+          </tr>
           {tableRows}
         </tbody>
       </table>

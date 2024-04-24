@@ -11,6 +11,7 @@ import {
 import { Link } from "react-router-dom";
 import { Dropdown } from "flowbite-react";
 import { useSelector } from "react-redux";
+import MobileNav from "./MobileNav";
 
 export default function Navigation() {
   const token = useSelector((state) => state.auth.token);
@@ -116,8 +117,8 @@ export default function Navigation() {
   );
 
   return (
-    <Navbar className='sticky top-0 z-10 h-max max-w-full rounded-none px-4 py-2 bg-[#313878] border-0 shadow-none'>
-      <div className='flex items-center justify-between text-blue-gray-900'>
+    <Navbar className='sticky top-0 z-10 h-max max-w-full rounded-none lg:px-4 py-2 bg-[#313878] border-0 shadow-none'>
+      <div className='flex items-center justify-between text-blue-gray-900 px-4 py-2 lg:py-0 lg:px-0'>
         <Logo />
         <div className='flex items-center order-3 gap-4'>
           <div className='mr-4 hidden lg:block'>{navList}</div>
@@ -168,8 +169,10 @@ export default function Navigation() {
         )}
       </div>
       <Collapse open={openNav}>
-        {/* Mobile Nav */}
-        <div></div>
+        <MobileNav
+          scrollToAboutUs={scrollToAboutUs}
+          scrollToJoinUs={scrollToJoinUs}
+        />
       </Collapse>
     </Navbar>
   );

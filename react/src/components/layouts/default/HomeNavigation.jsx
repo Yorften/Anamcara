@@ -13,6 +13,7 @@ import { Dropdown } from "flowbite-react";
 import Hero from "./Hero";
 import Recruiting from "./Recruiting";
 import { useSelector } from "react-redux";
+import MobileNav from "./MobileNav";
 
 export default function Navigation() {
   const token = useSelector((state) => state.auth.token);
@@ -119,8 +120,8 @@ export default function Navigation() {
 
   return (
     <section className='bg-[url("/assets/images/hero.png")] md:bg-[center_bottom_5rem] bg-contain bg-no-repeat h-[116vw]'>
-      <Navbar className='sticky top-0 z-10 h-max max-w-full rounded-none px-4 py-2 bg-transparent/15 border-0 shadow-none'>
-        <div className='flex items-center justify-between text-blue-gray-900'>
+      <Navbar className='sticky top-0 z-10 h-max max-w-full rounded-none lg:px-4 py-2 bg-transparent/15 border-0 shadow-none'>
+        <div className='flex items-center justify-between text-blue-gray-900 px-4 py-2 lg:py-0 lg:px-0'>
           <Logo />
           <div className='flex items-center order-3 gap-4'>
             <div className='mr-4 hidden lg:block'>{navList}</div>
@@ -170,9 +171,8 @@ export default function Navigation() {
             <DiscordButton className='lg:flex hidden' />
           )}
         </div>
-        <Collapse open={openNav}>
-          {/* Mobile Nav */}
-          <div></div>
+        <Collapse className="bg-blue-900" open={openNav}>
+          <MobileNav />
         </Collapse>
       </Navbar>
       <Hero />

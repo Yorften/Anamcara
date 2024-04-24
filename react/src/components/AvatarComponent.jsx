@@ -16,9 +16,9 @@ export default function AvatarComponent({
         className='flex items-center'
       />
       {user.nick ? (
-        <p className='hidden md:block'>{user.nick}</p>
+        <p>{user.nick}</p>
       ) : (
-        <p className='hidden md:block'>{user.username}</p>
+        <p>{user.username}</p>
       )}
       {!application && <IoIosArrowDown />}
     </div>
