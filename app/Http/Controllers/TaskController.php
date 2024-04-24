@@ -56,11 +56,11 @@ class TaskController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
         try {
             $customTask = CustomTask::findOrFail($id);
-            $customTask->dalete();
+            $customTask->delete();
             return response('', 204);
         } catch (\Exception $e) {
             return response(['error' => 'Task not found.'], 404);

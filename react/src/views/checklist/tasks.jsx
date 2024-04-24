@@ -28,7 +28,7 @@ export default function Tasks() {
         Swal.fire({
           title: "Error!",
           html: error.message || "Unknown error",
-          icon: "error",
+          icon: "error",  
           confirmButtonText: "Ok",
         });
       });
@@ -99,7 +99,7 @@ export default function Tasks() {
     <tr key={task.id}>
       <td className='w-24'>
         <img
-          src={`/public/assets/Icons/classes/${task.icon_path}`}
+          src={`/public/assets/Icons/tasks/${task.icon_path}`}
           className='w-6 h-6'
           alt=''
         />
@@ -130,9 +130,9 @@ export default function Tasks() {
           <input
             type='text'
             name='repitition'
-            defaultValue={task.repitition}
+            defaultValue={task.repetition}
             onBlur={(ev) =>
-              updateTask(task.id, { repitition: ev.target.value })
+              updateTask(task.id, { repetition: ev.target.value })
             }
             className='bg-[#141414] p-2 rounded-sm'
           />

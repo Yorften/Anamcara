@@ -23,6 +23,6 @@ class AttachCharacters
     public function handle(TaskCreated $taskCreated): void
     {
         $characters = Character::where('user_id', auth()->id())->pluck('id')->toArray();
-        $taskCreated->task->attach($characters);
+        $taskCreated->task->characters()->attach($characters);
     }
 }

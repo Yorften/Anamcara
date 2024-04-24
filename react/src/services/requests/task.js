@@ -16,7 +16,7 @@ TaskRequest.index = (params) => {
 
 TaskRequest.update = (id, params) => {
   return axiosClient
-    .patch(`/tasks/${id}`, params)
+    .put(`/tasks/${id}`, params)
     .then((response) => response.data);
 };
 
