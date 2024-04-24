@@ -21,20 +21,18 @@ export default function ChecklistLayout() {
           <Welcome />
         )}
       </div>
-
       <div className='h-full flex flex-col flex-auto flex-shrink-0 antialiased'>
-        <main className='ml-14 md:ml-56 min-h-screen h-full bg-[#313338]'>
-          {user && (
+        {user && (
+          <main className='ml-14 md:ml-56 min-h-screen h-full bg-[#313338]'>
             <ChecklistSideBar
               className={"top-[44px] sm:top-[52px] lg:top-[56px] shadow-xl"}
             />
-          )}
-
-          {user &&
-            (location.pathname === "/checklist" ||
-              location.pathname === "/checklist/") && <Index />}
-          <Outlet />
-        </main>
+            {user &&
+              (location.pathname === "/checklist" ||
+                location.pathname === "/checklist/") && <Index />}
+            <Outlet />
+          </main>
+        )}
       </div>
     </div>
   );

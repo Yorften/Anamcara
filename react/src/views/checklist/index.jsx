@@ -1,11 +1,35 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
+import "ldrs/grid";
 
 export default function Index() {
-  const user = useSelector((state) => state.auth.user);
+  const dispatch = useDispatch();
+  const [loading, setLoading] = useState(true);
 
   return (
     <>
-        <div className='text-5xl'>Index</div>
+      <div className='flex flex-col gap-10 p-4'>
+        <p className='text-lg'>
+          Tasks manager{" "}
+          <span className='text-xs text-gray-400'>
+            Manage & keep track of your tasks
+          </span>
+        </p>
+        <div className='overflow-x-auto'>
+          <table className='bg-[#141414] border-2 border-[#646464] min-w-[724px] w-full'>
+            <thead className='border-2 border-[#646464]'>
+              <tr className='*:p-4'>
+               
+              </tr>
+            </thead>
+            <tbody className='[&>*]:[&>*]:p-2 [&>*]:border-b-2 [&>*]:border-[#646464] '>
+              <tr>
+                
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </>
   );
 }
