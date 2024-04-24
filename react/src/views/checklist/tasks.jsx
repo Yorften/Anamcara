@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import Swal from "sweetalert2/src/sweetalert2.js";
 import { RiDeleteBin2Line } from "react-icons/ri";
 import IconRequest from "../../services/requests/icon";
-import TaskRequest from './../../services/requests/task';
+import TaskRequest from "./../../services/requests/task";
 import "ldrs/grid";
 
 export default function Tasks() {
@@ -19,7 +19,7 @@ export default function Tasks() {
   const freqRef = useRef();
   const iconRef = useRef();
 
-  const updateCharacter = (id, data) => {
+  const updateTask = (id, data) => {
     const response = TaskRequest.update(id, data);
     response
       .then(() => {})
@@ -34,7 +34,7 @@ export default function Tasks() {
       });
   };
 
-  const deleteCharacter = (id) => {
+  const deleteTask = (id) => {
     const response = TaskRequest.delete(id);
     response
       .then((data) => {
@@ -60,7 +60,11 @@ export default function Tasks() {
   const handleSubmit = (e) => {
     e.preventDefault();
     const payload = {
-     
+      name: nameRef.current.value,
+      ilvl: ilvlRef.current.value,
+      repetition: repetitionRef.current.value,
+      frequency: freqRef.current.value,
+      icon_id: iconRef.current.value,
     };
 
     const response = TaskRequest.store(payload);
@@ -91,25 +95,22 @@ export default function Tasks() {
     </option>
   ));
 
-  const tableRows = tasks.map((character) => (
-    <tr key={character.id}>
+  const tableRows = tasks.map((task) => (
+    <tr key={task.id}>
       <td className='w-24'>
         <img
-          src={`/public/assets/Icons/classes/${character.icon_path}`}
+          src={`/public/assets/Icons/classes/${task.icon_path}`}
           className='w-6 h-6'
           alt=''
         />
       </td>
       <td>
-        <input type='hidden' name='id' value={character.id} />
         <div className='flex flex-col gap-2'>
           <input
             type='text'
             name='name'
-            defaultValue={character.name}
-            onBlur={(ev) =>
-              updateCharacter(character.id, { name: ev.target.value })
-            }
+            defaultValue={task.name}
+            onBlur={(ev) => updateTask(task.id, { name: ev.target.value })}
             className='bg-[#141414] p-2 rounded-sm'
           />
           <div>
@@ -117,36 +118,41 @@ export default function Tasks() {
             <input
               type='text'
               name='ilvl'
-              onBlur={(ev) =>
-                updateCharacter(character.id, { ilvl: ev.target.value })
-              }
+              onBlur={(ev) => updateTask(task.id, { ilvl: ev.target.value })}
               className='bg-[#141414] ml-1 p-1 rounded-sm w-2/3 inline-block'
-              defaultValue={character.ilvl}
+              defaultValue={task.ilvl}
             />
           </div>
         </div>
       </td>
       <td>
-        <textarea
-          name='note'
-          id=''
-          rows='3'
-          className='bg-[#141414] w-full text-sm'
-          placeholder='Custom note, you can use it to set your bifrost info ect...'
-          defaultValue={character.note}
-          onBlur={(ev) =>
-            updateCharacter(character.id, { note: ev.target.value })
-          }
-        ></textarea>
+        <div className='flex flex-col gap-2'>
+          <input
+            type='text'
+            name='repitition'
+            defaultValue={task.repitition}
+            onBlur={(ev) =>
+              updateTask(task.id, { repitition: ev.target.value })
+            }
+            className='bg-[#141414] p-2 rounded-sm'
+          />
+          <select
+            name='freq'
+            className='bg-[#141414] w-full text-sm'
+            onBlur={(ev) => updateTask(task.id, { frequency: ev.target.value })}
+            defaultValue={task.frequency}
+          >
+            <option value='daily'>Daily</option>
+            <option value='weekly'>Weekly</option>
+          </select>
+        </div>
       </td>
       <td>
         <select
           name='icon'
           className='w-full bg-[#141414] text-sm'
-          defaultValue={character.class_icon_id}
-          onBlur={(ev) =>
-            updateCharacter(character.id, { class_icon_id: ev.target.value })
-          }
+          defaultValue={task.icon_id}
+          onBlur={(ev) => updateTask(task.id, { icon_id: ev.target.value })}
         >
           {options}
         </select>
@@ -154,7 +160,7 @@ export default function Tasks() {
       <td className=' text-center'>
         <RiDeleteBin2Line
           className='h-6 w-6 inline-block cursor-pointer text-red-600'
-          onClick={() => deleteCharacter(character.id)}
+          onClick={() => deleteTask(task.id)}
         />
       </td>
     </tr>
@@ -208,7 +214,7 @@ export default function Tasks() {
               ) : tasks.length === 0 ? (
                 <tr>
                   <td colSpan={4} className='text-center'>
-                    No characters found
+                    No tasks found
                   </td>
                 </tr>
               ) : (

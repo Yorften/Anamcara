@@ -103,7 +103,6 @@ export default function Characters() {
         />
       </td>
       <td>
-        <input type='hidden' name='id' value={character.id} />
         <div className='flex flex-col gap-2'>
           <input
             type='text'

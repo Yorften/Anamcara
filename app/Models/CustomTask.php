@@ -15,6 +15,7 @@ class CustomTask extends Model
         'repetition',
         'ilvl',
         'icon_id',
+        'user_id',
     ];
 
     public function user()
