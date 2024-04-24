@@ -130,6 +130,12 @@ export default function Apply() {
             })
             .catch((error) => {
               console.error(error);
+              Swal.fire({
+                title: "Error!",
+                html: error.response.data.message,
+                icon: "error",
+                confirmButtonText: "Ok",
+              });
             });
         }
       } else {

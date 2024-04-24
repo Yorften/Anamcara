@@ -48,7 +48,7 @@ class GuildApplicationController extends Controller
         $guildApplications = GuildApplication::where('user_id', auth()->id())->get();
         foreach ($guildApplications as $application) {
             if ($application->accepted === null) {
-                return response(['message' => 'You already have a pending application.'], 200);
+                return response(['message' => 'You already have a pending application.'], 500);
             }
         }
         $validated = $request->validated();
