@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Role;
 use App\Models\User;
 use Exception;
 use Illuminate\Support\Facades\Http;
@@ -10,13 +11,14 @@ use Illuminate\Support\Facades\Log;
 
 class GuildApplicationService
 {
-    public function assignRole($user)
+    public function assignRole($role, $user)
     {
         try {
+            $role = Role::where('name', $role)->firstOrFail();
             Http::withHeaders([
                 'Authorization' => 'Bot ' . env('DISCORD_APPLICATION_TOKEN'),
                 'Content-Type' => 'application/x-www-form-urlencoded',
-            ])->put('https://discord.com/api/guilds/' . env('DISCORD_GUILD_ID') . '/members/' . $user->id . '/roles/1006171675307548712');
+            ])->put('https://discord.com/api/guilds/' . env('DISCORD_GUILD_ID') . '/members/' . $user->id . '/roles/' . $role->id);
         } catch (\Exception $e) {
             Log::error('Error sending message: ' . $e->getMessage());
 
@@ -24,13 +26,14 @@ class GuildApplicationService
         }
     }
 
-    public function removeRole($user)
+    public function removeRole($role, $user)
     {
         try {
+            $role = Role::where('name', $role)->firstOrFail();
             Http::withHeaders([
                 'Authorization' => 'Bot ' . env('DISCORD_APPLICATION_TOKEN'),
                 'Content-Type' => 'application/x-www-form-urlencoded',
-            ])->delete('https://discord.com/api/guilds/' . env('DISCORD_GUILD_ID') . '/members/' . $user->id . '/roles/1132835277543583854');
+            ])->delete('https://discord.com/api/guilds/' . env('DISCORD_GUILD_ID') . '/members/' . $user->id . '/roles/' . $role->id);
         } catch (\Exception $e) {
             Log::error('Error sending message: ' . $e->getMessage());
 

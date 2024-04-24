@@ -99,10 +99,10 @@ class GuildApplicationController extends Controller
 
             if ($validated['accepted']) {
                 // Assign trail member role
-                $this->applicationService->assignRole($user);
+                $this->applicationService->assignRole('Trial Member',$user);
 
                 // // Remove Applicant role
-                $this->applicationService->removeRole($user);
+                $this->applicationService->removeRole('Applicant',$user);
 
 
                 // Send a DM to the applicant

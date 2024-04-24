@@ -41,7 +41,7 @@ export default function Index() {
         <p className='text-lg'>
           Checklist{" "}
           <span className='text-xs text-gray-400'>
-            Track your daily and weekly tasks with automated resets
+            Track your daily and weekly tasks.
           </span>
         </p>
         <div className='overflow-x-auto'>
