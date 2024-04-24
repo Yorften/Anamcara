@@ -35,12 +35,14 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::get('/icons', [ClassIconController::class, 'index']);
     Route::get('/icons/tasks', [ClassIconController::class, 'taskIndex']);
+    Route::get('/characters/tasks', [CharacterController::class, 'checklist']);
 
     Route::apiResource('/images', GalleryController::class);
 
     Route::apiResource('/videos', VideoController::class);
-    
+
     Route::apiResource('/characters', CharacterController::class);
+
 
     Route::apiResource('/tasks', TaskController::class);
 

@@ -26,4 +26,10 @@ CharacterRequest.delete = (id) => {
     .then((response) => response.data);
 };
 
+CharacterRequest.checklist = (params) => {
+  return axiosClient
+    .get("/characters/tasks", params)
+    .then((response) => response.data);
+};
+
 export default CharacterRequest;

@@ -1,10 +1,26 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "ldrs/grid";
+import CharacterRequest from "../../services/requests/character";
+import { setCharacters } from "../../features/characters/characterSlice";
 
 export default function Index() {
   const dispatch = useDispatch();
+  const characters = useSelector((state) => state.character.characters);
   const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const response = CharacterRequest.checklist();
+    response
+      .then((data) => {
+        console.log(data);
+        dispatch(setCharacters(data));
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
 
   return (
     <>

@@ -25,6 +25,12 @@ class CharacterController extends Controller
         ));
     }
 
+    public function checklist()
+    {
+        $characters = Character::with('icon', 'assignedTasks.icon', 'assignedCustomTasks.icon')->where('user_id', auth()->id())->get();
+        return response(new CharacterResource($characters));
+    }
+
     /**
      * Store a newly created resource in storage.
      */
