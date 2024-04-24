@@ -34,6 +34,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
 
     Route::get('/icons', [ClassIconController::class, 'index']);
+    Route::get('/icons/tasks', [ClassIconController::class, 'taskIndex']);
 
     Route::apiResource('/images', GalleryController::class);
 

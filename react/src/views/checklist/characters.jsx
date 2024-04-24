@@ -189,10 +189,10 @@ export default function Characters() {
           </span>
         </p>
         <div className='overflow-x-auto'>
-          <table className=' w-full bg-[#141414] border-2 border-[#646464] max-w-max min-w-[724px]'>
+          <table className='bg-[#141414] border-2 border-[#646464] min-w-[724px] w-full'>
             <thead className='border-2 border-[#646464]'>
               <tr className='*:p-4'>
-                <th colSpan={2} className='w-3/12 text-left font-medium'>
+                <th colSpan={2} className='w-4/12 text-left font-medium'>
                   Characters
                 </th>
                 <th className='w-4/12'></th>
@@ -201,14 +201,13 @@ export default function Characters() {
               </tr>
             </thead>
             <tbody className='[&>*]:[&>*]:p-2 [&>*]:border-b-2 [&>*]:border-[#646464] '>
-              {loading && (
+              {loading ? (
                 <tr>
                   <td colSpan={4} className='text-center'>
                     <l-grid size='60' speed='1.5' color='white'></l-grid>
                   </td>
                 </tr>
-              )}
-              {!loading && characters.length === 0 ? (
+              ) : characters.length === 0 ? (
                 <tr>
                   <td colSpan={4} className='text-center'>
                     No characters found

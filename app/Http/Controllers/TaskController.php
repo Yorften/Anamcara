@@ -16,8 +16,11 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $tasks = CustomTask::all();
-        return response(new TaskResource($tasks));
+        $tasks = CustomTask::with('icon')->where('user_id', auth()->id())->get();
+        return response(new TaskResource($tasks->map(function ($task) {
+            $task->icon_path = $task->icon->path;
+            return $task;
+        })));
     }
 
     /**
@@ -26,6 +29,7 @@ class TaskController extends Controller
     public function store(StoreTaskRequest $request)
     {
         $validated = $request->validated();
+        $validated['user_id'] = auth()->id();
         $customTask = CustomTask::create($validated);
         if ($customTask) {
             event(new TaskCreated($customTask));
@@ -38,7 +42,7 @@ class TaskController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateTaskRequest $request, string $id)
+    public function update(UpdateTaskRequest $request, $id)
     {
         try {
             $validated = $request->validated();
@@ -57,6 +61,7 @@ class TaskController extends Controller
         try {
             $customTask = CustomTask::findOrFail($id);
             $customTask->dalete();
+            return response('', 204);
         } catch (\Exception $e) {
             return response(['error' => 'Task not found.'], 404);
         }

@@ -14,7 +14,13 @@ class CustomTask extends Model
         'frequency',
         'repetition',
         'ilvl',
+        'icon_id',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
     public function icon()
     {

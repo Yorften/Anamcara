@@ -24,7 +24,7 @@ class AttachTasks
     public function handle(CharacterCreated $characterCreated): void
     {
         $tasks = Task::pluck('id')->toArray();
-        $customTasks = CustomTask::pluck('id')->toArray();
+        $customTasks = CustomTask::where('user_id', auth()->id())->pluck('id')->toArray();
         $characterCreated->character->assignedTasks()->attach($tasks);
         $characterCreated->character->assignedCustomTasks()->attach($customTasks);
     }

@@ -8,4 +8,10 @@ IconRequest.index = (params) => {
     .then((response) => response.data);
 };
 
+IconRequest.tasks = (params) => {
+  return axiosClient
+    .get("/icons/tasks", params)
+    .then((response) => response.data);
+};
+
 export default IconRequest;

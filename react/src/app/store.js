@@ -7,6 +7,7 @@ import imageReducer from "../features/images/imageSlice";
 import characterReducer from "../features/characters/characterSlice";
 import taskReducer from "../features/tasks/taskSlice";
 import iconReducer from "../features/icons/iconSlice";
+import taskIconReducer from "../features/icons/taskIconSlice";
 
 export default configureStore({
   reducer: {
@@ -18,5 +19,6 @@ export default configureStore({
     character: characterReducer,
     task: taskReducer,
     icon: iconReducer,
+    taskIcon: taskIconReducer,
   },
 });
