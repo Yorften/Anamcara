@@ -41,6 +41,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/tasks/default/update-progress', [TaskController::class, 'updateProgress']);
     Route::post('/tasks/default/refresh-progress', [TaskController::class, 'refreshProgress']);
 
+    Route::post('/tasks/custom/update-progress', [TaskController::class, 'updateCustomProgress']);
+    Route::post('/tasks/custom/refresh-progress', [TaskController::class, 'refreshCustomProgress']);
+
     Route::get('/tasks/custom', [TaskController::class, 'custom']);
 
 

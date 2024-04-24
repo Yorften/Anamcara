@@ -14,9 +14,6 @@ export default function Index() {
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.character.loading);
   const [isLoading, setIsLoading] = useState(true);
-  const characters = useSelector((state) => state.character.characters);
-  const tasks = useSelector((state) => state.task.tasks);
-  const custom = useSelector((state) => state.task.custom);
 
   useEffect(() => {
     const fetchData = async () => {

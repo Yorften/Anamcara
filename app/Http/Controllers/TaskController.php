@@ -86,7 +86,7 @@ class TaskController extends Controller
             $taskId = $request->input('task_id');
             $task = Task::findOrFail($taskId);
             $character = Character::findOrFail($charId);
-            
+
             $character->assignedTasks()->updateExistingPivot($task->id, ['progress' => $progress]);
         } catch (\Exception $e) {
             return response(['error' => 'Task not found.'], 404);
@@ -102,6 +102,36 @@ class TaskController extends Controller
             $character = Character::findOrFail($charId);
 
             $character->assignedTasks()->updateExistingPivot($task->id, ['progress' => 0]);
+        } catch (\Exception $e) {
+            return response(['error' => 'Task not found.'], 404);
+        }
+    }
+
+    public function updateCustomProgress(Request $request)
+    {
+
+        try {
+            $progress = $request->input('progress');
+            $charId = $request->input('char_id');
+            $taskId = $request->input('task_id');
+            $task = CustomTask::findOrFail($taskId);
+            $character = Character::findOrFail($charId);
+
+            $character->assignedCustomTasks()->updateExistingPivot($task->id, ['progress' => $progress]);
+        } catch (\Exception $e) {
+            return response(['error' => 'Task not found.'], 404);
+        }
+    }
+
+    public function refreshCustomProgress(Request $request)
+    {
+        try {
+            $charId = $request->input('char_id');
+            $taskId = $request->input('task_id');
+            $task = CustomTask::findOrFail($taskId);
+            $character = Character::findOrFail($charId);
+
+            $character->assignedCustomTasks()->updateExistingPivot($task->id, ['progress' => 0]);
         } catch (\Exception $e) {
             return response(['error' => 'Task not found.'], 404);
         }

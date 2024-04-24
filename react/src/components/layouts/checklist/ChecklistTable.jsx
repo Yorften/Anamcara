@@ -7,10 +7,11 @@ export default function ChecklistTable() {
   const tasks = useSelector((state) => state.task.tasks);
   const custom = useSelector((state) => state.task.custom);
 
-  const handleClick = (charId, taskId) => {
-    const checkboxElement = document.getElementById(
-      "checkbox" + charId + taskId
-    );
+  const handleClick = (event, charId, taskId) => {
+    const checkboxElement = event.currentTarget;
+
+    const id = checkboxElement.getAttribute("id");
+
     if (checkboxElement.hasAttribute("disabled")) {
       return;
     }
@@ -19,11 +20,17 @@ export default function ChecklistTable() {
     let max = array[1];
     checkboxElement.innerHTML = `${currentProgress}/${max}`;
 
-    TaskRequest.progress({
+    const payload = {
       char_id: charId,
       task_id: taskId,
       progress: currentProgress,
-    });
+    };
+
+    if (id.startsWith("custom_")) {
+      TaskRequest.customProgress(payload);
+    } else {
+      TaskRequest.progress(payload);
+    }
 
     if (currentProgress == max) {
       checkboxElement.setAttribute("disabled", "");
@@ -36,12 +43,19 @@ export default function ChecklistTable() {
     }
   };
 
-  const refresh = (charId, taskId) => {
-    TaskRequest.refresh({ char_id: charId, task_id: taskId });
+  const refresh = (event, charId, taskId) => {
+    const payload = {
+      char_id: charId,
+      task_id: taskId,
+    };
+    const checkboxElement = event.currentTarget.parentElement.childNodes[0];
+    const id = checkboxElement.getAttribute("id");
 
-    const checkboxElement = document.getElementById(
-      "checkbox" + charId + taskId
-    );
+    if (id.startsWith("custom_")) {
+      TaskRequest.customRefresh(payload);
+    } else {
+      TaskRequest.refresh(payload);
+    }
 
     let array = checkboxElement.innerHTML.split("/");
     let max = array[1];
@@ -97,14 +111,14 @@ export default function ChecklistTable() {
               <div className='flex items-center justify-center gap-2'>
                 <div
                   id={`checkbox${character.id}${task.id}`}
-                  onClick={() => handleClick(character.id, task.id)}
+                  onClick={(e) => handleClick(e, character.id, task.id)}
                   className=' bg-transparent/50 px-4 py-2 rounded hover:bg-transparent/25 select-none'
                   disabled
                 >
                   {character.pivot.progress}/{task.repetition}
                 </div>
                 <VscRefresh
-                  onClick={() => refresh(character.id, task.id)}
+                  onClick={(e) => refresh(e, character.id, task.id)}
                   className='inline-block p-1 bg-gray-600/20 rounded w-5 h-5 cursor-pointer'
                 />
               </div>
@@ -117,13 +131,13 @@ export default function ChecklistTable() {
               <div className='flex items-center justify-center gap-2'>
                 <div
                   id={`checkbox${character.id}${task.id}`}
-                  onClick={() => handleClick(character.id, task.id)}
+                  onClick={(e) => handleClick(e, character.id, task.id)}
                   className=' bg-transparent/50 px-4 py-2 rounded cursor-pointer hover:bg-transparent/25 select-none'
                 >
                   {character.pivot.progress}/{task.repetition}
                 </div>
                 <VscRefresh
-                  onClick={() => refresh(character.id, task.id)}
+                  onClick={(e) => refresh(e, character.id, task.id)}
                   className='hidden inline-block p-1 bg-gray-600/20 rounded w-5 h-5 cursor-pointer'
                 />
               </div>
@@ -145,16 +159,48 @@ export default function ChecklistTable() {
               <p>{task.name}</p>
             </div>
           </td>
-          {task.characters.map((progress) => (
-            <td
-              key={progress.id}
-              className='text-center border-2 border-[#646464]'
-            >
-              <p>
-                {progress.pivot.progress}/{task.repetition}
-              </p>
-            </td>
-          ))}
+          {task.characters.map((character) =>
+            character.pivot.progress === task.repetition ? (
+              <td
+                key={character.id}
+                className='text-center border-2 border-[#646464] bg-green-500/20'
+              >
+                <div className='flex items-center justify-center gap-2'>
+                  <div
+                    id={`custom_checkbox${character.id}${task.id}`}
+                    onClick={(e) => handleClick(e, character.id, task.id)}
+                    className=' bg-transparent/50 px-4 py-2 rounded hover:bg-transparent/25 select-none'
+                    disabled
+                  >
+                    {character.pivot.progress}/{task.repetition}
+                  </div>
+                  <VscRefresh
+                    onClick={(e) => refresh(e, character.id, task.id)}
+                    className='inline-block p-1 bg-gray-600/20 rounded w-5 h-5 cursor-pointer'
+                  />
+                </div>
+              </td>
+            ) : (
+              <td
+                key={character.id}
+                className='relative text-center border-2 border-[#646464]'
+              >
+                <div className='flex items-center justify-center gap-2'>
+                  <div
+                    id={`custom_checkbox${character.id}${task.id}`}
+                    onClick={(e) => handleClick(e, character.id, task.id)}
+                    className=' bg-transparent/50 px-4 py-2 rounded cursor-pointer hover:bg-transparent/25 select-none'
+                  >
+                    {character.pivot.progress}/{task.repetition}
+                  </div>
+                  <VscRefresh
+                    onClick={(e) => refresh(e, character.id, task.id)}
+                    className='hidden inline-block p-1 bg-gray-600/20 rounded w-5 h-5 cursor-pointer'
+                  />
+                </div>
+              </td>
+            )
+          )}
         </tr>
       ))
     );
