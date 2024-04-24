@@ -10,22 +10,18 @@ export default function Index() {
     <>
       <div className='flex flex-col gap-10 p-4'>
         <p className='text-lg'>
-          Tasks manager{" "}
+          Checklist{" "}
           <span className='text-xs text-gray-400'>
-            Manage & keep track of your tasks
+            Track your daily and weekly tasks with automated resets
           </span>
         </p>
         <div className='overflow-x-auto'>
           <table className='bg-[#141414] border-2 border-[#646464] min-w-[724px] w-full'>
             <thead className='border-2 border-[#646464]'>
-              <tr className='*:p-4'>
-               
-              </tr>
+              <tr className='*:p-4'></tr>
             </thead>
             <tbody className='[&>*]:[&>*]:p-2 [&>*]:border-b-2 [&>*]:border-[#646464] '>
-              <tr>
-                
-              </tr>
+              <tr></tr>
             </tbody>
           </table>
         </div>
