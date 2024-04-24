@@ -22,8 +22,8 @@ export default function Apply() {
   const dispatch = useDispatch();
   const userInGuild = useSelector((state) => state.auth.userInGuild);
   const user = useSelector((state) => state.auth.token);
-  const isGuildMember = useHasRole("Guild member");
-  const isTrailMember = useHasRole("Trial member");
+  const isGuildMember = useHasRole("Guildmate");
+  const isTrailMember = useHasRole("Trial Member");
   const [isLoading, setIsLoading] = useState(true);
 
   const serverRef = useRef();
@@ -171,7 +171,7 @@ export default function Apply() {
         className='object-contain h-full'
         alt=''
       />
-      <div className='my-4 lg:my-20 mx-2 md:mx-20'>
+      <div className='my-4 lg:my-14 mx-2 md:mx-20'>
         {isLoading ? (
           <div className='w-full h-80 flex items-center justify-center'>
             <img
@@ -182,14 +182,25 @@ export default function Apply() {
           </div>
         ) : user === null ? (
           <div>
-            <div className='text-5xl'>You must be logged in to apply!</div>
+            <div className='text-2xl lg:text-5xl'>
+              You must be logged in to apply!
+            </div>
           </div>
         ) : !userInGuild ? (
           <div>
             <JoinUs userInGuild={userInGuild} />
           </div>
         ) : isGuildMember || isTrailMember ? (
-          <div></div>
+          <div className='flex lg:flex-row flex-col items-center lg:items-end'>
+            <div className='text-2xl lg:text-5xl'>
+              You are already a guildmate!
+            </div>
+            <img
+              src='/assets/images/emotes/emoji_a_55.png'
+              className='h-20'
+              alt=''
+            />
+          </div>
         ) : (
           <>
             <p className='text-2xl lg:text-5xl mb-4 lg:mb-20'>

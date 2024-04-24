@@ -57,16 +57,12 @@ const DefaultLayout = () => {
   return (
     <div className='default-layout bg-[#224191] text-white'>
       {<>{location.pathname === "/" ? <HomeNavigation /> : <Navigation />}</>}
-      <div className='min-h-screen h-full'>
+      <div className='min-h-[50vh] lg:min-h-screen h-full'>
         {location.pathname === "/" && <Welcome />}
         <Outlet />
       </div>
       {
         <>
-          {location.pathname.startsWith("/checklist") ||
-          location.pathname.startsWith("/checklist/") ? null : (
-            <Footer />
-          )}
           {(location.pathname.startsWith("/checklist") && user) ||
           (location.pathname.startsWith("/checklist/") && user) ? null : (
             <Footer />

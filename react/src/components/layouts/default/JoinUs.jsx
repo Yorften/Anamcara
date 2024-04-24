@@ -151,7 +151,7 @@ export default function JoinUs({ userInGuild }) {
               </div>
               <div className='flex items-center justify-between'>
                 <div className='flex items-center gap-4'>
-                  <p className=''>&#9679; 257 Members</p>
+                  <p className=''>&#9679; 277 Members</p>
                   <p className='text-green-400'>&#9679; 120 Online</p>
                 </div>
                 <Link
