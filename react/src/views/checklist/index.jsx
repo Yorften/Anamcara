@@ -1,26 +1,41 @@
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
-import "ldrs/grid";
+import { useEffect } from "react";
 import CharacterRequest from "../../services/requests/character";
-import { setCharacters } from "../../features/characters/characterSlice";
+import {
+  setCharacters,
+  setLoading,
+} from "../../features/characters/characterSlice";
+import { useSelector, useDispatch } from "react-redux";
+import ChecklistTable from "../../components/layouts/checklist/ChecklistTable";
+import { setCustom, setTasks } from "../../features/tasks/taskSlice";
+import TaskRequest from "./../../services/requests/task";
+import "ldrs/grid";
 
 export default function Index() {
   const dispatch = useDispatch();
-  const characters = useSelector((state) => state.character.characters);
-  const [loading, setLoading] = useState(true);
+  const loading = useSelector((state) => state.character.loading);
 
   useEffect(() => {
-    const response = CharacterRequest.checklist();
-    response
-      .then((data) => {
-        console.log(data);
-        dispatch(setCharacters(data));
-        setLoading(false);
-      })
-      .catch((error) => {
+    const fetchData = async () => {
+      try {
+        const characterData = await CharacterRequest.index();
+        const defaultTasksData = await TaskRequest.default();
+        const customTasksData = await TaskRequest.custom();
+
+        console.log(characterData);
+        console.log(defaultTasksData);
+        console.log(customTasksData);
+
+        dispatch(setCharacters(characterData));
+        dispatch(setTasks(defaultTasksData));
+        dispatch(setCustom(customTasksData));
+        dispatch(setLoading(false));
+      } catch (error) {
         console.error(error);
-      });
-  }, []);
+      }
+    };
+
+    fetchData();
+  }, [loading]);
 
   return (
     <>
@@ -32,14 +47,13 @@ export default function Index() {
           </span>
         </p>
         <div className='overflow-x-auto'>
-          <table className='bg-[#141414] border-2 border-[#646464] min-w-[724px] w-full'>
-            <thead className='border-2 border-[#646464]'>
-              <tr className='*:p-4'></tr>
-            </thead>
-            <tbody className='[&>*]:[&>*]:p-2 [&>*]:border-b-2 [&>*]:border-[#646464] '>
-              <tr></tr>
-            </tbody>
-          </table>
+          {loading ? (
+            <div className='h-full w-full flex items-center justify-center'>
+              <l-grid size='120' speed='1.5' color='white'></l-grid>
+            </div>
+          ) : (
+            <ChecklistTable />
+          )}
         </div>
       </div>
     </>

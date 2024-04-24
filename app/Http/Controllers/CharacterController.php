@@ -16,19 +16,13 @@ class CharacterController extends Controller
      */
     public function index()
     {
-        $characters = Character::with('icon')->where('user_id', auth()->id())->get();
+        $characters = Character::with('icon')->where('user_id', auth()->id())->orderBy('id')->get();
         return response(new CharacterResource(
             $characters->map(function ($character) {
                 $character->icon_path = $character->icon->path;
                 return $character;
             })
         ));
-    }
-
-    public function checklist()
-    {
-        $characters = Character::with('icon', 'assignedTasks.icon', 'assignedCustomTasks.icon')->where('user_id', auth()->id())->get();
-        return response(new CharacterResource($characters));
     }
 
     /**

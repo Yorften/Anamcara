@@ -7,6 +7,7 @@ use App\Http\Requests\Tasks\StoreTaskRequest;
 use App\Http\Requests\Tasks\UpdateTaskRequest;
 use App\Http\Resources\TaskResource;
 use App\Models\CustomTask;
+use App\Models\Task;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
@@ -21,6 +22,28 @@ class TaskController extends Controller
             $task->icon_path = $task->icon->path;
             return $task;
         })));
+    }
+
+    public function default()
+    {
+        $tasks = Task::with([
+            'icon',
+            'characters' => function ($query) {
+                $query->withPivot('progress')->where('user_id', auth()->id())->orderBy('id');
+            },
+        ])->orderBy('id')->get();
+        return response(new TaskResource($tasks));
+    }
+
+    public function custom()
+    {
+        $tasks = CustomTask::with([
+            'icon',
+            'characters' => function ($query) {
+                $query->withPivot('progress')->where('user_id', auth()->id())->orderBy('id');
+            },
+        ])->orderBy('id')->get();
+        return response(new TaskResource($tasks));
     }
 
     /**

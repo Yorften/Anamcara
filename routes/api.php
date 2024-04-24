@@ -37,6 +37,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/icons/tasks', [ClassIconController::class, 'taskIndex']);
     Route::get('/characters/tasks', [CharacterController::class, 'checklist']);
 
+    Route::get('/tasks/default', [TaskController::class, 'default']);
+
+    Route::get('/tasks/custom', [TaskController::class, 'custom']);
+
+
     Route::apiResource('/images', GalleryController::class);
 
     Route::apiResource('/videos', VideoController::class);
