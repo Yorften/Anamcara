@@ -20,8 +20,8 @@ export default function MobileNav() {
     }
   };
   return (
-    <div className='flex gap-1'>
-      <ul className='flex flex-col py-4 space-y-4'>
+    <div className='flex gap-1 w-full'>
+      <ul className='flex flex-col py-4 space-y-4 w-2/3'>
         <li className='px-5 hidden md:block'>
           <div className='flex flex-row items-center h-8'>
             <div className='text-sm font-light tracking-wide text-white uppercase'></div>
@@ -86,13 +86,13 @@ export default function MobileNav() {
           </Link>
         </li>
       </ul>
-      <div className="py-10">
+      <div className="py-10 w-full flex justify-center ">
         {isLoading ? (
           <div className='w-[189.33px] lg:order-last'></div>
         ) : user ? (
-          <NavProfile className='flex px-1' user={user} />
+          <NavProfile className='flex px-1 h-20' user={user} />
         ) : (
-          <DiscordButton className='flex' />
+          <DiscordButton className='h-14' />
         )}
       </div>
     </div>

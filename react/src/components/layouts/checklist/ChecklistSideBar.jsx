@@ -52,7 +52,7 @@ export default function ChecklistSideBar({ className }) {
           </li>
         </ul>
         <p className='mb-14 px-5 py-3 hidden md:block text-center text-xs'>
-          Copyright @2024
+          Anamcara - Copyright @2024
         </p>
       </div>
     </div>

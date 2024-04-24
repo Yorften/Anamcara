@@ -53,12 +53,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::apiResource('/characters', CharacterController::class);
 
-
     Route::apiResource('/tasks', TaskController::class);
 
 
     Route::middleware(['role:Officer Team'])->group(function () {
         Route::get('/applications/history', [GuildApplicationController::class, 'history']);
+        Route::get('/applications/last', [GuildApplicationController::class, 'last']);
         Route::post('/roles/sync', [RoleController::class, 'sync']);
         Route::apiResource('/applications', GuildApplicationController::class);
     });

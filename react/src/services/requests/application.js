@@ -32,4 +32,10 @@ ApplicationRequest.history = (params) => {
     .then((response) => response.data);
 };
 
+ApplicationRequest.last = (params) => {
+  return axiosClient
+    .get("/applications/last", params)
+    .then((response) => response.data);
+};
+
 export default ApplicationRequest;

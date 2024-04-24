@@ -31,6 +31,13 @@ class GuildApplicationController extends Controller
         return response(new GuildApplicationResource($guildApplications));
     }
 
+    public function last()
+    {
+        $guildApplications = GuildApplication::where('accepted', null)->orderBy('created_at')->take(5)->get();
+        $guildApplications->load('user');
+        return response(new GuildApplicationResource($guildApplications));
+    }
+
 
 
     /**
