@@ -30,4 +30,12 @@ TaskRequest.custom = (params) => {
   return axiosClient.get("/tasks/custom", params).then((response) => response.data);
 };
 
+TaskRequest.progress = (params) => {
+  return axiosClient.post("/tasks/default/update-progress", params).then((response) => response.data);
+};
+
+TaskRequest.refresh = (params) => {
+  return axiosClient.post("/tasks/default/refresh-progress", params).then((response) => response.data);
+};
+
 export default TaskRequest;

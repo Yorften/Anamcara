@@ -6,6 +6,7 @@ use App\Events\TaskCreated;
 use App\Http\Requests\Tasks\StoreTaskRequest;
 use App\Http\Requests\Tasks\UpdateTaskRequest;
 use App\Http\Resources\TaskResource;
+use App\Models\Character;
 use App\Models\CustomTask;
 use App\Models\Task;
 use Illuminate\Http\Request;
@@ -71,6 +72,36 @@ class TaskController extends Controller
             $validated = $request->validated();
             $customTask = CustomTask::findOrFail($id);
             $customTask->update($validated);
+        } catch (\Exception $e) {
+            return response(['error' => 'Task not found.'], 404);
+        }
+    }
+
+    public function updateProgress(Request $request)
+    {
+
+        try {
+            $progress = $request->input('progress');
+            $charId = $request->input('char_id');
+            $taskId = $request->input('task_id');
+            $customTask = CustomTask::findOrFail($taskId);
+            $character = Character::findOrFail($charId);
+
+            $character->tasks()->updateExistingPivot($customTask->id, ['progress' => $progress]);
+        } catch (\Exception $e) {
+            return response(['error' => 'Task not found.'], 404);
+        }
+    }
+
+    public function refreshProgress(Request $request)
+    {
+        try {
+            $charId = $request->input('char_id');
+            $taskId = $request->input('task_id');
+            $customTask = CustomTask::findOrFail($taskId);
+            $character = Character::findOrFail($charId);
+
+            $character->tasks()->updateExistingPivot($customTask->id, ['progress' => 0]);
         } catch (\Exception $e) {
             return response(['error' => 'Task not found.'], 404);
         }

@@ -95,9 +95,9 @@ export default function Characters() {
 
   const tableRows = characters.map((character) => (
     <tr key={character.id}>
-      <td className='w-24'>
+      <td className='w-16 md:w-14 lg:w-10'>
         <img
-          src={`/public/assets/Icons/classes/${character.icon_path}`}
+          src={`/assets/Icons/classes/${character.icon_path}`}
           className='w-6 h-6'
           alt=''
         />

@@ -38,6 +38,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/characters/tasks', [CharacterController::class, 'checklist']);
 
     Route::get('/tasks/default', [TaskController::class, 'default']);
+    Route::post('/tasks/default/update-progress', [TaskController::class, 'updateProgress']);
+    Route::post('/tasks/default/refresh-progress', [TaskController::class, 'refreshProgress']);
 
     Route::get('/tasks/custom', [TaskController::class, 'custom']);
 

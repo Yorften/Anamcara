@@ -99,7 +99,7 @@ export default function Tasks() {
     <tr key={task.id}>
       <td className='w-24'>
         <img
-          src={`/public/assets/Icons/tasks/${task.icon_path}`}
+          src={`/assets/Icons/tasks/${task.icon_path}`}
           className='w-6 h-6'
           alt=''
         />
