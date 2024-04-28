@@ -213,10 +213,10 @@ export default function ChecklistTable() {
     );
   return (
     <>
-      <table className='bg-[#141414] border-2 border-[#646464] min-w-[924px] min-h-screen w-full'>
-        <thead className='border-2 border-[#646464]'>
-          <tr className='*:p-4 text-center'>
-            <td className='w-[10%] border-2 border-[#646464]'>Task</td>
+      <table className='bg-[#141414] border-2 border-[#646464] min-w-[700px] min-h-screen w-full'>
+        <thead className='border-2 border-[#646464] w-full'>
+          <tr className='*:p-1 *:py-4 text-center w-full'>
+            <td className='w-[5%] border-2 border-[#646464]'>Task</td>
             {tableHeads}
           </tr>
         </thead>
