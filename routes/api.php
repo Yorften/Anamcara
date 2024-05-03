@@ -28,6 +28,7 @@ use App\Http\Controllers\VideoController;
 Route::post('/auth/discord/callback', [AuthController::class, 'callback']);
 
 Route::middleware(['auth:sanctum'])->group(function () {
+
     Route::apiResource('/applications', GuildApplicationController::class)->only('store');
 
     // User
@@ -36,31 +37,33 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/users/roles', [UserController::class, 'updateUserRoles']);
     Route::post('/logout', [AuthController::class, 'logout']);
 
-    // Icons
-    Route::get('/icons', [ClassIconController::class, 'index']);
-    Route::get('/icons/tasks', [ClassIconController::class, 'taskIndex']);
+    Route::middleware('cache.headers:public;max_age=3600')->group(function () {
 
-    // Checklist
-    Route::get('/characters/tasks', [CharacterController::class, 'checklist']);
-    Route::get('/tasks/default', [TaskController::class, 'default']);
-    Route::post('/tasks/default/update-progress', [TaskController::class, 'updateProgress']);
-    Route::post('/tasks/default/refresh-progress', [TaskController::class, 'refreshProgress']);
-    Route::post('/tasks/custom/update-progress', [TaskController::class, 'updateCustomProgress']);
-    Route::post('/tasks/custom/refresh-progress', [TaskController::class, 'refreshCustomProgress']);
-    Route::get('/tasks/custom', [TaskController::class, 'custom']);
+        // Icons
+        Route::get('/icons', [ClassIconController::class, 'index']);
+        Route::get('/icons/tasks', [ClassIconController::class, 'taskIndex']);
+
+        // Checklist
+        Route::get('/characters/tasks', [CharacterController::class, 'checklist']);
+        Route::get('/tasks/default', [TaskController::class, 'default']);
+        Route::post('/tasks/default/update-progress', [TaskController::class, 'updateProgress']);
+        Route::post('/tasks/default/refresh-progress', [TaskController::class, 'refreshProgress']);
+        Route::post('/tasks/custom/update-progress', [TaskController::class, 'updateCustomProgress']);
+        Route::post('/tasks/custom/refresh-progress', [TaskController::class, 'refreshCustomProgress']);
+        Route::get('/tasks/custom', [TaskController::class, 'custom']);
 
 
-    Route::apiResource('/images', GalleryController::class);
+        Route::apiResource('/images', GalleryController::class);
 
-    Route::apiResource('/videos', VideoController::class);
+        Route::apiResource('/videos', VideoController::class);
 
-    Route::apiResource('/characters', CharacterController::class);
+        Route::apiResource('/characters', CharacterController::class);
 
-    Route::apiResource('/tasks', TaskController::class);
-
+        Route::apiResource('/tasks', TaskController::class);
+    });
 
     Route::middleware(['role:Officer Team'])->group(function () {
-        
+
         Route::get('/applications/history', [GuildApplicationController::class, 'history']);
 
         Route::get('/applications/last', [GuildApplicationController::class, 'last']);
