@@ -61,7 +61,6 @@ class AuthController extends Controller
                 return response()->json(['error' => 'An unexpected error occurred:' . $e->getMessage()], 500);
             }
         }
-
         return response(['message' => "couldn't get access token"]);
     }
 

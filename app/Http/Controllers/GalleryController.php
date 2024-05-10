@@ -25,7 +25,7 @@ class GalleryController extends Controller
     {
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $imageName = time() . "." . $image->extension();
+            $imageName = time() . '_' . uniqid() . "." . $image->extension();
             $image->storeAs('public/', $imageName);
             $validated['path'] = $imageName;
             Gallery::create($validated);
